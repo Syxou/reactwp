@@ -1,0 +1,14 @@
+.App {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  grid-template-rows: 1fr;
+  grid-template-areas: "nav main";
+  grid-column-gap: 30px;
+  grid-row-gap: 0px;
+}
+
+.gridMain {
+  display: grid;
+  grid-gap: 10px;
+  grid-template-columns: 1fr 300px;
+}

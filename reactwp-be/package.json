@@ -1,0 +1,23 @@
+{
+  "name": "reactwp-be",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "knex": "^0.20.8",
+    "mssql": "^6.0.1",
+    "mysql": "^2.18.1",
+    "mysql2": "^2.1.0",
+    "objection": "^2.1.2",
+    "oracle": "^0.4.1",
+    "pg": "^7.17.1",
+    "sqlite3": "^4.1.1"
+  }
+}
