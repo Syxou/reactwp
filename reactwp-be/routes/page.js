@@ -21,5 +21,10 @@ router.get('/:id', function (req, res, next) {
     console.log(id)
 })
 
+router.post('/pages/chenge/', function (req, res) {
+    var page = req.body.page;
+    console.log(page)
+})
+
 
 module.exports = router

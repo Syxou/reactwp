@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Button, Input } from 'antd';
-
+import axios from 'axios'
 import Card from '../../compontnts/card/Card'
 import Sidebare from '../../compontnts/sidebar/Sidebar'
-import { fetchPageItem } from '../../actions/actions'
+import { fetchPageItem, setTitlePage } from '../../actions/actions'
 
 
 class Page extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            title: ''
-        };
+
 
         this.handleChangeTitle = this.handleChangeTitle.bind(this);
         this.handleSubmitPage = this.handleSubmitPage.bind(this);
@@ -23,17 +21,19 @@ class Page extends Component {
         const id = this.props.match.params.id;
         console.log(id)
         this.props.dispatch(fetchPageItem(id))
-        this.setState({ title: 'aaa' })
     }
 
-    componentWillReceiveProps(){
-        console.log(this.props.page.title)
-    }
 
 
     handleChangeTitle(event) {
-
+        // this.props.dispatch(setTitlePage({ ...this.props.page, title: event.target.value }))
+        axios({
+            method: 'post',
+            url: '/pages/chenge/',
+            data: '1'
+        }).then(res => { console.log(res) })
     }
+
     handleSubmitPage() {
 
     }
@@ -42,13 +42,14 @@ class Page extends Component {
         return (
             <>
                 <div>
-                    <input value={this.state.title} onChange={this.handleChangeTitle} />
+                    <input value={this.props.page.title} onChange={this.handleChangeTitle} />
                 </div>
                 <Sidebare>
                     <Card
                         bg='linear-gradient(180deg, #679CF6 0%, #4072EE 100%)'
                     >
                         <p style={{ color: '#ffffff' }}><span>Status:</span>{" " + this.props.page.state}</p>
+                        <p></p>
                     </Card>
                     <Button type="primary" icon="save" size='large' onClick={this.hendleSavePage} />
                 </Sidebare>
@@ -58,7 +59,6 @@ class Page extends Component {
 }
 
 const mapStateToProps = state => {
-    console.log('mapStateToProps')
     return {
         page: state.pages.pageItem
     }

@@ -1,4 +1,6 @@
 import actionTypes from '../constants';
+import axios from 'axios';
+
 
 function pagesReceived(pages) {
     return {
@@ -37,6 +39,7 @@ export function fetchPageItem(id) {
             .catch((e) => console.log(e))
 }
 
-export function deliverPage(page) {
-    console.log(page)
+export function setTitlePage(page) {
+    return null
+
 }
