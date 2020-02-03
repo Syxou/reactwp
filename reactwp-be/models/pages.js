@@ -9,5 +9,4 @@ class Pages extends Model {
     }
 }
 
-
 module.exports = Pages;

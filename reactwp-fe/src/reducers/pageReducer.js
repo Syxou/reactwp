@@ -19,6 +19,11 @@ export default (state = initialState, action) => {
             updated['pageItem'] = action.pageItem
             return updated
 
+        case actionTypes.PAGE_ITEM_SUBMIT:
+            console.log(action.pageItem)
+            updated['pageItem'] = action.pageItem
+            return updated
+
         default:
             return state
     }

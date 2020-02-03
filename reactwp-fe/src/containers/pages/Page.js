@@ -23,19 +23,21 @@ class Page extends Component {
         this.props.dispatch(fetchPageItem(id))
     }
 
-
-
     handleChangeTitle(event) {
-        // this.props.dispatch(setTitlePage({ ...this.props.page, title: event.target.value }))
-        axios({
-            method: 'post',
-            url: '/pages/chenge/',
-            data: '1'
-        }).then(res => { console.log(res) })
+        this.props.dispatch(setTitlePage({ ...this.props.page, title: event.target.value }))
+        console.log('handleChangeTitle')
     }
 
     handleSubmitPage() {
-
+        axios({
+            method: 'post',
+            url: '/pages/changes/',
+            data: this.props.page
+        })
+            .then(res => { console.log(res) })
+            .catch(function (error) {
+                console.log(error);
+            });
     }
 
     render(props) {
@@ -51,7 +53,7 @@ class Page extends Component {
                         <p style={{ color: '#ffffff' }}><span>Status:</span>{" " + this.props.page.state}</p>
                         <p></p>
                     </Card>
-                    <Button type="primary" icon="save" size='large' onClick={this.hendleSavePage} />
+                    <Button type="primary" icon="save" size='large' onClick={this.handleSubmitPage} />
                 </Sidebare>
             </>
         );
@@ -65,3 +67,5 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps)(Page);
+
+

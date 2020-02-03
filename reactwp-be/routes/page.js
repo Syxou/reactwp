@@ -21,9 +21,19 @@ router.get('/:id', function (req, res, next) {
     console.log(id)
 })
 
-router.post('/pages/chenge/', function (req, res) {
-    var page = req.body.page;
+router.post('/changes/', function (req, res) {
+    var page = req.body;
     console.log(page)
+    Pages.query()
+        .update({ title: page.title })
+        .where('id', page.id)
+        .catch(err => {
+            consol.log(err)
+        })
+    Pages.query()
+        .then(pages => {
+            res.json(pages.filter(pages => parseInt(pages.id) === parseInt(page.id)))
+        })
 })
 
 

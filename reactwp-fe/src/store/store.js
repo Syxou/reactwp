@@ -2,13 +2,17 @@ import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import pageReducer from '../reducers/pageReducer';
 /* eslint-disable no-underscore-dangle */
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+
 const store = createStore(
   combineReducers({
     pages: pageReducer
   }),
-  applyMiddleware(
+  composeEnhancers(applyMiddleware(
     thunk
-  ),
+  )),
+
 );
 /* eslint-enable */
 export default store;

@@ -17,8 +17,9 @@ function pageItemReceived(pageItem) {
 }
 
 function pageItemSubmit(pageItem) {
+    console.log(pageItem)
     return {
-        type: actionTypes.PAGES_ITEM_RECEIVED,
+        type: actionTypes.PAGE_ITEM_SUBMIT,
         pageItem: pageItem
     }
 }
@@ -40,6 +41,6 @@ export function fetchPageItem(id) {
 }
 
 export function setTitlePage(page) {
-    return null
-
+    console.log('aaa', page)
+    return dispatch => dispatch(pageItemSubmit(page))
 }
