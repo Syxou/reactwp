@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const knex = require('../knex/knex')
-const Pages = require('../models/pages')
+const Pages = require('./pages')
 
 
 router.get('/', function (req, res, next) {
@@ -21,20 +21,55 @@ router.get('/:id', function (req, res, next) {
     console.log(id)
 })
 
+
+/**
+ * add post (page) to db. 
+ * body - ajax object page
+ */
+
+router.post('/add', function (req, res) {
+    const page = req.body
+    console.log(page)
+    Pages.query()
+        .insert({
+            title: page.title,
+            state: page.state,
+            slug: page.slug,
+            date_modifate: new Date()
+        }).then(() => {
+            res.sendStatus(200)
+        })
+        .catch(err => {
+            console.log(err)
+        })
+})
+
+router.post('/delete', function (req, res) {
+    const page = req.body
+    console.log(page)
+    Pages.query()
+        .deleteById(page.id)
+        .then(() => {
+            res.sendStatus(200)
+        })
+        .catch(err => {
+            res.json(err.message)
+        })
+})
+
 router.post('/changes/', function (req, res) {
-    var page = req.body;
+    const page = req.body;
     console.log(page)
     Pages.query()
         .update({ title: page.title })
         .where('id', page.id)
         .catch(err => {
-            consol.log(err)
+            console.log(err)
         })
     Pages.query()
         .then(pages => {
             res.json(pages.filter(pages => parseInt(pages.id) === parseInt(page.id)))
         })
 })
-
 
 module.exports = router
