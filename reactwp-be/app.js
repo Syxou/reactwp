@@ -15,12 +15,7 @@ app.use(cors());
 app.options('*', cors());
 app.use('/', routes);
 app.use('/pages', pagesRoute)
-app.use('/user', user)
-
-app.use('/test', function (req, res, next) {
-    res.send(knex.select('*').from('pages'));
-})
-
+app.use('/users', user)
 
 
 app.listen(PORT, function () {

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Button, Input } from 'antd';
+import { Editor, EditorState, RichUtils } from 'draft-js';
+import { Button } from 'antd';
 import axios from 'axios'
 import Card from '../../compontnts/card/Card'
 import Sidebare from '../../compontnts/sidebar/Sidebar'
@@ -12,10 +13,23 @@ class Page extends Component {
     constructor(props) {
         super(props);
 
+        this.state = { editorState: EditorState.createEmpty() };
+        this.onChange = editorState => this.setState({ editorState });
+        this.handleKeyCommand = this.handleKeyCommand.bind(this);
 
         this.handleChangeTitle = this.handleChangeTitle.bind(this);
         this.handleSubmitPage = this.handleSubmitPage.bind(this);
     }
+
+    handleKeyCommand(command, editorState) {
+        const newState = RichUtils.handleKeyCommand(editorState, command);
+        if (newState) {
+            this.onChange(newState);
+            return 'handled';
+        }
+        return 'not-handled';
+    }
+
 
     componentDidMount() {
         const id = this.props.match.params.id;
@@ -45,7 +59,13 @@ class Page extends Component {
             <>
                 <div>
                     <input value={this.props.page.title} onChange={this.handleChangeTitle} />
+                    <Editor
+                        editorState={this.state.editorState}
+                        handleKeyCommand={this.handleKeyCommand}
+                        onChange={this.onChange}
+                    />
                 </div>
+
                 <Sidebare>
                     <Card
                         bg='linear-gradient(180deg, #679CF6 0%, #4072EE 100%)'

@@ -21,11 +21,11 @@ async function createSchema() {
     })
 }
 
-createSchema()
-    .then(() => knex.destroy())
-    .catch(err => {
-        console.error(err);
-        return knex.destroy();
-    });
+// createSchema()
+//     .then(() => knex.destroy())
+//     .catch(err => {
+//         console.error(err);
+//         return knex.destroy();
+//     });
 
 module.exports = User;
