@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const knex = require('../knex/knex')
+const knex = require('../../knex/knex')
 const Pages = require('./pages')
 
 
@@ -9,7 +9,6 @@ router.get('/', function (req, res, next) {
         .then(pages => {
             res.json(pages)
         })
-
 })
 
 router.get('/:id', function (req, res, next) {

@@ -3,8 +3,8 @@ var bodyParser = require("body-parser");
 const cors = require('cors');
 const knex = require('./knex/knex')
 const routes = require('./routes/index');
-const pagesRoute = require('./pages/page');
-const Pages = require('./pages/pages')
+const pagesRoute = require('./components/pages/page');
+const user = require('./components/users/user')
 let app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -15,7 +15,7 @@ app.use(cors());
 app.options('*', cors());
 app.use('/', routes);
 app.use('/pages', pagesRoute)
-
+app.use('/user', user)
 
 app.use('/test', function (req, res, next) {
     res.send(knex.select('*').from('pages'));
