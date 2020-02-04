@@ -43,6 +43,20 @@ router.post('/add', function (req, res) {
         })
 })
 
+router.post('/trash', function (req, res) {
+    const page = req.body
+    console.log(page)
+    Pages.query()
+        .update({ state: 'publish' })
+        .where('id', page.id)
+        .then(() => {
+            res.sendStatus(200)
+        })
+        .catch(err => {
+            res.json(err.message)
+        })
+})
+
 router.post('/delete', function (req, res) {
     const page = req.body
     console.log(page)

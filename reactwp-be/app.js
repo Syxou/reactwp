@@ -4,7 +4,8 @@ const cors = require('cors');
 const knex = require('./knex/knex')
 const routes = require('./routes/index');
 const pagesRoute = require('./components/pages/page');
-const user = require('./components/users/user')
+const users = require('./components/users/user')
+const posts = require('./components/posts/posts')
 let app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -15,7 +16,8 @@ app.use(cors());
 app.options('*', cors());
 app.use('/', routes);
 app.use('/pages', pagesRoute)
-app.use('/users', user)
+app.use('/users', users)
+app.use('/posts', posts)
 
 
 app.listen(PORT, function () {

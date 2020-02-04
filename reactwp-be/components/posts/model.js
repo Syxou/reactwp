@@ -5,20 +5,20 @@ Model.knex(knex);
 
 class User extends Model {
     static get tableName() {
-        return 'users'
+        return 'posts'
     }
 }
 
 async function createSchema() {
-    if (await knex.schema.hasTable('users')) return;
-
-    await knex.schema.createTable('users', table => {
+    if (await knex.schema.hasTable('posts')) return;
+    await knex.schema.createTable('posts', table => {
         table.increments('id').primary();
-        table.string('name');
+        table.bigInteger('autor');
+        table.datetime('date');
+        table.text('content');
+        table.string('title');
+        table.string('state');
         table.string('type');
-        table.string('email');
-        table.string('data_registred');
-        // table.dropTimestamps()
     })
 }
 
