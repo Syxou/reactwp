@@ -1,13 +1,14 @@
+var faker = require('faker');
 
-exports.seed = function(knex) {
+exports.seed = function (knex) {
   // Deletes ALL existing entries
-  return knex('table_name').del()
+  return knex('post_data').del()
     .then(function () {
       // Inserts seed entries
-      return knex('table_name').insert([
-        {id: 1, colName: 'rowValue1'},
-        {id: 2, colName: 'rowValue2'},
-        {id: 3, colName: 'rowValue3'}
+      return knex('post_data').insert([
+        { post_id: 1, post_content: faker.lorem.paragraphs(), data_type: 'html', post_date: faker.date.past() },
+        { post_id: 1, post_content: faker.image.imageUrl(), data_type: 'attachment', post_date: faker.date.past() },
+        { post_id: 1, post_content: faker.lorem.paragraph(), data_type: 'html', post_date: faker.date.past() }
       ]);
     });
 };

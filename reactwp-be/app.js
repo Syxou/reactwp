@@ -6,6 +6,8 @@ const routes = require('./routes/index');
 const pagesRoute = require('./components/pages/page');
 const users = require('./components/users/user')
 const posts = require('./components/posts/posts')
+const postData = require('./components/postData/router')
+
 let app = express();
 const PORT = process.env.PORT || 5000;
 
@@ -18,7 +20,7 @@ app.use('/', routes);
 app.use('/pages', pagesRoute)
 app.use('/users', users)
 app.use('/posts', posts)
-
+app.use('/postdata', postData)
 
 app.listen(PORT, function () {
     console.log(`Listening on port ${PORT}`);

@@ -1,8 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { Editor, EditorState, RichUtils } from 'draft-js';
+
+import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+
 import { Button } from 'antd';
 import axios from 'axios'
+
 import Card from '../../compontnts/card/Card'
 import Sidebare from '../../compontnts/sidebar/Sidebar'
 import { fetchPageItem, setTitlePage } from '../../actions/actions'
@@ -15,20 +20,12 @@ class Page extends Component {
 
         this.state = { editorState: EditorState.createEmpty() };
         this.onChange = editorState => this.setState({ editorState });
-        this.handleKeyCommand = this.handleKeyCommand.bind(this);
 
         this.handleChangeTitle = this.handleChangeTitle.bind(this);
         this.handleSubmitPage = this.handleSubmitPage.bind(this);
     }
 
-    handleKeyCommand(command, editorState) {
-        const newState = RichUtils.handleKeyCommand(editorState, command);
-        if (newState) {
-            this.onChange(newState);
-            return 'handled';
-        }
-        return 'not-handled';
-    }
+
 
 
     componentDidMount() {
@@ -41,6 +38,8 @@ class Page extends Component {
         this.props.dispatch(setTitlePage({ ...this.props.page, title: event.target.value }))
         console.log('handleChangeTitle')
     }
+
+    onChange = (editorState) => this.setState({ editorState });
 
     handleSubmitPage() {
         axios({
@@ -57,13 +56,16 @@ class Page extends Component {
     render(props) {
         return (
             <>
-                <div>
+                <div style={{ width: "95%" }}>
                     <input value={this.props.page.title} onChange={this.handleChangeTitle} />
-                    <Editor
-                        editorState={this.state.editorState}
-                        handleKeyCommand={this.handleKeyCommand}
-                        onChange={this.onChange}
-                    />
+                    <Card >
+                        <Editor
+                            editorState={this.state.editorState}
+                            wrapperClassName="demo-wrapper"
+                            editorClassName="editer-content"
+                            onEditorStateChange={this.onChange}
+                        />
+                    </Card>
                 </div>
 
                 <Sidebare>

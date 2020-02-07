@@ -22,14 +22,19 @@
 
 
 module.exports = {
-
     development: {
         client: 'mysql',
         connection: {
             host: 'localhost',
             database: 'reactwp',
             user: 'root',
-            password: ''
+            password: 'root'
+        },
+        migrations: {
+            directory: 'migrations'
+        },
+        seeds: {
+            directory: 'seeds'
         }
     },
 
@@ -39,7 +44,7 @@ module.exports = {
             host: 'localhost',
             database: 'reactwp',
             user: 'root',
-            password: ''
+            password: 'root'
         },
         pool: {
             min: 2,
@@ -56,7 +61,7 @@ module.exports = {
             host: 'localhost',
             database: 'reactwp',
             user: 'root',
-            password: ''
+            password: 'root'
         },
         pool: {
             min: 2,

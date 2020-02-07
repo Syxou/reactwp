@@ -3,6 +3,8 @@ const router = express.Router();
 const knex = require('../../knex/knex')
 const Pages = require('./pages')
 
+var slugify = require('slugify')
+
 
 router.get('/', function (req, res, next) {
     Pages.query()

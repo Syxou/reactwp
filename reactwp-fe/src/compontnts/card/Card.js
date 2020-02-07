@@ -13,7 +13,7 @@ class Card extends Component {
             <div
                 className="card"
                 style={{
-                    backgroundImage: this.props.bg,
+                    background: this.props.bg,
                     padding: this.props.padding
                 }}
             >

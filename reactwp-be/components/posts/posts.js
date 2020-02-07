@@ -9,6 +9,9 @@ router.get('/', function (req, res, next) {
         .then(users => {
             res.json(users)
         })
+        .catch(err => {
+            res.json(err)
+        })
 })
 
 router.post('/add/', function (req, res, next) {

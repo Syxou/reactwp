@@ -23,10 +23,10 @@ async function createSchema() {
 }
 
 // createSchema()
-//     .then(() => knex.destroy())
-//     .catch(err => {
-//         console.error(err);
-//         return knex.destroy();
-//     });
+    // .then(() => knex.destroy())
+    // .catch(err => {
+    //     console.error(err);
+    //     return knex.destroy();
+    // });
 
 module.exports = User;
