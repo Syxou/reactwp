@@ -26,7 +26,7 @@ router.get('/:id', function (req, res, next) {
 /**
  * add post (page) to db. 
  * body - ajax object page
- */
+*/
 
 router.post('/add', function (req, res) {
     const page = req.body
@@ -73,17 +73,17 @@ router.post('/delete', function (req, res) {
 })
 
 router.post('/changes/', function (req, res) {
-    const page = req.body;
-    console.log(page)
+    const data = req.body;
+    console.log(data)
     Pages.query()
-        .update({ title: page.title })
-        .where('id', page.id)
+        .update({ title: data.page.title })
+        .where('id', data.page.id)
         .catch(err => {
             console.log(err)
         })
     Pages.query()
         .then(pages => {
-            res.json(pages.filter(pages => parseInt(pages.id) === parseInt(page.id)))
+            res.json(pages.filter(pages => parseInt(pages.id) === parseInt(data.page.id)))
         })
 })
 

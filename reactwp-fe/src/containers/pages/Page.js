@@ -22,7 +22,11 @@ class Page extends Component {
             editorState: EditorState.createEmpty(),
             redirect: false,
         };
-        this.onChange = editorState => this.setState({ editorState });
+
+        this.onChange = editorState => {
+            this.setState({ editorState });
+            console.log()
+        }
 
         this.handleChangeTitle = this.handleChangeTitle.bind(this);
         this.handleSubmitPage = this.handleSubmitPage.bind(this);
@@ -31,7 +35,6 @@ class Page extends Component {
 
     componentDidMount() {
         const id = this.props.match.params.id;
-        console.log(id)
         this.props.dispatch(fetchPageItem(id))
     }
 
@@ -46,7 +49,10 @@ class Page extends Component {
         axios({
             method: 'post',
             url: '/pages/changes/',
-            data: this.props.page
+            data: {
+                page: this.props.page,
+                data_page: convertToRaw(this.state.editorState.getCurrentContent())
+            }
         })
             .then((res) => { console.log(res) })
             .catch(function (error) {
@@ -73,6 +79,7 @@ class Page extends Component {
 
         return (
             <>
+                {console.log(this.state.editorState)}
                 <div style={{ width: "95%" }}>
                     <input className="pageTitle" value={this.props.page.title} onChange={this.handleChangeTitle} />
                     <Card >

@@ -29,6 +29,7 @@ router.post('/add', function (req, res) {
             res.json(err)
         })
 })
+router.post()
 
 
 module.exports = router
