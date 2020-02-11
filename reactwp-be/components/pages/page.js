@@ -49,7 +49,7 @@ router.post('/trash', function (req, res) {
     const page = req.body
     console.log(page)
     Pages.query()
-        .update({ state: 'publish' })
+        .update({ state: 'trash' })
         .where('id', page.id)
         .then(() => {
             res.sendStatus(200)

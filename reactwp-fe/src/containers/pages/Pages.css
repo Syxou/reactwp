@@ -4,3 +4,43 @@
     border-radius: 5px;
     padding: 30px;
 }
+
+.pageTitle {
+    padding: 15px 5px;
+    margin: 20px;
+    background-color: transparent;
+    border: 0;
+    font-size: 1.5rem;
+}
+
+.pageTitle:focus {
+    outline: 0;
+}
+
+.buttonSave {
+    margin: 50px 10px;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+button {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 15px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    padding: 14px 19px;
+    cursor: pointer;
+    border: 0;
+    background: linear-gradient(180deg, #679CF6 0%, #4072EE 100%);
+    border-radius: 5px;
+    transition: all .3s ease;
+}
+
+button:focus,
+button:hover {
+    outline: none;
+    box-shadow: 0px 5px 15px #ACB2C1;
+}

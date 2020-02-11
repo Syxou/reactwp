@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import { Button } from 'antd';
+import { Link } from 'react-router-dom'
 import Listing from '../../compontnts/listing/Listing'
-
 import { fetchPages } from '../../actions/actions'
-
+import Sidebare from '../../compontnts/sidebar/Sidebar'
 import './Pages.css';
 
 class Pages extends Component {
@@ -17,13 +18,21 @@ class Pages extends Component {
             return (<Listing key={i} data={page} />);
         });
         return (
-            <div>
-                <h2>Pages</h2>
-                <div className="cardList">
-                    {this.props.pages ? pageItems : 'pageItems'}
+            <>
+                <div>
+                    <h2>Pages</h2>
+                    <div className="cardList">
+                        {this.props.pages ? pageItems : 'pageItems'}
+                    </div>
                 </div>
-                
-            </div>
+
+
+                <Sidebare>
+                    <Link to="/admin/new/page">
+                        <Button type="primary">New Page</Button>
+                    </Link>
+                </Sidebare>
+            </>
         );
     }
 }
