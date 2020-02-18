@@ -1,46 +1,19 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+
 import './Listing.css'
-
-const Card = styled.div`
-    display: flex;
-    padding: 10px;
-    border-bottom: solid 1px #EBEDF4;
-    align-items: center;
-    img{
-        width: 40px;
-        height: 40px;
-        border-radius: 100%;
-        background: #D8D8D8;
-        margin-right: 10px;
-    }
-    p{
-        margin:0;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 14px;
-        line-height: 16px;
-        color: #31394D;
-    }
-    span{
-        font-size: 12px;
-        color: #748AA1;
-    }
-`
-
+// import {PropTypes } from 'prop-types'
+/**
+ * TODO link /page/ add from props
+ */
 
 class Listing extends Component {
     render() {
         return (
-            <Card>
-                <img src="" alt="" />
-                <div>
-                    <p>{this.props.name}</p>
-                    <span>{this.props.status}</span>
-                </div>
-                <Link to={this.props.link}>{this.props.textLink}</Link>
-            </Card >
+            <div>
+                <div>{this.props.data.title} <span style={{color: 'gray', fontSize: '12px'}}>{this.props.data.state}</span></div>
+                <div><Link to={`/admin/page/${this.props.data.id}`}>Edit</Link></div>
+            </div>
         );
     }
 }

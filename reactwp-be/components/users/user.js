@@ -8,7 +8,6 @@ router.get('/', function (req, res, next) {
     User.query()
         .then(users => {
             res.json(users)
-            console.log(users)
         })
 })
 

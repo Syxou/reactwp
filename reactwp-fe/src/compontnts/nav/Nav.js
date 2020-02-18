@@ -19,14 +19,14 @@ class Nav extends Component {
                         </NavLink>
                     </div>
                     <div>
-                        <NavLink
+                        <NavLink exact
                             activeClassName="navbar__link--active"
                             className="navbar__link" to="/admin/user">
                             <Icon style={{ fontSize: '21px' }} type="user" />
                         </NavLink>
                     </div>
                     <div>
-                        <NavLink
+                        <NavLink exact
                             activeClassName="navbar__link--active"
                             className="navbar__link" to="/admin/pages">
                             <Icon style={{ fontSize: '21px' }} type="file" />
