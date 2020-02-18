@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const knex = require('../../knex/knex')
 const Pages = require('./pages')
+const PostData = require('../postData/model')
 
 var slugify = require('slugify')
 
@@ -73,14 +74,24 @@ router.post('/delete', function (req, res) {
 })
 
 router.post('/changes/', function (req, res) {
-    const page = req.body;
-    console.log(page)
+    const page = req.body.page;
+    const content = req.body.content;
+
     Pages.query()
         .update({ title: page.title })
         .where('id', page.id)
         .catch(err => {
             console.log(err)
         })
+
+    PostData.query()
+        .where('post_id', page.id)
+        .where('post_type', 'content') 
+        .update({ post_content: JSON.stringify(content) })
+        .catch(err => {
+            console.log(err)
+        })
+            
     Pages.query()
         .then(pages => {
             res.json(pages.filter(pages => parseInt(pages.id) === parseInt(page.id)))

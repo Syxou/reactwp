@@ -31,4 +31,17 @@ router.post('/add', function (req, res) {
 })
 
 
+router.get('/:id', function (req, res) {
+    const id = parseInt(req.params.id)
+    console.log(id)
+    PostData.query()
+        .where('post_id', id)
+        .where('post_type', 'content')
+        .then( content =>{
+            res.json(content)
+        })
+
+})
+
+
 module.exports = router

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
-import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
+import { EditorState, createWithContent, convertFromRaw, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
@@ -11,62 +11,78 @@ import axios from 'axios'
 
 import Card from '../../compontnts/card/Card'
 import Sidebare from '../../compontnts/sidebar/Sidebar'
-import { fetchPageItem, setTitlePage } from '../../actions/actions'
-
 
 class Page extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             editorState: EditorState.createEmpty(),
             redirect: false,
+            page: {},
         };
         this.onChange = editorState => this.setState({ editorState });
 
-        this.handleChangeTitle = this.handleChangeTitle.bind(this);
-        this.handleSubmitPage = this.handleSubmitPage.bind(this);
-        this.handleDeletePage = this.handleDeletePage.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         const id = this.props.match.params.id;
         console.log(id)
-        this.props.dispatch(fetchPageItem(id))
+        // this.props.dispatch(fetchPageItem(id))
+        await fetch(`/pages/${id}`)
+            .then((res) => res.json())
+            .then((data) => this.setState({ page: data[0] }))
+            .catch((e) => console.log(e))
+
+        await fetch(`/postdata/${id}`)
+            .then((res) => res.json())
+            .then((data) => {
+                this.setState({
+                    editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(data[0].post_content)))
+                })
+            })
+        console.log(this.state.editorState)
     }
 
-    handleChangeTitle(event) {
-        this.props.dispatch(setTitlePage({ ...this.props.page, title: event.target.value }))
-        console.log('handleChangeTitle')
+    handleChangeTitle = (event) => {
+        let value = event.target.value
+        this.setState({
+            page: {
+                ...this.state.page,
+                title: value
+            }
+        });
     }
 
     onChange = (editorState) => this.setState({ editorState });
 
-    handleSubmitPage() {
+    handleSubmitPage = () => {
         axios({
             method: 'post',
             url: '/pages/changes/',
-            data: this.props.page
+            data: {
+                page: this.state.page,
+                content: convertToRaw(this.state.editorState.getCurrentContent())
+            }
         })
             .then((res) => { console.log(res) })
             .catch(function (error) {
                 console.log(error);
             });
     }
-    handleDeletePage() {
+
+    handleDeletePage = () => {
         axios({
             method: 'post',
             url: '/pages/trash/',
-            data: this.props.page
+            data: this.state.page
         })
             .then((() => { this.setState({ redirect: true }) }))
             .catch((err) => { console.log(err) })
     }
 
     render(props) {
-
+        
         const { redirect } = this.state;
-
         if (redirect) {
             return <Redirect to="/admin/pages" />;
         }
@@ -74,7 +90,7 @@ class Page extends Component {
         return (
             <>
                 <div style={{ width: "95%" }}>
-                    <input className="pageTitle" value={this.props.page.title} onChange={this.handleChangeTitle} />
+                    <input className="pageTitle" value={this.state.page.title} onChange={this.handleChangeTitle} />
                     <Card >
                         <Editor
                             editorState={this.state.editorState}
@@ -89,7 +105,7 @@ class Page extends Component {
                     <Card
                         bg='linear-gradient(180deg, #679CF6 0%, #4072EE 100%)'
                     >
-                        <p style={{ color: '#ffffff' }}><span>Status:</span>{" " + this.props.page.state}</p>
+                        <p style={{ color: '#ffffff' }}><span>Status:</span>{" " + this.state.page.state}</p>
                         <p></p>
                     </Card>
                     <Button className="buttonSave" type="primary" icon="save" size={'large'} onClick={this.handleSubmitPage} />
