@@ -45,7 +45,7 @@ class Page extends Component {
             })
         console.log(this.state.editorState)
     }
-
+        
     handleChangeTitle = (event) => {
         let value = event.target.value
         this.setState({

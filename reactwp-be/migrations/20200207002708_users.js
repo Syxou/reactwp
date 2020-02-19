@@ -13,7 +13,7 @@ exports.up = function (knex) {
                 .string("passwodr")
                 .notNullable()
             table
-                .string("type")
+                .bolean("admin")
                 .notNullable()
             table
                 .string("email")

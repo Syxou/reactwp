@@ -16,6 +16,7 @@
 //         }
 //     }
 // }
+
 module.exports = {
     development: {
         client: 'mysql',
@@ -23,7 +24,7 @@ module.exports = {
             host: 'localhost',
             database: 'reactwp',
             user: 'root',
-            password: 'root'
+            password: ''
         },
         migrations: {
             directory: 'migrations'

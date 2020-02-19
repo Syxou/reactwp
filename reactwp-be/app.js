@@ -7,6 +7,7 @@ const pagesRoute = require('./components/pages/page');
 const users = require('./components/users/user')
 const posts = require('./components/posts/posts')
 const postData = require('./components/postData/router')
+const auth = require('./components/users/auth/auth')
 
 let app = express();
 const PORT = process.env.PORT || 5000;
