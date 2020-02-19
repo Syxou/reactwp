@@ -8,30 +8,30 @@ class Nav extends Component {
         return (
             <nav className="nav">
                 <div className="menu">
-                    <div>
-                        <NavLink
-                            exact
-                            activeClassName="navbar__link--active"
-                            className="navbar__link"
-                            to="/admin/"
-                        >
-                            <Icon style={{ fontSize: '21px' }} type="home" />
-                        </NavLink>
-                    </div>
-                    <div>
-                        <NavLink exact
-                            activeClassName="navbar__link--active"
-                            className="navbar__link" to="/admin/user">
-                            <Icon style={{ fontSize: '21px' }} type="user" />
-                        </NavLink>
-                    </div>
-                    <div>
-                        <NavLink exact
-                            activeClassName="navbar__link--active"
-                            className="navbar__link" to="/admin/pages">
-                            <Icon style={{ fontSize: '21px' }} type="file" />
-                        </NavLink>
-                    </div>
+
+                    <NavLink
+                        exact
+                        activeClassName="navbar__link--active"
+                        className="navbar__link"
+                        to="/admin/"
+                    >
+                        <Icon style={{ fontSize: '21px' }} type="home" />
+                    </NavLink>
+
+
+                    <NavLink 
+                        activeClassName="navbar__link--active"
+                        className="navbar__link" to="/admin/users/">
+                        <Icon style={{ fontSize: '21px' }} type="user" />
+                    </NavLink>
+
+
+                    <NavLink 
+                        activeClassName="navbar__link--active"
+                        className="navbar__link" to="/admin/pages">
+                        <Icon style={{ fontSize: '21px' }} type="file" />
+                    </NavLink>
+
                 </div>
             </nav>
         );

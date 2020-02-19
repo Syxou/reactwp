@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const knex = require('../../knex/knex')
 const Pages = require('./pages')
+const PostData = require('../postData/model')
 
 var slugify = require('slugify')
 
@@ -26,7 +27,7 @@ router.get('/:id', function (req, res, next) {
 /**
  * add post (page) to db. 
  * body - ajax object page
-*/
+ */
 
 router.post('/add', function (req, res) {
     const page = req.body
@@ -37,7 +38,20 @@ router.post('/add', function (req, res) {
             state: page.state,
             slug: page.slug,
             date_modifate: new Date()
-        }).then(() => {
+        })
+        .then(() => {
+            PostData.query()
+                .insert({
+                    post_content: JSON.stringify(content),
+                    post_id: page.id,
+                    post_type: 'content',
+                    state: 'draft'
+                })
+                .catch(err => {
+                    console.log(err)
+                })
+        })
+        .then(() => {
             res.sendStatus(200)
         })
         .catch(err => {
@@ -47,16 +61,26 @@ router.post('/add', function (req, res) {
 
 router.post('/trash', function (req, res) {
     const page = req.body
+    if (req.body.state === 'trash') {
+        Pages.query()
+            .deleteById(page.id)
+            .then(() => {
+                res.sendStatus(200)
+            })
+            .catch(err => {
+                res.json(err.message)
+            })
+    } else
+        Pages.query()
+            .update({ state: 'trash' })
+            .where('id', page.id)
+            .then(() => {
+                res.sendStatus(200)
+            })
+            .catch(err => {
+                res.json(err.message)
+            })
     console.log(page)
-    Pages.query()
-        .update({ state: 'trash' })
-        .where('id', page.id)
-        .then(() => {
-            res.sendStatus(200)
-        })
-        .catch(err => {
-            res.json(err.message)
-        })
 })
 
 router.post('/delete', function (req, res) {
@@ -73,17 +97,27 @@ router.post('/delete', function (req, res) {
 })
 
 router.post('/changes/', function (req, res) {
-    const data = req.body;
-    console.log(data)
+    const page = req.body.page;
+    const content = req.body.content;
+
     Pages.query()
-        .update({ title: data.page.title })
-        .where('id', data.page.id)
+        .update({ title: page.title })
+        .where('id', page.id)
         .catch(err => {
             console.log(err)
         })
+
+    PostData.query()
+        .where('post_id', page.id)
+        .where('post_type', 'content')
+        .update({ post_content: JSON.stringify(content) })
+        .catch(err => {
+            console.log(err)
+        })
+
     Pages.query()
         .then(pages => {
-            res.json(pages.filter(pages => parseInt(pages.id) === parseInt(data.page.id)))
+            res.json(pages.filter(pages => parseInt(pages.id) === parseInt(page.id)))
         })
 })
 

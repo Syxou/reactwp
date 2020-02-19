@@ -1,0 +1,109 @@
+.login-form {
+    max-width: 300px;
+}
+
+.login-form-forgot {
+    float: right;
+}
+
+.login-form-button {
+    width: 100%;
+}
+
+body {
+    background-color: #F2F2F2;
+}
+
+.loginForm_wrap {
+    position: absolute;
+    width: max-content;
+    height: max-content;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    z-index: 0;
+    background: white;
+    padding: 20px;
+    box-shadow: 0px 10px 20px rgba(31, 32, 65, 0.05);
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+input {
+    padding: 20px 30px !important;
+}
+
+.ant-input-affix-wrapper .ant-input-prefix {
+    left: 12px;
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+    background-color: #BC9CFF;
+    border-color: #BC9CFF;
+}
+
+.ant-checkbox-wrapper:hover .ant-checkbox-inner,
+.ant-checkbox:hover .ant-checkbox-inner,
+.ant-checkbox-input:focus+.ant-checkbox-inner {
+    border-color: #BC9CFF;
+}
+
+.ant-checkbox-wrapper:hover .ant-checkbox-inner,
+.ant-checkbox:hover .ant-checkbox-inner,
+.ant-checkbox-input:focus+.ant-checkbox-inner {
+    border-color: #BC9CFF;
+}
+
+/* Primary Gradient */
+.primaryButton {
+    position: relative;
+    background: linear-gradient(180deg, #BC9CFF 0%, #8BA4F9 100%);
+    border-radius: 22px;
+    width: 100%;
+    height: max-content;
+    padding: 10px;
+    margin: 10px auto;
+    border: 0;
+}
+
+.primaryButton span {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 14px;
+    line-height: 15px;
+    text-transform: uppercase;
+    color: #FFFFFF;
+}
+
+.primaryButton:hover,
+.primaryButton:focus,
+.primaryButton:focus span,
+.primaryButton:active span,
+.primaryButton:hover span {
+    color: #BC9CFF;
+    border: 0;
+    box-shadow: none;
+}
+
+.primaryButton:hover::before {
+    box-shadow: 0 0 7px;
+}
+
+.primaryButton::before {
+    transition: box-shadow 0.3s ease;
+    display: block;
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    margin: -3px;
+    border-radius: inherit;
+    background: linear-gradient(180deg, #BC9CFF 0%, #8BA4F9 100%);
+    border-radius: 22px;
+    opacity: 1;
+}

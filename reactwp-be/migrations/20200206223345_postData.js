@@ -10,13 +10,16 @@ exports.up = function (knex) {
                 .notNullable()
             table
                 .text("post_content")
-                .notNullable()
             table
                 .string("data_type")
                 .notNullable()
             table
+                .string("post_type")
+                .notNullable()
+            table
                 .string("post_date")
                 .notNullable()
+
         })
     ])
 };

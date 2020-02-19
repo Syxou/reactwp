@@ -65,7 +65,7 @@ class NewPage extends Component {
         const { redirect } = this.state;
 
         if (redirect) {
-            return <Redirect to="/admin/pages" />;
+            return <Redirect to="/admin/pages/" />;
         }
         return (
             <>
