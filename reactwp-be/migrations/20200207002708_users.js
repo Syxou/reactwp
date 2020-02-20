@@ -10,14 +10,19 @@ exports.up = function (knex) {
                 .string("name")
                 .notNullable()
             table
-                .string("passwodr")
+                .string("username")
                 .notNullable()
             table
-                .bolean("admin")
+                .string("password")
+                .notNullable()
+            table
+                .boolean("admin")
                 .notNullable()
             table
                 .string("email")
                 .notNullable()
+            table
+                .boolean("verified")
             table
                 .string("date_create")
                 .notNullable()

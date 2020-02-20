@@ -5,29 +5,29 @@ Model.knex(knex);
 
 class User extends Model {
 
-    constructor(name, username, email, password, admin, verified) {
-        this.name = name
-        this.username = username
-        this.email = email
-        this.password = password
-        this.admin = admin
-        this.verified = verified
-    }
+    // constructor(name, username, email, password, admin, verified) {
+    //     this.name = name
+    //     this.username = username
+    //     this.email = email
+    //     this.password = password
+    //     this.admin = admin
+    //     this.verified = verified
+    // }
 
     static get tableName() {
         return 'users'
     }
 }
 
-function save(){
+function save(name, username, email, password, admin, verified) {
     User.query()
         .insert({
-            name: this.name,
-            username: this.username,
-            email: this.email,
-            password: this.password,
-            admin: this.admin,
-            verified: this.verified,
+            name: name,
+            username: username,
+            email: email,
+            password: password,
+            admin: admin,
+            verified: verified,
             data_registred: new Date()
         })
         .then(() => {

@@ -1,4 +1,7 @@
 var faker = require('faker');
+const bcrypt = require('bcrypt');
+
+// 
 
 exports.seed = function (knex) {
   // Deletes ALL existing entries
@@ -7,9 +10,29 @@ exports.seed = function (knex) {
       // Inserts seed entries
       return knex('users').insert([
         {
-          name: faker.name.firstName(),
-          passwodr: faker.internet.password(),
-          type: 'admin',
+          name: faker.name.firstName() + " " + faker.name.lastName(),
+          username: "syxou",
+          password: bcrypt.hashSync("!Sun12345", 10),
+          admin: true,
+          verified: true,
+          email: faker.internet.email(),
+          date_create: faker.date.past(),
+        },
+        {
+          name: faker.name.firstName() + " " + faker.name.lastName(),
+          username: faker.finance.accountName(),
+          password: bcrypt.hashSync(faker.internet.password(), 10),
+          admin: faker.random.boolean(),
+          verified: faker.random.boolean(),
+          email: faker.internet.email(),
+          date_create: faker.date.past(),
+        },
+        {
+          name: faker.name.firstName() + " " + faker.name.lastName(),
+          username: faker.finance.accountName(),
+          password: bcrypt.hashSync(faker.internet.password(), 10),
+          admin: faker.random.boolean(),
+          verified: faker.random.boolean(),
           email: faker.internet.email(),
           date_create: faker.date.past(),
         },
