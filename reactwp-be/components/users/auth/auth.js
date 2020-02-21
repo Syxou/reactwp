@@ -4,16 +4,21 @@ const router = express.Router();
 const knex = require('../../../knex/knex')
 const User = require('../model')
 
-function generateToken(user) {
+module.exports = generateToken = (user) => {
+    var id = user.id
+    console.log(user)
     var u = {
         name: user.name,
         username: user.username,
         admin: user.admin,
-        _id: user._id.toString(),
-        image: user.image
+        _id: user.id.toString()
+        // image: user.image
     };
 
     return token = jwt.sign(u, process.env.JWT_SEKRET,
         { expiresIn: 60 * 60 * 24 });
 }
 
+
+
+// exports.generateToken = generateToken;

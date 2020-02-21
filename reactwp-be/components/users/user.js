@@ -4,7 +4,7 @@ const knex = require('../../knex/knex')
 const User = require('./model')
 const bcrypt = require('bcrypt');
 
-const { generateToken } = require('./auth/auth')
+const generateToken = require('./auth/auth')
 
 router.get('/', function (req, res, next) {
     User.query()
@@ -38,6 +38,7 @@ router.post('/signup/', function (req, res, next) {
     var hash = bcrypt.hashSync(body.password.trim(), 10);
 
     var user = {
+        _id: body.name.id,
         name: body.name.trim(),
         username: body.username.trim(),
         email: body.email.trim(),
@@ -73,7 +74,7 @@ router.post('/signin', async function (req, res) {
                 message: "Username or Passwoerd is Wrong"
             })
         }
-        var token = generateToken(user);
+        var token = generateToken(user[0]);
         userClean = {
             name: user[0].name.trim(),
             username: user[0].username.trim(),
