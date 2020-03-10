@@ -17,7 +17,7 @@ function App() {
     <Provider store={store}>
       <Router>
         <Switch>
-          <Route exact path="/login" component={Login} />
+          <Route exact path="/admin/login" component={Login} />
           <div className="App">
             <div>
               <Nav />
@@ -26,6 +26,9 @@ function App() {
               <Routes />
             </div>
           </div>
+          <Route>
+            <h1>404</h1>
+          </Route>
         </Switch>
       </Router>
     </Provider >

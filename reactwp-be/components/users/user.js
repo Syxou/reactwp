@@ -1,90 +1,114 @@
 const express = require('express');
 const router = express.Router();
-const knex = require('../../knex/knex')
 const User = require('./model')
 const bcrypt = require('bcrypt');
+const { generateToken } = require('./auth/auth')
 
-const generateToken = require('./auth/auth')
-
-router.get('/', function (req, res, next) {
+router.get('/', function (req, res) {
     User.query()
         .then(users => {
-            res.json(users)
             console.log(users)
+            res.json(users)
         })
 })
 
-router.post('/add/', function (req, res, nexts) {
-    const user = req.body;
-    console.log(user)
+router.get('/:id', function (req, res) {
+    const id = parseInt(req.params.id)
+    User.query()
+        .findById(id)
+        .then(user => {
+            let userClear = {
+                id: user.id,
+                name: user.name,
+                username: user.username,
+                admin: user.admin,
+                email: user.email,
+                state: user.state,
+                image: '',
+                verified: user.verified,
+                date_create: user.date_create,
+            }
+            res.json(userClear)
+        })
+        .catch(() => {
+            res.sendStatus(404)
+        })
+})
+
+router.post('/add', (req, res) => {
+    const body = req.body
+    console.log(body)
     User.query()
         .insert({
-            name: user.name,
-            type: user.type,
-            email: user.email,
-            data_registred: new Date()
+            name: body.name,
+            username: body.username,
+            password: bcrypt.hashSync(body.password, 10),
+            admin: body.admin,
+            verified: false,
+            email: body.email,
+            date_create: new Date(),
         })
-        .then(() => {
-            res.sendStatus(200)
+        .then(req => {
+            return res.sendStatus(201).json({ id: req.user.id })
         })
         .catch(err => {
-            console.log(err)
+            return res.sendStatus(404).json(err.message)
         })
 })
 
-// Signup Route
-router.post('/signup/', function (req, res, next) {
-    var body = req.body;
-    var hash = bcrypt.hashSync(body.password.trim(), 10);
-
-    var user = {
-        _id: body.name.id,
-        name: body.name.trim(),
-        username: body.username.trim(),
-        email: body.email.trim(),
-        password: hash,
-        admin: false,
-        isEmailVerified: false
-    }
-
-    User.save(function (err, user) {
-        if (err) throw err;
-        var token = generatetoken(user);
-        res.json({
-            user: user,
-            token: token
+router.post('/delete', (req, res) => {
+    const id = parseInt(req.body.id)
+    console.log('delete');
+    User.query()
+        .deleteById(id)
+        .then((req) => {
+            console.log(req)
+            if (req === 1) {
+                return res.sendStatus(200)
+            }
+            res.sendStatus(404)
         })
-    })
+        .catch((err) => {
+            res.sendStatus(404).json(err.message)
+        })
 })
-
 
 router.post('/signin', async function (req, res) {
     const body = req.body
     console.log(body)
-    var user = await User
-        .query()
+    var user = []
+    const userQuery = await User.query()
         .where('username', body.username)
-    console.log(user[0])
+        .then((res, err) => {
+            console.log('user', res[0])
+            user = res;
+            console.log(err)
+        })
 
-    await bcrypt.compare(body.password, user[0].password, function (err, valid) {
-        console.log('asdasd')
+    console.log(user)
+    bcrypt.compare(body.password, user[0].password, function (err, valid) {
         if (!valid) {
-            return res.status(404).json({
+            return res.status(401).json({
                 errror: true,
                 message: "Username or Passwoerd is Wrong"
             })
         }
-        var token = generateToken(user[0]);
+        console.log(err)
+        let token = generateToken(user[0]);
+        console.log(token)
         userClean = {
             name: user[0].name.trim(),
             username: user[0].username.trim(),
             email: user[0].email.trim(),
-            admin: false,
+            admin: user[0].admin,
         }
-        res.json({
-            user: userClean,
-            token: token
-        })
+        console.log(userClean)
+
+        res.status(200)
+            .json({
+                user: userClean,
+                token: token
+            })
     })
 })
 

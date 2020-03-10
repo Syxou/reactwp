@@ -6,7 +6,9 @@ class Card extends Component {
 
     static defaultProps = {
         bg: '#ffffff',
-        padding: '30px'
+        padding: '30px',
+        margin: '10px 0',
+        width: 'inherit'
     }
     render() {
         return (
@@ -14,7 +16,9 @@ class Card extends Component {
                 className="card"
                 style={{
                     background: this.props.bg,
-                    padding: this.props.padding
+                    padding: this.props.padding,
+                    margin: this.props.margin,
+                    width: this.props.width
                 }}
             >
                 {this.props.children}

@@ -7,7 +7,7 @@ const PostData = require('../postData/model')
 var slugify = require('slugify')
 
 
-router.get('/', function (req, res, next) {
+router.get('/', function (req, res) {
     Pages.query()
         .then(pages => {
             res.json(pages)

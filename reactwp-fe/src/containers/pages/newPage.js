@@ -1,16 +1,18 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+
 import { Redirect } from 'react-router-dom';
-import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
+import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import { Button } from 'antd';
 import axios from 'axios';
+import Cookies from 'js-cookie'
 
 import Card from '../../compontnts/card/Card';
 import Sidebare from '../../compontnts/sidebar/Sidebar';
-import { fetchPageItem, setTitlePage } from '../../actions/actions';
+import { unsetUserToken } from '../../actions/actions';
+
 
 
 class NewPage extends Component {
@@ -50,14 +52,18 @@ class NewPage extends Component {
         }
         axios({
             method: 'post',
-            url: '/pages/add/',
-            data: data
+            url: '/admin/pages/add/',
+            data: data,
+            headers: {
+                'Authorization': 'Bearer ' + Cookies.get('token'),
+            },
         })
             .then(() => {
                 this.setState({ redirect: true })
             })
-            .catch(function (error) {
-                console.log(error);
+            .catch(error => {
+                if (error.response.status === 401)
+                    this.ptops.dispatch(unsetUserToken())
             });
     }
 

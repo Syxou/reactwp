@@ -9,9 +9,10 @@
 }
 
 .menu {
-    display: block;
+    display: inline-grid;
     width: 100%;
-    height: max-content;
+    height: 100%;
+    align-items: flex-start;
 }
 
 .navbar__link {
@@ -54,4 +55,19 @@
 
 .navbar__link--active i {
     color: #fff;
+}
+
+.menuBottom {
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+}
+
+.logOut {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    margin: 10px auto;
+    color: white;
 }

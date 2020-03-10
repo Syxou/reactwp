@@ -2,15 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 
-import { EditorState, createWithContent, convertFromRaw, convertToRaw } from 'draft-js';
+import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import { Button } from 'antd';
 import axios from 'axios'
+import Cookies from 'js-cookie'
 
 import Card from '../../compontnts/card/Card'
 import Sidebare from '../../compontnts/sidebar/Sidebar'
+import { unsetUserToken } from '../../actions/actions'
 
 class Page extends Component {
     constructor(props) {
@@ -28,24 +30,31 @@ class Page extends Component {
         const id = this.props.match.params.id;
         console.log(id)
         // this.props.dispatch(fetchPageItem(id))
-        await fetch(`/pages/${id}`)
-            .then((res) => res.json())
-            .then((data) => this.setState({ page: data[0] }))
-            .catch((e) => console.log(e))
+        await axios({
+            method: 'get',
+            url: `/admin/pages/${id}`,
+            headers: {
+                'Authorization': 'Bearer ' + Cookies.get('token'),
+            }
+        })
+            .then(res => this.setState({ page: res.data[0] }))
+            .catch(error => {
+                if (error.response.status === 401) {
+                    this.props.dispatch(unsetUserToken())
+                }
+            })
 
-        await fetch(`/postdata/${id}`)
-            .then((res) => res.json())
-            .then((data) => {
-                this.setState({
-                    editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(data[0].post_content)))
-                })
-            })
-            .catch(err => {
-                console.log(err)
-            })
-        console.log(this.state.editorState)
+        await axios({
+            method: 'get',
+            url: `/admin/postdata/${id}`,
+            headers: {
+                'Authorization': 'Bearer ' + Cookies.get('token'),
+            },
+        })
+            .then(res => this.setState({ editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(res.data[0].post_content))) }))
+            .catch(err => console.log(err))
     }
-        
+
     handleChangeTitle = (event) => {
         let value = event.target.value
         this.setState({
@@ -61,7 +70,10 @@ class Page extends Component {
     handleSubmitPage = () => {
         axios({
             method: 'post',
-            url: '/pages/changes/',
+            url: '/admin/pages/changes/',
+            headers: {
+                'Authorization': 'Bearer ' + Cookies.get('token'),
+            },
             data: {
                 page: this.state.page,
                 content: convertToRaw(this.state.editorState.getCurrentContent())
@@ -76,8 +88,11 @@ class Page extends Component {
     handleDeletePage = () => {
         axios({
             method: 'post',
-            url: '/pages/trash/',
-            data: this.state.page
+            url: '/admin/pages/trash/',
+            data: this.state.page,
+            headers: {
+                'Authorization': 'Bearer ' + Cookies.get('token'),
+            },
         })
             .then((() => { this.setState({ redirect: true }) }))
             .catch((err) => { console.log(err) })

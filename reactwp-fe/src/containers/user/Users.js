@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-
+import axios from 'axios';
+import { Link } from 'react-router-dom'
 import Listing from '../../compontnts/listing/Listing'
-
+import { connect } from "react-redux"
+import { unsetUserToken } from "../../actions/actions"
+import Cookies from 'js-cookie'
+import Sidebare from '../../compontnts/sidebar/Sidebar'
 class Users extends Component {
 
     constructor(props) {
@@ -10,17 +14,24 @@ class Users extends Component {
             users: []
         }
     }
-
-
     componentDidMount() {
-        fetch('/users/')
-            .then(res => res.json())
-            .then(data => this.setState({ users: data }))
-
+        axios({
+            method: 'get',
+            url: '/admin/users',
+            headers: {
+                'Authorization': 'Bearer ' + Cookies.get('token'),
+            }
+        })
+            .then(res => this.setState({ users: res.data }))
+            .catch(error => {
+                if (error.response.status === 401) {
+                    this.props.dispatch(unsetUserToken())
+                }
+            })
     }
 
-
     render() {
+        console.log(this.props)
         const getUsers = this.state.users.map((user, i) => (
             <Listing
                 key={i}
@@ -32,16 +43,20 @@ class Users extends Component {
         ))
         return (
             <>
-                {console.log(this.state.users)}
                 <div>
                     <h2>Users</h2>
                     <div className="cardList">
                         {this.state.users && getUsers}
                     </div>
                 </div>
+                <Sidebare>
+                    <Link to="/admin/users/new">
+                        <button type="primary">New Page</button>
+                    </Link>
+                </Sidebare>А
             </>
         );
     }
 }
 
-export default Users;
+export default connect()(Users);

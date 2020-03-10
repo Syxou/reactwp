@@ -19,8 +19,9 @@ exports.up = function (knex) {
                 .boolean("admin")
                 .notNullable()
             table
+                .string("state")
+            table
                 .string("email")
-                .notNullable()
             table
                 .boolean("verified")
             table
