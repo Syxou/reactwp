@@ -1,3 +1,5 @@
+
+
 exports.up = function (knex) {
     return Promise.all([
         knex.schema.createTable("post_data", table => {
@@ -19,7 +21,6 @@ exports.up = function (knex) {
             table
                 .string("post_date")
                 .notNullable()
-
         })
     ])
 };

@@ -6,10 +6,11 @@ const pagesRoute = require('../components/pages/page');
 const users = require('../components/users/user')
 const posts = require('../components/posts/posts')
 const postData = require('../components/postData/router')
+const rcf = require('../components/rcf/rcf')
 
 router.use('/', (req, res, next) => {
     if (req.originalUrl === "/admin/users/signin/") {
-        
+
     }
     else {
         var token = getTokenFromBearer(req)
@@ -30,6 +31,7 @@ router.use('/', (req, res, next) => {
 router.get('/', function (req, res) {
     res.send('now then admin');
 });
+router.use('/api/rcf', rcf)
 router.use('/pages', pagesRoute)
 router.use('/users', users)
 router.use('/posts', posts)

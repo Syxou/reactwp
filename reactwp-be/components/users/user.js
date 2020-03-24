@@ -7,7 +7,6 @@ const { generateToken } = require('./auth/auth')
 router.get('/', function (req, res) {
     User.query()
         .then(users => {
-            console.log(users)
             res.json(users)
         })
 })
@@ -19,6 +18,7 @@ router.get('/:id', function (req, res) {
         .then(user => {
             let userClear = {
                 id: user.id,
+                avatar: user.avatar,
                 name: user.name,
                 username: user.username,
                 admin: user.admin,
@@ -35,25 +35,55 @@ router.get('/:id', function (req, res) {
         })
 })
 
-router.post('/add', (req, res) => {
+router.post('/add', async (req, res) => {
     const body = req.body
     console.log(body)
-    User.query()
+
+    const user = User.query()
         .insert({
             name: body.name,
             username: body.username,
+            avatar: body.avatar,
             password: bcrypt.hashSync(body.password, 10),
             admin: body.admin,
             verified: false,
             email: body.email,
             date_create: new Date(),
         })
-        .then(req => {
-            return res.sendStatus(201).json({ id: req.user.id })
+        .then((result) => {
+            console.log(result)
+            res.json({ id: user.id })
         })
         .catch(err => {
-            return res.sendStatus(404).json(err.message)
+            console.log('err', err)
+            res.status(404).json(err.message)
         })
+})
+
+
+router.post('/chenge', (req, res) => {
+    const id = parseInt(req.body.id), body = req.body
+    console.log(body);
+
+    User.query()
+        .findById(id)
+        .patch({
+            name: body.name,
+            username: body.username,
+            avatar: body.avatar,
+            email: body.email,
+            admin: body.admin,
+            verified: body.verified,
+        })
+        .then(() => {
+            res.json({ error: false, message: "User has beed updated" })
+        })
+        .catch(error => {
+            console.log("error:     ", error)
+            res.json({ error: true, message: "Error" })
+        })
+
+
 })
 
 router.post('/delete', (req, res) => {
@@ -75,7 +105,6 @@ router.post('/delete', (req, res) => {
 
 router.post('/signin', async function (req, res) {
     const body = req.body
-    console.log(body)
     var user = []
     const userQuery = await User.query()
         .where('username', body.username)
@@ -84,8 +113,6 @@ router.post('/signin', async function (req, res) {
             user = res;
             console.log(err)
         })
-
-    console.log(user)
     bcrypt.compare(body.password, user[0].password, function (err, valid) {
         if (!valid) {
             return res.status(401).json({
@@ -93,9 +120,7 @@ router.post('/signin', async function (req, res) {
                 message: "Username or Passwoerd is Wrong"
             })
         }
-        console.log(err)
         let token = generateToken(user[0]);
-        console.log(token)
         userClean = {
             name: user[0].name.trim(),
             username: user[0].username.trim(),

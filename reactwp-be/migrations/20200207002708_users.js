@@ -13,6 +13,8 @@ exports.up = function (knex) {
                 .string("username")
                 .notNullable()
             table
+                .text("avatar")
+            table
                 .string("password")
                 .notNullable()
             table

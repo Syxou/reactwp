@@ -3,13 +3,6 @@ const router = express.Router();
 const knex = require('../../knex/knex')
 const PostData = require('./model')
 
-
-
-/**
- * need page/post id *
- *      datatype
- *      data
- */
 router.post('/add', function (req, res) {
     const postData = req.body;
     console.log(postData)
@@ -37,7 +30,7 @@ router.get('/:id', function (req, res) {
     PostData.query()
         .where('post_id', id)
         .where('post_type', 'content')
-        .then( content =>{
+        .then(content => {
             res.json(content)
         })
 
