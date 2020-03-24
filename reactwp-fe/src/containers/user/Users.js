@@ -14,6 +14,7 @@ class Users extends Component {
             users: []
         }
     }
+
     componentDidMount() {
         axios({
             method: 'get',
@@ -35,6 +36,7 @@ class Users extends Component {
         const getUsers = this.state.users.map((user, i) => (
             <Listing
                 key={i}
+                image={user.avatar}
                 name={user.name}
                 status={user.email}
                 link={`/admin/users/${user.id}`}
@@ -51,7 +53,7 @@ class Users extends Component {
                 </div>
                 <Sidebare>
                     <Link to="/admin/users/new">
-                        <button type="primary">New Page</button>
+                        <button type="primary">New user</button>
                     </Link>
                 </Sidebare>А
             </>

@@ -31,7 +31,7 @@ body {
     overflow: hidden;
 }
 
-input {
+.loginForm_wrap input {
     padding: 20px 30px !important;
 }
 

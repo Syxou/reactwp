@@ -94,7 +94,7 @@ class NewPage extends Component {
                         <p style={{ color: '#ffffff' }}><span>Status:</span>{" draft"}</p>
                         <p></p>
                     </Card>
-                    <Button className="buttonSave" type="primary" icon="save" size={'large'} onClick={this.handleSubmitPage} />
+                    <Button className="buttonSave" type="primary" SmileOutlined="save" size={'large'} onClick={this.handleSubmitPage} />
                 </Sidebare>
             </>
         );

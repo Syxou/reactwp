@@ -35,9 +35,17 @@ class Nav extends Component {
 
                         <NavLink
                             activeClassName="navbar__link--active"
-                            className="navbar__link" to="/admin/pages">
+                            className="navbar__link"
+                            to="/admin/pages">
                             <Icon style={{ fontSize: '21px' }} type="file" />
                         </NavLink>
+                        <NavLink
+                            activeClassName="navbar__link--active"
+                            className="navbar__link"
+                            to="/admin/rcf">
+                            <Icon style={{ fontSize: '21px' }} type="form" />
+                        </NavLink>
+
                     </div>
                     <div className="menuBottom">
                         <button className="logOut" onClick={this.hendleLogOut}><Icon type="logout" /></button>

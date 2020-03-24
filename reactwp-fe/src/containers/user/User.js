@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
 import styled from 'styled-components';
 import Card from '../../compontnts/card/Card';
 import Sidebare from '../../compontnts/sidebar/Sidebar';
-import { Icon } from 'antd';
+import { Icon, Button } from 'antd';
 import Cookies from 'js-cookie';
 import { unsetUserToken } from "../../actions/actions";
 
@@ -32,16 +33,6 @@ class User extends Component {
             })
     }
 
-    hendleDelete = () => {
-        axios({
-            method: 'post',
-            url: '/admin/users/delete/',
-            headers: {
-                'Authorization': 'Bearer ' + Cookies.get('token'),
-            },
-            data: { id: this.state.user.id }
-        })
-    }
 
     render() {
         return (
@@ -50,7 +41,7 @@ class User extends Component {
                     <div>
                         <h1>{this.state.user.name}</h1>
                         <Card>
-                            <UserImg src="" alt="" />
+                            <UserImg src={this.state.user.avatar} alt="" />
                             <UserName>{this.state.user.name}</UserName>
                             <MailLink href={`mailto:${this.state.user.email}`}>{this.state.user.email}</MailLink>
                         </Card>
@@ -65,8 +56,11 @@ class User extends Component {
                         <TextCard>Registration:{this.state.user.date_create}</TextCard>
                         <TextCard>Visibility: {this.state.user.state} </TextCard>
                     </Card>
-                    <button><Icon type="edit" /></button>
-                    <button onClick={this.hendleDelete}><Icon type="delete" /></button>
+
+                    <Link to={`/admin/users/edit/${this.props.match.params.id}`}>
+                        <Button onClick={this.hendleSave} shape="circle" icon="edit" />
+                    </Link>
+
                 </Sidebare>
             </>
         );
@@ -98,6 +92,7 @@ const UserImg = styled.img`
     box-sizing: border-box;
     box-shadow: 0px 10px 20px rgba(31, 32, 65, 0.1);
     border-radius: 48px;
+    object-fit: cover;
     width: 96px;
     height: 96px;
     margin: 0 auto;

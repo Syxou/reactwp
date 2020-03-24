@@ -66,7 +66,6 @@ class Page extends Component {
     }
 
     onChange = (editorState) => this.setState({ editorState });
-
     handleSubmitPage = () => {
         axios({
             method: 'post',
@@ -126,8 +125,8 @@ class Page extends Component {
                         <p style={{ color: '#ffffff' }}><span>Status:</span>{" " + this.state.page.state}</p>
                         <p></p>
                     </Card>
-                    <Button className="buttonSave" type="primary" icon="save" size={'large'} onClick={this.handleSubmitPage} />
-                    <Button className="buttonSave" type="primary" icon="delete" size={'large'} onClick={this.handleDeletePage} />
+                    <Button className="buttonSave" type="primary" SmileOutlined="save" size={'large'} onClick={this.handleSubmitPage} />
+                    <Button className="buttonSave" type="primary" SmileOutlined="delete" size={'large'} onClick={this.handleDeletePage} />
                 </Sidebare>
             </>
         );

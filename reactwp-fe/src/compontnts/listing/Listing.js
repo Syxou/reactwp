@@ -9,6 +9,7 @@ const Card = styled.div`
     border-bottom: solid 1px #EBEDF4;
     align-items: center;
     img{
+        object-fit: cover;
         width: 40px;
         height: 40px;
         border-radius: 100%;
@@ -34,7 +35,7 @@ class Listing extends Component {
     render() {
         return (
             <Card>
-                <img src="" alt="" />
+                <img src={this.props.image} alt="" />
                 <div>
                     <p>{this.props.name}</p>
                     <span>{this.props.status}</span>
