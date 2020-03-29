@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const knex = require('../../knex/knex')
-const Post = require('./model')
+const Post = require('../../models/post')
 
 
 router.get('/', function (req, res, next) {

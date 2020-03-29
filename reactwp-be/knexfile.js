@@ -27,10 +27,10 @@ module.exports = {
             password: 'root'
         },
         migrations: {
-            directory: 'migrations'
+            directory: 'src/migrations'
         },
         seeds: {
-            directory: 'seeds'
+            directory: 'src/seeds'
         }
     },
 

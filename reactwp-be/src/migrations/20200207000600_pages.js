@@ -1,7 +1,7 @@
 
 exports.up = function (knex) {
     return Promise.all([
-        knex.schema.createTable("pages", table => {
+        knex.schema.createTable("post", table => {
             table
                 .increments("id")
                 .unsigned()
@@ -17,12 +17,16 @@ exports.up = function (knex) {
             table
                 .string("date_modifate")
                 .notNullable()
+            table
+                .integer('user_id')
+            table
+                .string('post_type')
         })
     ])
 };
 
 exports.down = function (knex) {
     return Promise.all([
-        knex.schema.dropTableIfExists("pages")
+        knex.schema.dropTableIfExists("post")
     ])
 };

@@ -1,11 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const knex = require('../../knex/knex')
-const Pages = require('./pages')
+const Pages = require('../../models/post')
 const PostData = require('../postData/model')
 
 var slugify = require('slugify')
-
 
 router.get('/', function (req, res) {
     Pages.query()

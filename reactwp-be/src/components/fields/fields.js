@@ -1,7 +1,7 @@
 const express = require('express')
 const router = express.Router()
-const PostData = require('../postData/model')
-const Pages = require('../pages/pages')
+const Fields = require('../fields/fields')
+const Pages = require('../../models/pages')
 var slugify = require('slug-generator')
 
 router.get('/', (req, res) => {

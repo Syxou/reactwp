@@ -1,10 +1,10 @@
 
 exports.seed = function (knex) {
   // Deletes ALL existing entries
-  return knex('pages').del()
+  return knex('post').del()
     .then(function () {
       // Inserts seed entries
-      return knex('pages').insert([
+      return knex('post').insert([
         {
           title: 'Home',
           state: 'publish',
