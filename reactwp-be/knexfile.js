@@ -24,7 +24,7 @@ module.exports = {
             host: 'localhost',
             database: 'reactwp',
             user: 'root',
-            password: 'root'
+            password: ''
         },
         migrations: {
             directory: 'src/migrations'

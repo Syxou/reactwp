@@ -1,12 +1,12 @@
 const express = require('express')
 const router = express.Router()
-const Fields = require('../fields/fields')
+const Fields = require('../../models/fields')
 const Pages = require('../../models/pages')
 var slugify = require('slug-generator')
 
 router.get('/', (req, res) => {
-    PostData.query()
-        .where('post_type', 'like', 'cf_%')
+    Fields.query()
+        .where('slug', 'like', 'cf_%')
         // .withGraphFetched('pages')
         .then(post => {
             console.log(post)
@@ -24,27 +24,6 @@ router.get('/:id', (req, res) => {
             res.json(post[0])
         })
 })
-
-/**
- * * post_id      : post/page  id
- * // data_id      : rcf id
- * * post_content : json for rcf
- * * data_type    : rcf 
- * * post_type    : cf_<name rcf>
- * * post_date    : new date()
- */
-
-const PostDataValidation = (by, what) => {
-    var flag = true
-    PostData.query()
-        .where(by, what)
-        .then((data) => {
-            console.log(data)
-            flag = false
-        })
-        .catch()
-    return flag
-}
 
 router.post('/add', async (req, res, next) => {
     const body = req.body,
@@ -95,11 +74,11 @@ router.post('/update', async (req, res) => {
         })
         .then(data => {
             console.log(data)
-            res.status(300).send({ error: false, message: "Custom Fields were update" })
+            res.status(300).send({ error: false, message: "Custom fields have been updated." })
         })
         .catch(err => {
             console.log(err)
-            res.status(401).send({ error: true, message: err })
+            res.status(401).send({ error: true, message: 'Something went wrong' })
         })
 })
 

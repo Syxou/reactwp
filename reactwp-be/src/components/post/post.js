@@ -1,25 +1,37 @@
 const express = require('express');
+import Page from './../../../../reactwp-fe/src/containers/pages/Page';
 const router = express.Router();
-const knex = require('../../knex/knex')
-const Pages = require('../../models/post')
+// const knex = require('../../knex/knex')
+const Post = require('../../models/post')
 const PostData = require('../postData/model')
 
-var slugify = require('slugify')
+// var slugify = require('slugify')
 
 router.get('/', function (req, res) {
-    Pages.query()
-        .then(pages => {
-            res.json(pages)
+    Post.query()
+        .then(Post => {
+            res.json(Post)
         })
 })
 
-router.get('/:id', function (req, res, next) {
+router.get('/:id', function (req, res) {
     const id = parseInt(req.params.id)
-    Pages.query()
-        .then(pages => {
-            res.json(pages.filter(pages => pages.id === id))
+    Post.query()
+        .then(Post => {
+            res.json(Post.filter(Post => Post.id === id))
         })
+
+})
+
+router.get('/fields/:id', (req, res) => {
+    console.log('aaa')
+    const id = parseInt(req.body)
     console.log(id)
+    const post = Post.query().findById(id);
+    // console.log(post)
+    // const schema = await post
+    //     .$relatedQuery('schema')
+    // console.log(schema)
 })
 
 
@@ -31,7 +43,7 @@ router.get('/:id', function (req, res, next) {
 router.post('/add', function (req, res) {
     const page = req.body
     console.log(page)
-    Pages.query()
+    Post.query()
         .insert({
             title: page.title,
             state: page.state,
@@ -61,7 +73,7 @@ router.post('/add', function (req, res) {
 router.post('/trash', function (req, res) {
     const page = req.body
     if (req.body.state === 'trash') {
-        Pages.query()
+        Post.query()
             .deleteById(page.id)
             .then(() => {
                 res.sendStatus(200)
@@ -70,7 +82,7 @@ router.post('/trash', function (req, res) {
                 res.json(err.message)
             })
     } else
-        Pages.query()
+        Post.query()
             .update({ state: 'trash' })
             .where('id', page.id)
             .then(() => {
@@ -85,7 +97,7 @@ router.post('/trash', function (req, res) {
 router.post('/delete', function (req, res) {
     const page = req.body
     console.log(page)
-    Pages.query()
+    Post.query()
         .deleteById(page.id)
         .then(() => {
             res.sendStatus(200)
@@ -99,7 +111,7 @@ router.post('/changes/', function (req, res) {
     const page = req.body.page;
     const content = req.body.content;
 
-    Pages.query()
+    Post.query()
         .update({ title: page.title })
         .where('id', page.id)
         .catch(err => {
@@ -114,9 +126,9 @@ router.post('/changes/', function (req, res) {
             console.log(err)
         })
 
-    Pages.query()
-        .then(pages => {
-            res.json(pages.filter(pages => parseInt(pages.id) === parseInt(page.id)))
+    Post.query()
+        .then(Post => {
+            res.json(Post.filter(Post => parseInt(Post.id) === parseInt(page.id)))
         })
 })
 

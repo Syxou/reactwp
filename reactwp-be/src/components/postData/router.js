@@ -3,6 +3,10 @@ const router = express.Router();
 const knex = require('../../knex/knex')
 const PostData = require('./model')
 
+/**
+ * ! DEPRECATED
+ */
+
 router.post('/add', function (req, res) {
     const postData = req.body;
     console.log(postData)

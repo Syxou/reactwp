@@ -15,12 +15,14 @@ exports.up = function (knex) {
                 .string('slug')
             table
                 .integer('post_id')
+            table
+                .integer('fields_schema_id')
         })
     ])
 };
 
 exports.down = function (knex) {
-    return new Promise.all([
+    return  Promise.all([
         knex.schema.dropTableIfExists('fields')
     ])
 };

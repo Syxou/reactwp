@@ -1,20 +1,29 @@
-const { Model } = require('objection');
+const { Model, ref } = require('objection');
 const knex = require('../knex/knex')
+const Schema = require('./schema')
 
 Model.knex(knex);
 
 class Post extends Model {
+
     static get tableName() {
         return 'post'
     }
+
+    static relationMappings = {
+        schema: {
+            relation: Model.ManyTomanyRelation,
+            modelClass: Schema,
+            join: {
+                from: 'post.id',
+                through: {
+                    from: 'post_schema.posts_id',
+                    to: 'post_schema.schema_id'
+                },
+                to: 'fields_schema.id'
+            }
+        }
+    }
 }
-
-
-// createSchema()
-// .then(() => knex.destroy())
-// .catch(err => {
-//     console.error(err);
-//     return knex.destroy();
-// });
 
 module.exports = Post;

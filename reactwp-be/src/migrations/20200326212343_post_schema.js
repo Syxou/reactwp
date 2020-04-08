@@ -5,6 +5,10 @@ exports.up = function (knex) {
             table
                 .increments('id')
                 .primary();
+            table
+                .integer('post_id')
+            table
+                .integer('schema_id')
         })
     ])
 
