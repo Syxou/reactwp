@@ -4,6 +4,11 @@ const Schema = require('./schema')
 
 Model.knex(knex);
 
+/**
+ *              TABLE post
+ * id   title   state   slug    date_modifate   uset_id post_type
+ */
+
 class Post extends Model {
 
     static get tableName() {

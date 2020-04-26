@@ -126,6 +126,7 @@ router.post('/signin', async function (req, res) {
             username: user[0].username.trim(),
             email: user[0].email.trim(),
             admin: user[0].admin,
+            avatar: user[0].avatar
         }
         console.log(userClean)
 

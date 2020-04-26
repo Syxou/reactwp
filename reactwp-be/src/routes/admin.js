@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 var jwt = require('jsonwebtoken');
-const { getTokenFromBearer } = require('../components/users/auth/auth')
+const { getTokenFromBearer } = require('../components/users/auth/auth');
 const post = require('../components/post/post');
-const users = require('../components/users/user')
-const posts = require('../components/posts/posts')
-const postData = require('../components/postData/router')
-const fields = require('../components/fields/fields')
+const users = require('../components/users/user');
+const posts = require('../components/posts/posts');
+const postData = require('../components/postData/router');
+const fields = require('../components/fields/fields');
+const schema = require('../components/schema/schema');
 
 router.use('/', (req, res, next) => {
     if (req.originalUrl === "/admin/users/signin/") {
@@ -31,6 +32,8 @@ router.use('/', (req, res, next) => {
 router.get('/', function (req, res) {
     res.send('now then admin');
 });
+
+router.use('/api/fields/schema', schema)
 router.use('/api/rcf', fields)
 router.use('/pages', post)
 router.use('/users', users)

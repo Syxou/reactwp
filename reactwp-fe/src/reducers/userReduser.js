@@ -8,6 +8,7 @@ var initialState = {
         username: '',
         password: '',
         email: '',
+        avatar: '',
     },
 }
 

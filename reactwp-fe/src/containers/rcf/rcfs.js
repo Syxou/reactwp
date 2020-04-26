@@ -16,7 +16,7 @@ class rcf extends Component {
     componentDidMount() {
         axios({
             method: 'get',
-            url: '/admin/api/rcf/',
+            url: '/admin/api/fields/schema/',
             headers: {
                 'Authorization': 'Bearer ' + Cookies.get('token'),
             }
@@ -30,13 +30,13 @@ class rcf extends Component {
     }
 
     render() {
-        console.log(this.state.fields)
+        console.log("fields", this.state.fields)
         const getFIelds = this.state.fields.map((field, i) => (
             <Listing
                 key={i}
-                name={field.post_type}
-                status={field.post_date}
-                link={`/admin/rcf/${field.data_id}`}
+                name={field.name}
+                status={field.type}
+                link={`/admin/rcf/${field.id}`}
                 textLink={'View'}
             />
         ))
@@ -46,7 +46,6 @@ class rcf extends Component {
                 <div className="cardList">
                     {this.state.fields && getFIelds}
                 </div>
-
             </div>
         );
     }

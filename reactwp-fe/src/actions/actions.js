@@ -86,7 +86,6 @@ export function fetchPageItem(id) {
 }
 
 export function setTitlePage(page) {
-    console.log('aaa', page)
     return dispatch => dispatch(pageItemSubmit(page))
 }
 

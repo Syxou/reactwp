@@ -1,5 +1,4 @@
 const express = require('express');
-import Page from './../../../../reactwp-fe/src/containers/pages/Page';
 const router = express.Router();
 // const knex = require('../../knex/knex')
 const Post = require('../../models/post')

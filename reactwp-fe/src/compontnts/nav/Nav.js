@@ -3,19 +3,23 @@ import { NavLink, } from "react-router-dom";
 import { connect } from 'react-redux'
 import { Icon } from 'antd';
 import './Nav.css'
-
+import { Avatar } from 'antd';
 import { unsetUserToken } from '../../actions/actions'
+import styled from 'styled-components';
 
 class Nav extends Component {
 
     hendleLogOut = () => {
         this.props.dispatch(unsetUserToken())
     }
+
     render() {
+        console.log("user", this.props.user)
         return (
             <div className="nav">
                 <nav className="menu">
-                    <div >
+                    <div>
+            
                         <NavLink
                             exact
                             activeClassName="navbar__link--active"
@@ -55,6 +59,21 @@ class Nav extends Component {
         );
     }
 }
+
+
+const UserImg = styled.img`
+background: url();
+background - color: gray;
+box - sizing: border - box;
+box - shadow: 0px 10px 20px rgba(31, 32, 65, 0.1);
+border - radius: 48px;
+object - fit: cover;
+width: 96px;
+height: 96px;
+margin: 0 auto;
+display: block;
+border: 2px solid #FFFFFF;
+`
 
 const mapStateToProps = state => ({ user: state.user })
 
