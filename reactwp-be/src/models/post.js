@@ -1,6 +1,7 @@
 const { Model, ref } = require('objection');
-const knex = require('../knex/knex')
-const Schema = require('./schema')
+const knex = require('../knex/knex');
+const Schema = require('./schema');
+const Fields = require('./fields');
 
 Model.knex(knex);
 
@@ -26,6 +27,14 @@ class Post extends Model {
                     to: 'post_schema.schema_id'
                 },
                 to: 'fields_schema.id'
+            },
+        },
+        fields: {
+            relation: Model.BelongsToOneRelation,
+            modelClass: Fields,
+            join: {
+                from: 'post.id',
+                to: 'fields.post_id',
             }
         }
     }

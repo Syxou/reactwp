@@ -12,7 +12,8 @@ import Cookies from 'js-cookie'
 
 import Card from '../../compontnts/card/Card'
 import Sidebare from '../../compontnts/sidebar/Sidebar'
-import { unsetUserToken } from '../../actions/actions'
+import { unsetUserToken, fetchOnePageById, changePageTitle } from '../../actions/pageAction'
+import Fields from './fields/fields'
 
 class Page extends Component {
     constructor(props) {
@@ -21,28 +22,15 @@ class Page extends Component {
             editorState: EditorState.createEmpty(),
             redirect: false,
             page: {},
+            fields: []
         };
         this.onChange = editorState => this.setState({ editorState });
-
     }
 
     async componentDidMount() {
         const id = this.props.match.params.id;
-        console.log(id)
         // this.props.dispatch(fetchPageItem(id))
-        await axios({
-            method: 'get',
-            url: `/admin/pages/${id}`,
-            headers: {
-                'Authorization': 'Bearer ' + Cookies.get('token'),
-            }
-        })
-            .then(res => this.setState({ page: res.data[0] }))
-            .catch(error => {
-                if (error.response.status === 401) {
-                    this.props.dispatch(unsetUserToken())
-                }
-            })
+        await this.props.dispatch(fetchOnePageById(id))
 
         await axios({
             method: 'get',
@@ -51,18 +39,17 @@ class Page extends Component {
                 'Authorization': 'Bearer ' + Cookies.get('token'),
             },
         })
-            .then(res => this.setState({ editorState: EditorState.createWithContent(convertFromRaw(JSON.parse(res.data[0].post_content))) }))
+            .then(res => this.setState({
+                editorState: EditorState.createWithContent(
+                    convertFromRaw(JSON.parse(res.data[0].post_content))
+                )
+            }))
             .catch(err => console.log(err))
     }
 
     handleChangeTitle = (event) => {
         let value = event.target.value
-        this.setState({
-            page: {
-                ...this.state.page,
-                title: value
-            }
-        });
+        this.props.dispatch(changePageTitle(value))
     }
 
     onChange = (editorState) => this.setState({ editorState });
@@ -97,9 +84,8 @@ class Page extends Component {
             .catch((err) => { console.log(err) })
     }
 
-    render(props) {
-
-        const { redirect } = this.state;
+    render() {
+        const { redirect, fields } = this.state;
         if (redirect) {
             return <Redirect to="/admin/pages" />;
         }
@@ -107,8 +93,8 @@ class Page extends Component {
         return (
             <>
                 <div style={{ width: "95%" }}>
-                    <input className="pageTitle" value={this.state.page.title} onChange={this.handleChangeTitle} />
-                    <Card >
+                    <input className="pageTitle" value={this.props.page.post.title} onChange={this.handleChangeTitle} />
+                    <Card>
                         <Editor
                             editorState={this.state.editorState}
                             wrapperClassName="demo-wrapper"
@@ -116,13 +102,14 @@ class Page extends Component {
                             onEditorStateChange={this.onChange}
                         />
                     </Card>
+                    <Fields fields={this.props.page.fields} />
                 </div>
 
                 <Sidebare>
                     <Card
                         bg='linear-gradient(180deg, #679CF6 0%, #4072EE 100%)'
                     >
-                        <p style={{ color: '#ffffff' }}><span>Status:</span>{" " + this.state.page.state}</p>
+                        <p style={{ color: '#ffffff' }}><span>Status:</span>{" " + this.props.page.post.state}</p>
                         <p></p>
                     </Card>
                     <Button className="buttonSave" type="primary" SmileOutlined="save" size={'large'} onClick={this.handleSubmitPage} />
@@ -135,7 +122,7 @@ class Page extends Component {
 
 const mapStateToProps = state => {
     return {
-        page: state.pages.pageItem
+        page: state.pages.page
     }
 }
 

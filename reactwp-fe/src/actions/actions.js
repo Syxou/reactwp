@@ -9,6 +9,8 @@ function pagesReceived(pages) {
     }
 }
 
+
+
 function pagesFiterby(pages, filterItem, filterBy) {
     return {
         type: actionTypes.PAGES_FILTER_BY,
@@ -53,12 +55,13 @@ export function fetchPages() {
         })
             .then((response) => dispatch(pagesReceived(response.data)))
             .catch((error) => {
-                if (error.response.status === 401) {
+                if (error.response && error.response.status === 401) {
                     console.log(401)
                     return dispatch(unsetUserToken())
                 }
             })
 }
+
 export function filterPages(filterItem, filterBy) {
     console.log(filterItem, filterBy)
     return dispatch =>

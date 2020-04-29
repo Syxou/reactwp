@@ -9,12 +9,11 @@ const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 const store = createStore(
   combineReducers({
     pages: pageReducer,
-    user: userReduser
+    user: userReduser,
   }),
   composeEnhancers(applyMiddleware(
     thunk
   )),
-
 );
 /* eslint-enable */
 export default store;

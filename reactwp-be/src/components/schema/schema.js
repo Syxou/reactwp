@@ -20,7 +20,7 @@ router.get('/:id', async (req, res) => {
 
     const field = await Fields.query().findById(1)
 
-    const related = await schema.$relatedQuery('fields').select('id', 'type', 'name', 'slug').where('fields_schema_id', '=', id).groupBy('slug');
+    const related = await schema.$relatedQuery('fields').select('id', 'type', 'name', 'slug').where('fields_schema_id', '=', id).groupBy('id');
 
     const resut = { fields: related, ...schema }
 

@@ -19,14 +19,6 @@ class Fields extends Model {
                 from: 'fields.fields_schema_id',
                 to: 'fields_schema.id'
             }
-        },
-        post: {
-            relation: Model.BelongsToOneRelation,
-            modelClass: Post,
-            join: {
-                from: 'fields.post_id',
-                to: 'post.id'
-            }
         }
     };
 

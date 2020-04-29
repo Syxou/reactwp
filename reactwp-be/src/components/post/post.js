@@ -1,26 +1,28 @@
 const express = require('express');
 const router = express.Router();
-// const knex = require('../../knex/knex')
-const Post = require('../../models/post')
-const PostData = require('../postData/model')
+const Post = require('../../models/post');
+const Fields = require('../../models/fields');
+const PostData = require('../postData/model');
 
 // var slugify = require('slugify')
 
-router.get('/', function (req, res) {
-    Post.query()
+/**
+ * * path: /admin/pages/
+ */
+
+router.get('/', async function (req, res) {
+    await Post.query()
         .then(Post => {
             res.json(Post)
         })
 })
 
-router.get('/:id', function (req, res) {
+router.get('/:id', async (req, res) => {
     const id = parseInt(req.params.id)
-    Post.query()
-        .then(Post => {
-            res.json(Post.filter(Post => Post.id === id))
-        })
-
-})
+    const post = await Post.query().findById(id);
+    const fields = await post.$relatedQuery('fields').where('post_id', '=', id)
+    res.json({ fields: fields, post: post })
+});
 
 router.get('/fields/:id', (req, res) => {
     console.log('aaa')

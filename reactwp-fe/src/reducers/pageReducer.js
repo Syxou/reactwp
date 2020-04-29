@@ -2,11 +2,14 @@ import actionTypes from '../constants'
 
 var initialState = {
     pages: [],
-    pageItem: {}
+    pageItem: {},
+    page: {
+        fields: [],
+        post: {}
+    },
 }
 
 export default (state = initialState, action) => {
-
     var updated = Object.assign({}, state)
 
     switch (action.type) {
@@ -14,6 +17,22 @@ export default (state = initialState, action) => {
             console.log('PAGES_RECEIVED')
             updated['pages'] = action.pages
             return updated
+
+        case actionTypes.PAGE_RECEIVED:
+            console.log('PAGE_RECEIVED', action.page)
+            updated['page'] = action.page
+            return updated;
+
+        case actionTypes.PAGE_SET_TITLE:
+            const post = { ...state.page.post, title: action.title }
+            const page = { ...state.page, post: post }
+            updated['page'] = page;
+            return updated
+
+        case actionTypes.PAGE_SET_FIELD_BY_ID:
+            console.log(action.id, action.field)
+            
+            return state
 
         case actionTypes.PAGES_FILTER_BY:
             console.log('PAGES_FILTER_BY')
