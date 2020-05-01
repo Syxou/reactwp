@@ -53,16 +53,17 @@ class Page extends Component {
     }
 
     onChange = (editorState) => this.setState({ editorState });
-    handleSubmitPage = () => {
-        axios({
+
+    handleSubmitPage = async () => {
+        await axios({
             method: 'post',
-            url: '/admin/pages/changes/',
+            url: '/admin/post/changes/',
             headers: {
                 'Authorization': 'Bearer ' + Cookies.get('token'),
             },
             data: {
-                page: this.state.page,
-                content: convertToRaw(this.state.editorState.getCurrentContent())
+                page: this.props.page.post,
+                content: convertToRaw(this.state.editorState.getCurrentContent()),
             }
         })
             .then((res) => { console.log(res) })
@@ -112,8 +113,8 @@ class Page extends Component {
                         <p style={{ color: '#ffffff' }}><span>Status:</span>{" " + this.props.page.post.state}</p>
                         <p></p>
                     </Card>
-                    <Button className="buttonSave" type="primary" SmileOutlined="save" size={'large'} onClick={this.handleSubmitPage} />
-                    <Button className="buttonSave" type="primary" SmileOutlined="delete" size={'large'} onClick={this.handleDeletePage} />
+                    <Button onClick={this.handleSubmitPage} shape="circle" icon="save" />
+                    <Button onClick={this.handleDeletePage} shape="circle" icon="delete" />
                 </Sidebare>
             </>
         );

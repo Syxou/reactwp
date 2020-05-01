@@ -7,19 +7,7 @@ Model.knex(knex);
 
 
 class PostSchema extends Model {
-
     static tableName = 'post_schema';
-
-    static relationMappings = {
-        fields: {
-            relation: Model.ManyToManyRelation,
-            modeClass: Schema,
-            join: {
-                from: ""
-            }
-        }
-    }
-
 }
 
 

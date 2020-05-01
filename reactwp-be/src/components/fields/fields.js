@@ -13,12 +13,12 @@ router.get('/', (req, res) => {
             res.json(post)
         })
 })
+
 router.get('/:id', (req, res) => {
     const id = parseInt(req.params.id)
-    console.log(id)
-    PostData.query()
-        .where('post_type', 'like', 'cf_%')
-        .where('data_id', '=', id)
+    console.log(id,"asdasd")
+    Fields.query()
+        .where('id', '=', id)
         .then(post => {
             console.log(post[0])
             res.json(post[0])

@@ -35,7 +35,8 @@ router.get('/', function (req, res) {
 
 router.use('/api/fields/schema', schema)
 router.use('/api/rcf', fields)
-router.use('/pages', post)
+router.use('/api/post', post)    //* ist a new
+router.use('/pages', post)  //!deprecated 
 router.use('/users', users)
 router.use('/posts', posts)
 router.use('/postdata', postData)

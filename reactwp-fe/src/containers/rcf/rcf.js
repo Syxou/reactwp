@@ -5,7 +5,6 @@ import RcfItem from './rcfItem'
 import styled from 'styled-components';
 import Card from './../../compontnts/card/Card';
 import pagesArticle from './../pages/pagesArticle';
-import Distributor from "./fields/distributor";
 
 import { connect } from 'react-redux';
 
@@ -29,6 +28,7 @@ class rcf extends Component {
             loading: false
         }
     }
+
     componentDidMount() {
         const id = this.props.match.params.id
         axios({
@@ -49,11 +49,7 @@ class rcf extends Component {
     handleChangeName = () => {
 
     }
-
-
-
     render() {
-
         console.log(this.state)
         return (
             <>
@@ -61,7 +57,17 @@ class rcf extends Component {
                     <h1>{this.state.name}</h1>
 
                     {this.state.fields.map((field, i) => (
-                        <Distributor key={i} field={field} />
+                        <Card key={i}>
+                            <Name onChange={this.handleChangeName} value={field.name} />
+                            <Slug value={field.slug}></Slug>
+                            <div>Type:
+                                <Select defaultValue={field.type} style={{ width: 120 }} loading={this.state.loading} onChange={handleChange}>
+                                    {this.state.types.map((type, i) => (
+                                        <Option key={i} value={type}>{type}</Option>
+                                    ))}
+                                </Select>
+                            </div>
+                        </Card>
                     ))}
                 </div>
                 <Card>
@@ -72,7 +78,26 @@ class rcf extends Component {
         );
     }
 }
-
+const Slug = styled.input`
+    margin-top:20px;
+    width: max-content;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    text-align: left;
+    color: #1F2041;
+    border: none; 
+`;
+const Name = styled.input`
+    margin-top:20px;
+    width: max-content;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    text-align: left;
+    color: #1F2041;
+    border: none;
+`;
 
 const mapStateToPtops = (state) => {
     return {
