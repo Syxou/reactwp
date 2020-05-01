@@ -32,10 +32,9 @@ export function changePageTitle(title) {
     })
 }
 
-export function changeFieldById(id, field) {
-    return dispatch => dispatch({
+export function changeFieldById(field) {
+    return {
         type: actionTypes.PAGE_SET_FIELD_BY_ID,
         field: field,
-        id: id,
-    })
+    }
 }

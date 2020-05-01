@@ -30,9 +30,17 @@ export default (state = initialState, action) => {
             return updated
 
         case actionTypes.PAGE_SET_FIELD_BY_ID:
-            console.log(action.id, action.field)
-            
-            return state
+            let newFields = [];
+            state.page.fields.map((field, i) => {
+                if (field.id === action.field.id) {
+                    newFields.push(action.field)
+                } else {
+                    newFields.push(field)
+                }
+            })
+            const page_set_field = { ...state.page, fields: newFields }
+            updated['page'] = page_set_field;
+            return updated
 
         case actionTypes.PAGES_FILTER_BY:
             console.log('PAGES_FILTER_BY')
