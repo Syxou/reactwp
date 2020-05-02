@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from "axios"
 import Cookies from 'js-cookie'
 import RcfItem from './rcfItem'
-import styled from 'styled-components';
+import styled, { ThemeConsumer } from 'styled-components';
 import Card from './../../compontnts/card/Card';
 import pagesArticle from './../pages/pagesArticle';
 
@@ -25,7 +25,11 @@ class rcf extends Component {
             name: null,
             slug: null,
             types: ["wyswyg", "text"],
-            loading: false
+            loading: false,
+            AllPages: [],
+            selectAllPages: [],
+            selectedPage: [],
+            selectPages: [],
         }
     }
 
@@ -40,15 +44,31 @@ class rcf extends Component {
         })
             .then(res => {
                 const { data } = res;
-
-                this.setState({ fields: data.fields, type: data.type, name: data.name, slug: data.slug, id: data.id })
+                let newSelectedPage = []
+                data.pages.forEach(page => {
+                    newSelectedPage.push(page.slug)
+                })
+                this.setState({ fields: data.fields, type: data.type, name: data.name, slug: data.slug, id: data.id, selectPages: data.pages, selectedPage: newSelectedPage })
             })
             .catch(err => console.log(err))
+
+        axios({
+            method: "get",
+            url: '/admin/api/post?type=page',
+            headers: {
+                'Authorization': 'Bearer ' + Cookies.get('token'),
+            }
+        })
+            .then(res => {
+                const { data } = res;
+                this.setState({ AllPages: data })
+            })
     }
 
     handleChangeName = () => {
 
     }
+
     render() {
         console.log(this.state)
         return (
@@ -73,6 +93,19 @@ class rcf extends Component {
                 <Card>
                     <p>{this.state.slug}</p>
                     <p>{this.state.type}</p>
+                    <Select
+                        mode="multiple"
+                        style={{ width: '100%' }}
+                        placeholder="Please select"
+                        defaultValue={this.state.selectedPage}
+                        onChange={handleChange}
+                    >
+                        {this.state.AllPages.map((page, i) => (
+                            <Option key={i} value={page.slug} label={page.name}>
+                                {page.slug}
+                            </Option>
+                        ))}
+                    </Select>
                 </Card>
             </>
         );

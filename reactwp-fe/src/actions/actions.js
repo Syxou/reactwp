@@ -48,7 +48,7 @@ export function fetchPages() {
     return dispatch =>
         axios({
             method: "get",
-            url: '/admin/pages',
+            url: '/admin/api/post?type=page',
             headers: {
                 "Authorization": 'Bearer ' + Cookies.get('token')
             }

@@ -5,9 +5,6 @@ import Text from './text';
 export default class Fields extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-
-        };
     }
     distributor = (field) => {
         switch (field.type) {
@@ -24,14 +21,14 @@ export default class Fields extends Component {
                 break;
         }
     }
-
-
     render() {
         const { fields } = this.props;
-        // console.log("fields", fields)
+        console.log("fields")
         return (
             <div>
-                {fields.map(field => this.distributor(field))}
+                {fields.length > 1 ?
+                    fields.map(field => this.distributor(field))
+                    : this.distributor(fields)}
             </div>
         )
     }

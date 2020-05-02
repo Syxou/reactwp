@@ -55,9 +55,10 @@ class Page extends Component {
     onChange = (editorState) => this.setState({ editorState });
 
     handleSubmitPage = async () => {
+        const id = this.props.match.params.id;
         await axios({
             method: 'post',
-            url: '/admin/post/changes/',
+            url: '/admin/api/post/changes',
             headers: {
                 'Authorization': 'Bearer ' + Cookies.get('token'),
             },
@@ -70,6 +71,16 @@ class Page extends Component {
             .catch(function (error) {
                 console.log(error);
             });
+        await axios({
+            method: 'post',
+            url: `/admin/api/post/fields/update/${id}`,
+            headers: {
+                'Authorization': 'Bearer ' + Cookies.get('token'),
+            },
+            data: {
+                fields: this.props.page.fields
+            }
+        })
     }
 
     handleDeletePage = () => {
@@ -90,7 +101,6 @@ class Page extends Component {
         if (redirect) {
             return <Redirect to="/admin/pages" />;
         }
-
         return (
             <>
                 <div style={{ width: "95%" }}>
@@ -103,7 +113,10 @@ class Page extends Component {
                             onEditorStateChange={this.onChange}
                         />
                     </Card>
-                    <Fields fields={this.props.page.fields} />
+                    {this.props.page.fields ?
+                        <Fields fields={this.props.page.fields} />
+                        : null
+                    }
                 </div>
 
                 <Sidebare>

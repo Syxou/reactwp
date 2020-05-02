@@ -31,6 +31,7 @@ export default (state = initialState, action) => {
 
         case actionTypes.PAGE_SET_FIELD_BY_ID:
             let newFields = [];
+            state.page.fields.length > 1 ?
             state.page.fields.map((field, i) => {
                 if (field.id === action.field.id) {
                     newFields.push(action.field)
@@ -38,6 +39,7 @@ export default (state = initialState, action) => {
                     newFields.push(field)
                 }
             })
+            :  newFields = action.field
             const page_set_field = { ...state.page, fields: newFields }
             updated['page'] = page_set_field;
             return updated
