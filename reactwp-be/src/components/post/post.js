@@ -11,7 +11,10 @@ const PostData = require('../postData/model');
  */
 
 router.get('/', async function (req, res) {
+    var type = req.query.type
+    console.log(type)
     await Post.query()
+        .where('type', type)
         .then(Post => {
             res.json(Post)
         })
@@ -25,7 +28,6 @@ router.get('/:id', async (req, res) => {
 });
 
 router.get('/fields/:id', (req, res) => {
-    console.log('aaa')
     const id = parseInt(req.body)
     console.log(id)
     const post = Post.query().findById(id);
@@ -40,6 +42,39 @@ router.get('/fields/:id', (req, res) => {
  * add post (page) to db. 
  * body - ajax object page
  */
+
+router.post('/fields/update/:id', async (req, res) => {
+    const fields = req.body.fields;
+    const id = parseInt(req.params.id)
+    const post = await Post.query().findById(id);
+    if (fields.length > 1) {
+        await fields.forEach(field => {
+            post.$relatedQuery('fields')
+                .update({
+                    data: field.data
+                })
+                .where('id', field.id)
+                .then((res) => {
+                    console.log('res', res)
+                })
+                .catch((err) => {
+                    console.log('err', err)
+                })
+        });
+    } else {
+        await post.$relatedQuery('fields')
+            .update({
+                data: fields.data
+            })
+            .where('id', fields.id)
+            .then((res) => {
+                console.log('res', res)
+            })
+            .catch((err) => {
+                console.log('err', err)
+            })
+    }
+})
 
 router.post('/add', function (req, res) {
     const page = req.body
@@ -108,7 +143,7 @@ router.post('/delete', function (req, res) {
         })
 })
 
-router.post('/changes/', function (req, res) {
+router.post('/changes', function (req, res) {
     const page = req.body.page;
     const content = req.body.content;
 

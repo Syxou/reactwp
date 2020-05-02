@@ -1,6 +1,6 @@
 const { Model } = require('objection');
 const knex = require('../knex/knex')
-const Fields = require('../models/fields')
+
 
 Model.knex(knex);
 
@@ -11,18 +11,36 @@ Model.knex(knex);
  */
 
 class Schema extends Model {
+
     static get tableName() {
         return 'fields_schema'
     }
 
-    static relationMappings = {
-        fields: {
-            relation: Model.HasManyRelation,
-            modelClass: Fields,
-            join: {
-                from: 'fields_schema.id',
-                to: 'fields.fields_schema_id',
-            }
+    static get relationMappings() {
+        const Fields = require('../models/fields')
+        const Post = require('../models/post')
+        
+        return {
+            fields: {
+                relation: Model.HasManyRelation,
+                modelClass: Fields,
+                join: {
+                    from: 'fields_schema.id',
+                    to: 'fields.fields_schema_id',
+                }
+            },
+            posts: {
+                relation: Model.ManyToManyRelation,
+                modelClass: Post,
+                join: {
+                    from: 'fields_schema.id',
+                    through: {
+                        from: 'post_schema.schema_id',
+                        to: 'post_schema.post_id',
+                    },
+                    to: 'post.id',
+                },
+            },
         }
     };
 }

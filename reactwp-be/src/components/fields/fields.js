@@ -7,7 +7,6 @@ var slugify = require('slug-generator')
 router.get('/', (req, res) => {
     Fields.query()
         .where('slug', 'like', 'cf_%')
-        // .withGraphFetched('pages')
         .then(post => {
             console.log(post)
             res.json(post)

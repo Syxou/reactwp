@@ -17,18 +17,18 @@ class Post extends Model {
     }
 
     static relationMappings = {
-        schema: {
-            relation: Model.ManyTomanyRelation,
-            modelClass: Schema,
-            join: {
-                from: 'post.id',
-                through: {
-                    from: 'post_schema.posts_id',
-                    to: 'post_schema.schema_id'
-                },
-                to: 'fields_schema.id'
-            },
-        },
+        // schema: {
+        //     relation: Model.ManyTomanyRelation,
+        //     modelClass: Schema,
+        //     join: {
+        //         from: 'post.id',
+        //         through: {
+        //             from: 'post_schema.posts_id',
+        //             to: 'post_schema.schema_id'
+        //         },
+        //         to: 'fields_schema.id'
+        //     },
+        // },
         fields: {
             relation: Model.BelongsToOneRelation,
             modelClass: Fields,

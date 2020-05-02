@@ -12,6 +12,8 @@ exports.up = function (knex) {
                 .text("state")
                 .notNullable()
             table
+                .text('type')
+            table
                 .string("slug")
                 .notNullable()
             table
