@@ -32,7 +32,6 @@ class Users extends Component {
     }
 
     render() {
-        console.log(this.props)
         const getUsers = this.state.users.map((user, i) => (
             <Listing
                 key={i}
@@ -46,7 +45,7 @@ class Users extends Component {
         return (
             <>
                 <div>
-                    <h2>Users</h2>
+                    <h1>Users</h1>
                     <div className="cardList">
                         {this.state.users && getUsers}
                     </div>

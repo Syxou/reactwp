@@ -3,4 +3,19 @@
     border-radius: 5px;
     width: inherit;
     height: max-content;
+    transition: all 0.3s ease;
+    animation-duration: 0.3s;
+    animation-name: slidein;
+}
+
+@keyframes slidein {
+    from {
+        transform: translateY(-10%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0%);
+        opacity: 1;
+    }
 }

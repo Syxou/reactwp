@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import { connect } from 'react-redux'
-
 import { changeFieldById } from '../../../actions/pageAction'
 import Card from '../../../compontnts/card/Card'
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
@@ -9,21 +8,17 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 function Wyswyg({ field, setFieldById }) {
 
-    const [editorState, setEditorState] = useState(EditorState.
-        createWithContent(convertFromRaw(JSON.parse(field.data))));
+    const [editorState, setEditorState] = useState(
+        () => {
+            if (field.data === "")
+                return EditorState.createEmpty()
+            else
+                return EditorState.createWithContent(
+                    convertFromRaw(JSON.parse(field.data))
+                )
+        }
+    );
 
-    const [edited, setEdited] = useState(false)
-
-    // const onSaveEditorState = () => {
-    //     const field = props.field
-    //     this.props.dispatch()
-    // }
-    // const { field } = props;
-    // useEffect(() => {
-    //     setEditorState(EditorState.
-    //         createWithContent(convertFromRaw(JSON.parse(field.data))))
-
-    // }, [])
     return (
         <Card>
             <h4>{field.name}</h4>
