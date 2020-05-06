@@ -15,7 +15,7 @@ router.get('/', (req, res) => {
 
 router.get('/:id', (req, res) => {
     const id = parseInt(req.params.id)
-    console.log(id,"asdasd")
+    console.log(id, "asdasd")
     Fields.query()
         .where('id', '=', id)
         .then(post => {

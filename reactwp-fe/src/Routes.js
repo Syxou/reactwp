@@ -14,6 +14,7 @@ import Page from './containers/pages/Page'
 import newPage from './containers/pages/newPage'
 import Rcfs from './containers/rcf/rcfs'
 import Rcf from './containers/rcf/rcf'
+import Media from './containers/media/Meida'
 
 import Cookies from 'js-cookie'
 
@@ -25,13 +26,18 @@ const Routes = (props) => {
     return (
         <Switch>
             <Route exact path="/admin" component={Home} />
+
             <Route path="/admin/users/new" component={newUser} />
             <Route path="/admin/users/edit/:id" component={editUser} />
             <Route path="/admin/users/:id" component={User} />
             <Route path="/admin/users/" component={Users} />
+
             <Route path="/admin/pages/:id" component={Page} />
             <Route path="/admin/pages" component={Pages} />
             <Route path="/admin/new/page" component={newPage} />
+
+            <Route path="/admin/media" component={Media} />
+
             <Route path="/admin/rcf/:id" component={Rcf} />
             <Route path="/admin/rcf" component={Rcfs} />
             <Route>

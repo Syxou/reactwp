@@ -19,7 +19,7 @@ class Nav extends Component {
             <div className="nav">
                 <nav className="menu">
                     <div>
-            
+
                         <NavLink
                             exact
                             activeClassName="navbar__link--active"
@@ -48,6 +48,13 @@ class Nav extends Component {
                             className="navbar__link"
                             to="/admin/rcf">
                             <Icon style={{ fontSize: '21px' }} type="form" />
+                        </NavLink>
+                        <NavLink
+                            to="/admin/media"
+                            activeClassName="navbar__link--active"
+                            className="navbar__link"
+                        >
+                            <Icon style={{ fontSize: '21px' }} type="file-image" />
                         </NavLink>
 
                     </div>

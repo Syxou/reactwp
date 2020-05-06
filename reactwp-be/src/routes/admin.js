@@ -8,6 +8,7 @@ const posts = require('../components/posts/posts');
 const postData = require('../components/postData/router');
 const fields = require('../components/fields/fields');
 const schema = require('../components/schema/schema');
+const media = require('../components/media/media')
 
 router.use('/', (req, res, next) => {
     if (req.originalUrl === "/admin/users/signin/") {
@@ -34,6 +35,7 @@ router.get('/', function (req, res) {
 });
 
 router.use('/api/fields/schema', schema)
+router.use('/api/media', media)
 router.use('/api/rcf', fields)
 router.use('/api/post', post)    //* ist a new
 router.use('/pages', post)  //!deprecated 
