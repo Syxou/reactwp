@@ -1,47 +1,70 @@
-import React from 'react'
-import Cookies from 'js-cookie'
+import React, { useEffect, } from 'react'
+import { connect } from 'react-redux'
+import { fetchAllMedia } from '../../actions/mediaAction'
+import UploadMedia from './UploadMedia'
+import styled from 'styled-components'
+import Card from '../../compontnts/card/Card'
+import MediaItem from './MediaItem'
 
-import { Upload, Icon, message } from 'antd';
-const { Dragger } = Upload;
 
-export default function Meida() {
-    const props = {
-        name: 'file',
-        multiple: true,
-        method: 'post',
-        action: '/admin/api/media/upload',
-        name: 'Files',
-        headers: {
-            'Authorization': 'Bearer ' + Cookies.get('token'),
-        },
-        onChange(info) {
-            const { status } = info.file;
-            if (status !== 'uploading') {
-                console.log(info.file, info.fileList);
-            }
-            if (status === 'done') {
-                message.success(`${info.file.name} file uploaded successfully.`);
-            } else if (status === 'error') {
-                message.error(`${info.file.name} file upload failed.`);
-            }
-        },
-    };
+const useFetching = someFetchActionCreator => {
+    useEffect(() => {
+        someFetchActionCreator();
+    }, [])
+}
+
+function Meida({ media, getMedia }) {
+    useFetching(getMedia)
+    console.log(media)
+
+
     return (
-        <>
+        <Wrap>
+            <h2>Media</h2>
             <div>
-                <h2>Media</h2>
-                <div>
+                <UploadMedia />
+            </div>
+            <div>
+                <Card>
+                    <Gallery id="gallery">
+                        {
+                            media.media.map((m, i) => (
+                                <MediaItem key={m.id} media={m} />
+                            ))
+                        }
+                    </Gallery>
+                </Card>
+            </div>
 
-                </div>
-            </div>
-            <div>
-                <Dragger {...props}>
-                    <p className="ant-upload-drag-icon">
-                        <Icon type="inbox" />
-                    </p>
-                    <p className="ant-upload-text">Click or drag file to this area to upload</p>
-                </Dragger>
-            </div>
-        </>
+        </Wrap>
     )
 }
+
+const Gallery = styled.div`
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat( 5, minmax(100px, 500px) );
+    grid-template-rows: 1fr 1fr 1fr;
+    gap: 15px;
+  
+`
+
+const Wrap = styled.div`
+    grid-column-start: 1;
+    grid-column-end: 3;
+`
+
+
+const mapDispatchToProps = (dispatch) => ({
+    getMedia() {
+        return dispatch(fetchAllMedia())
+    }
+})
+
+const mapStateToProps = (state) => {
+    return ({
+        media: state.media
+    })
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Meida)
