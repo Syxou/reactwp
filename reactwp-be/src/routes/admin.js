@@ -43,4 +43,5 @@ router.use('/users', users)
 router.use('/posts', posts)
 router.use('/postdata', postData)
 
+
 module.exports = router;

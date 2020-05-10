@@ -3,11 +3,12 @@ const router = express.Router();
 const Post = require('../../models/post');
 const Fields = require('../../models/fields');
 const PostData = require('../postData/model');
-
+const PostType = require('../../models/post_type')
 // var slugify = require('slugify')
 
 /**
- * * path: /admin/pages/
+ * * newPath /api/post/   new
+ * ! path: /admin/pages/  deprecated 
  */
 
 router.get('/', async function (req, res) {
@@ -20,19 +21,22 @@ router.get('/', async function (req, res) {
         })
 })
 
+
+
 router.get('/:id', async (req, res) => {
     const id = parseInt(req.params.id)
     const post = await Post.query().findById(id);
-    const fields = await post.$relatedQuery('fields').where('post_id', '=', id)
+    const fields = await post.$relatedQuery('fields').where('post_id', id)
+    console.log(fields, post)
     res.json({ fields: fields, post: post })
 });
 
-router.get('/fields/:id', (req, res) => {
+router.get('/fields/:id', async (req, res) => {
     const id = parseInt(req.body)
     console.log(id)
-    const post = Post.query().findById(id);
+    const post = await Post.query().findById(id);
     // console.log(post)
-    // const schema = await post
+    // const schema = await psost
     //     .$relatedQuery('schema')
     // console.log(schema)
 })
@@ -40,7 +44,6 @@ router.get('/fields/:id', (req, res) => {
 
 /**
  * add post (page) to db. 
- * body - ajax object page
  */
 
 router.post('/fields/update/:id', async (req, res) => {
@@ -76,7 +79,7 @@ router.post('/fields/update/:id', async (req, res) => {
     }
 })
 
-router.post('/add', function (req, res) {
+router.post('/add', async function (req, res) {
     const page = req.body
     console.log(page)
     Post.query()
@@ -106,7 +109,7 @@ router.post('/add', function (req, res) {
         })
 })
 
-router.post('/trash', function (req, res) {
+router.post('/trash', async function (req, res) {
     const page = req.body
     if (req.body.state === 'trash') {
         Post.query()
@@ -130,7 +133,7 @@ router.post('/trash', function (req, res) {
     console.log(page)
 })
 
-router.post('/delete', function (req, res) {
+router.post('/delete', async function (req, res) {
     const page = req.body
     console.log(page)
     Post.query()
@@ -143,7 +146,7 @@ router.post('/delete', function (req, res) {
         })
 })
 
-router.post('/changes', function (req, res) {
+router.post('/changes', async function (req, res) {
     const page = req.body.page;
     const content = req.body.content;
 
@@ -167,5 +170,66 @@ router.post('/changes', function (req, res) {
             res.json(Post.filter(Post => parseInt(Post.id) === parseInt(page.id)))
         })
 })
+
+
+router.get('/type/all', async (req, res, next) => {
+    try {
+        const postTypeAll = await PostType.query()
+        res.json(postTypeAll)
+    } catch (error) {
+        console.log(error)
+        next();
+    }
+})
+
+router.get('/type/all', async (req, res, next) => {
+    try {
+        const postTypeAll = await PostType.query()
+        res.json(postTypeAll)
+    } catch (error) {
+        console.log(error)
+        next();
+    }
+})
+
+
+/**  
+**  {
+**     "type": "page",
+**     "icon": "file"
+**  }
+ */
+router.post('/type/add', async (req, res, next) => {
+    try {
+        const body = req.body
+        const checkType = await PostType.query().where({ type: body.type })
+
+        if (checkType.length === 0) {
+            const newType = await PostType.query().insert({
+                type: body.type,
+                icon: body.icon,
+            })
+            res.status(200).send({ error: false, message: 'This type has been added' })
+        } else {
+            res.status(409).send({ error: true, message: 'This type already exist' })
+            next();
+        }
+    } catch (error) {
+        console.log(error)
+        next()
+    }
+})
+
+router.delete('/type/remove/:id', async (req, res, next) => {
+    try {
+        const id = req.params.id
+        const postTypeAll = await PostType.query().deleteById(id);
+        res.json(postTypeAll)
+    } catch (error) {
+        console.log(error)
+        next();
+    }
+})
+
 
 module.exports = router

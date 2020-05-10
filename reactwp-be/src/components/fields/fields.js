@@ -73,7 +73,7 @@ router.post('/update', async (req, res) => {
         })
         .then(data => {
             console.log(data)
-            res.status(300).send({ error: false, message: "Custom fields have been updated." })
+            res.status(200).send({ error: false, message: "Custom fields have been updated." })
         })
         .catch(err => {
             console.log(err)
