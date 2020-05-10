@@ -8,81 +8,105 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import { Button } from 'antd';
 import axios from 'axios'
+import Cookies from 'js-cookie'
 
 import Card from '../../compontnts/card/Card'
 import Sidebare from '../../compontnts/sidebar/Sidebar'
-import { fetchPageItem, setTitlePage } from '../../actions/actions'
-
+import { unsetUserToken, fetchOnePageById, changePageTitle } from '../../actions/pageAction'
+import Fields from './fields/fields'
 
 class Page extends Component {
     constructor(props) {
         super(props);
-
         this.state = {
             editorState: EditorState.createEmpty(),
             redirect: false,
+            page: {},
+            fields: []
         };
-
-        this.onChange = editorState => {
-            this.setState({ editorState });
-            console.log()
-        }
-
-        this.handleChangeTitle = this.handleChangeTitle.bind(this);
-        this.handleSubmitPage = this.handleSubmitPage.bind(this);
-        this.handleDeletePage = this.handleDeletePage.bind(this);
+        this.onChange = editorState => this.setState({ editorState });
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         const id = this.props.match.params.id;
-        this.props.dispatch(fetchPageItem(id))
+        // this.props.dispatch(fetchPageItem(id))
+        await this.props.dispatch(fetchOnePageById(id))
+
+        await axios({
+            method: 'get',
+            url: `/admin/postdata/${id}`,
+            headers: {
+                'Authorization': 'Bearer ' + Cookies.get('token'),
+            },
+        })
+            .then(res => this.setState({
+                editorState: EditorState.createWithContent(
+                    convertFromRaw(JSON.parse(res.data[0].post_content))
+                )
+            }))
+            .catch(err => console.log(err))
     }
 
-    handleChangeTitle(event) {
-        this.props.dispatch(setTitlePage({ ...this.props.page, title: event.target.value }))
-        console.log('handleChangeTitle')
+    handleChangeTitle = (event) => {
+        let value = event.target.value
+        this.props.dispatch(changePageTitle(value))
     }
 
     onChange = (editorState) => this.setState({ editorState });
 
-    handleSubmitPage() {
-        axios({
+    handleSubmitPage = async () => {
+        const id = this.props.match.params.id;
+        await axios({
             method: 'post',
-            url: '/pages/changes/',
+            url: '/admin/api/post/changes',
+            headers: {
+                'Authorization': 'Bearer ' + Cookies.get('token'),
+            },
             data: {
-                page: this.props.page,
-                data_page: convertToRaw(this.state.editorState.getCurrentContent())
+                page: this.props.page.post,
+                content: convertToRaw(this.state.editorState.getCurrentContent()),
             }
         })
             .then((res) => { console.log(res) })
             .catch(function (error) {
                 console.log(error);
             });
+        await axios({
+            method: 'post',
+            url: `/admin/api/post/fields/update/${id}`,
+            headers: {
+                'Authorization': 'Bearer ' + Cookies.get('token'),
+            },
+            data: {
+                fields: this.props.page.fields
+            }
+        })
     }
-    handleDeletePage() {
+
+    handleDeletePage = () => {
         axios({
             method: 'post',
-            url: '/pages/trash/',
-            data: this.props.page
+            url: '/admin/pages/trash/',
+            data: this.state.page,
+            headers: {
+                'Authorization': 'Bearer ' + Cookies.get('token'),
+            },
         })
             .then((() => { this.setState({ redirect: true }) }))
             .catch((err) => { console.log(err) })
     }
 
-    render(props) {
-
-        const { redirect } = this.state;
-
+    render() {
+        const { redirect, fields } = this.state;
         if (redirect) {
             return <Redirect to="/admin/pages" />;
         }
-
+        console.log(this.props)
         return (
             <>
-                {console.log(this.state.editorState)}
                 <div style={{ width: "95%" }}>
-                    <input className="pageTitle" value={this.props.page.title} onChange={this.handleChangeTitle} />
-                    <Card >
+                    <input className="pageTitle" value={this.props.page.post.title} onChange={this.handleChangeTitle} />
+                    <Card>
                         <Editor
                             editorState={this.state.editorState}
                             wrapperClassName="demo-wrapper"
@@ -90,17 +114,21 @@ class Page extends Component {
                             onEditorStateChange={this.onChange}
                         />
                     </Card>
+                    {this.props.page.fields ?
+                        <Fields fields={this.props.page.fields} />
+                        : null
+                    }
                 </div>
 
                 <Sidebare>
                     <Card
                         bg='linear-gradient(180deg, #679CF6 0%, #4072EE 100%)'
                     >
-                        <p style={{ color: '#ffffff' }}><span>Status:</span>{" " + this.props.page.state}</p>
+                        <p style={{ color: '#ffffff' }}><span>Status:</span>{" " + this.props.page.post.state}</p>
                         <p></p>
                     </Card>
-                    <Button className="buttonSave" type="primary" icon="save" size={'large'} onClick={this.handleSubmitPage} />
-                    <Button className="buttonSave" type="primary" icon="delete" size={'large'} onClick={this.handleDeletePage} />
+                    <Button onClick={this.handleSubmitPage} shape="circle" icon="save" />
+                    <Button onClick={this.handleDeletePage} shape="circle" icon="delete" />
                 </Sidebare>
             </>
         );
@@ -109,7 +137,7 @@ class Page extends Component {
 
 const mapStateToProps = state => {
     return {
-        page: state.pages.pageItem
+        page: state.pages.page
     }
 }
 

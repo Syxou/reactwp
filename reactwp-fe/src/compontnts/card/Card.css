@@ -1,6 +1,21 @@
 .card {
-    box-shadow: 0px 1px 4px #E5E9F2;
+    box-shadow: 0px 10px 20px rgba(31, 32, 65, 0.05);
     border-radius: 5px;
     width: inherit;
     height: max-content;
+    transition: all 0.3s ease;
+    animation-duration: 0.3s;
+    animation-name: slidein;
+}
+
+@keyframes slidein {
+    from {
+        transform: translateY(-10%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0%);
+        opacity: 1;
+    }
 }

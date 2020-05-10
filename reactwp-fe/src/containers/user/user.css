@@ -1,0 +1,15 @@
+.avatar-uploader .ant-upload {
+    margin: 0 auto !important;
+    border-radius: 100% !important;
+    overflow: hidden !important;
+}
+
+.ant-upload-picture-card-wrapper {
+    width: max-content !important;
+    margin: 0 auto;
+    display: block !important;
+}
+
+.avatar-uploader .ant-upload span {
+    padding: 0 !important;
+}

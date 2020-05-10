@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "removeComments": true,
+    "allowJs": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "target": "es6",
+    "outDir": "./dist/",
+    "baseUrl": "./",
+    "moduleResolution": "node",
+    "lib": [
+      "es2015"
+    ],
+  },
+  "exclude": [
+    "./node_modules",
+    "./dist",
+    "./knexfile.js"
+  ],
+  "include": [
+    "./src/**/*"
+  ],
+}

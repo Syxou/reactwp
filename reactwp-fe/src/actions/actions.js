@@ -1,11 +1,22 @@
 import actionTypes from '../constants';
 import axios from 'axios';
-
+import Cookies from 'js-cookie'
 
 function pagesReceived(pages) {
     return {
         type: actionTypes.PAGES_RECEIVED,
         pages: pages
+    }
+}
+
+
+
+function pagesFiterby(pages, filterItem, filterBy) {
+    return {
+        type: actionTypes.PAGES_FILTER_BY,
+        pages: pages,
+        filterBy: filterBy,
+        filterItem: filterItem,
     }
 }
 
@@ -24,12 +35,49 @@ function pageItemSubmit(pageItem) {
     }
 }
 
-export function fetchPages(pages) {
+function logIn(user) {
+    return {
+        type: actionTypes.SET_USER_TOKEN,
+        user: user
+    }
+}
+
+let logOut = () => ({ type: actionTypes.UNSET_USER_TOKEN })
+
+export function fetchPages() {
     return dispatch =>
-        fetch(`/pages`)
-            .then((response) => response.json())
-            .then((data) => dispatch(pagesReceived(data)))
-            .catch((e) => console.log(e))
+        axios({
+            method: "get",
+            url: '/admin/api/post?type=page',
+            headers: {
+                "Authorization": 'Bearer ' + Cookies.get('token')
+            }
+        })
+            .then((response) => dispatch(pagesReceived(response.data)))
+            .catch((error) => {
+                if (error.response && error.response.status === 401) {
+                    console.log(401)
+                    return dispatch(unsetUserToken())
+                }
+            })
+}
+
+export function filterPages(filterItem, filterBy) {
+    console.log(filterItem, filterBy)
+    return dispatch =>
+        axios({
+            method: "get",
+            url: '/admin/pages',
+            headers: {
+                "Authorization": 'Bearer ' + Cookies.get('token')
+            }
+        })
+            .then((response) => dispatch(pagesFiterby(response.data, filterItem, filterBy)))
+            .catch((error) => {
+                if (error.response.status === 401) {
+                    return dispatch(unsetUserToken())
+                }
+            })
 }
 
 export function fetchPageItem(id) {
@@ -41,6 +89,30 @@ export function fetchPageItem(id) {
 }
 
 export function setTitlePage(page) {
-    console.log('aaa', page)
     return dispatch => dispatch(pageItemSubmit(page))
 }
+
+export function setUserToken(user) {
+    console.log('setUserToken', user)
+    return dispatch => dispatch(logIn(user))
+}
+export function unsetUserToken() {
+    console.log('unsetUserToken')
+    return dispatch => dispatch(logOut())
+}
+
+
+// /action for new user (steps)
+
+const setAcountSteps = (acount) => {
+    return {
+        type: actionTypes.ADD_STEPS_ACCOUNT,
+        action: acount
+    }
+}
+
+export function setAcountData(acount) {
+    console.log(acount)
+    return dispatch => dispatch(setAcountSteps(acount))
+}
+
