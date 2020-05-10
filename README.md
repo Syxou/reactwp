@@ -11,8 +11,8 @@ Reactwp uses a number of open source projects to work properly:
 * [React.js](https://reactjs.org/) - A JavaScript library for building user interfaces
 * [knex.js](http://knexjs.org/) - "batteries included" SQL query builder
 * [objection.js](https://vincit.github.io/objection.js/) - An SQL-friendly ORM for Node.js
-* [node.js] - evented I/O for the backend
-* [Express] - fast node.js network app framework [@tjholowaychuk]
+* [node.js](https://nodejs.org/) - evented I/O for the backend
+* [Express](https://expressjs.com/) - fast node.js network app framework [@tjholowaychuk]
 * [ant.design](https://3x.ant.design/) - @3.x A design system with values of Nature and Determinacy for better user experience of enterprise applications
 * [jwt](https://jwt.io/) - JSON Web Tokens
 
