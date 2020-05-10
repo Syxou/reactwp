@@ -1,18 +1,20 @@
 import actionTypes from '../constants'
 
 let iniTialState = {
-    media: [],
+    types: [],
+    posts: []
 }
 
 export default (state = iniTialState, action) => {
 
     let update = Object.assign({}, state);
-    let newMedia = [];
 
     switch (action.type) {
-        case actionTypes.GET_ALL_MEDIA:
-            console.log('GET_ALL_MEDIA')
-            update['media'] = action.media
+        case actionTypes.SET_POST_TYPE:
+            update['types'] = action.postsTypes
+            return update;
+        case actionTypes.SET_POST_BY_TYPE:
+            update['posts'] = action.posts
             return update;
 
         default: return state;

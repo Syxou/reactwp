@@ -15,7 +15,7 @@ import Sidebare from '../../compontnts/sidebar/Sidebar'
 import { unsetUserToken, fetchOnePageById, changePageTitle } from '../../actions/pageAction'
 import Fields from './fields/fields'
 
-class Page extends Component {
+class Post extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -141,6 +141,6 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(Page);
+export default connect(mapStateToProps)(Post);
 
 

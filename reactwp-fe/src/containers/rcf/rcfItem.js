@@ -15,7 +15,7 @@ class rcfItem extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            types: ["wyswyg", "text", "image"],
+            types: ["wyswyg", "text", "image", "gallery"],
             save: false,
         }
     }

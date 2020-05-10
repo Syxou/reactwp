@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom'
-import { connect } from 'react-redux'
+
 import Home from './containers/home/Home'
 
 import Users from './containers/user/Users'
@@ -15,6 +15,8 @@ import newPage from './containers/pages/newPage'
 import Rcfs from './containers/rcf/rcfs'
 import Rcf from './containers/rcf/rcf'
 import Media from './containers/media/Meida'
+import Posts from './containers/post/Posts'
+import Post from './containers/post/Post'
 
 import Cookies from 'js-cookie'
 
@@ -23,6 +25,7 @@ const Routes = (props) => {
     if (!Cookies.get('token')) {
         return <Redirect to="/admin/login/" />
     }
+
     return (
         <Switch>
             <Route exact path="/admin" component={Home} />
@@ -40,6 +43,10 @@ const Routes = (props) => {
 
             <Route path="/admin/rcf/:id" component={Rcf} />
             <Route path="/admin/rcf" component={Rcfs} />
+
+            <Route path="/admin/post/:name/:id" component={Post} />
+            <Route path="/admin/post/:name" component={Posts} />
+
             <Route>
                 <h1>404</h1>
             </Route>
@@ -47,6 +54,5 @@ const Routes = (props) => {
     )
 };
 
-const mapStateToProps = state => ({ user: state.user })
 
-export default connect(mapStateToProps)(Routes);
+export default Routes;

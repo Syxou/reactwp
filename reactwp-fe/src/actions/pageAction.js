@@ -4,6 +4,7 @@ import Cookies from 'js-cookie'
 import { unsetUserToken } from './actions'
 
 export function fetchOnePageById(id) {
+
     return (
         dispatch => axios({
             method: 'get',

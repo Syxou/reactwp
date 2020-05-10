@@ -20,4 +20,7 @@ export default {
 
 
     GET_ALL_MEDIA: 'GET_ALL_MEDIA',
+
+    SET_POST_TYPE: 'SET_POST_TYPE',
+    SET_POST_BY_TYPE: 'SET_POST_BY_TYPE',
 }

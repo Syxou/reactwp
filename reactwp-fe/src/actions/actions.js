@@ -115,3 +115,4 @@ export function setAcountData(acount) {
     console.log(acount)
     return dispatch => dispatch(setAcountSteps(acount))
 }
+

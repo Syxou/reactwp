@@ -4,6 +4,7 @@ import { Upload, Icon, message } from 'antd';
 import { connect } from 'react-redux'
 import { fetchAllMedia } from '../../actions/mediaAction'
 
+
 const { Dragger } = Upload;
 function UploadMedia({ getMedia }) {
     const props = {
@@ -38,6 +39,7 @@ function UploadMedia({ getMedia }) {
         </Dragger>
     )
 }
+
 
 
 const mapDispatchToProps = (dispatch) => ({
