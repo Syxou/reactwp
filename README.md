@@ -65,6 +65,6 @@ $ cd reactwp
 $ cd reactwp-be
 $ npm i
 $ knex migrate:latest
-$ knex seek:run
+$ knex seed:run
 $ npm run dev
 ```
