@@ -6,6 +6,9 @@ import Card from './../../compontnts/card/Card';
 import { connect } from 'react-redux';
 import { getSchemaById, setNewField } from '../../actions/schemaAction'
 import { Select, Button } from 'antd';
+import { Transfer, Switch, Table, Tag } from 'antd';
+import difference from 'lodash/difference';
+import RcfPagesSelect from './rcfPagesSelect'
 
 import RcfItem from './rcfItem'
 import './style.css'
@@ -32,13 +35,14 @@ class Rcf extends Component {
 
         await axios({
             method: "get",
-            url: '/admin/api/post?type=page',
+            url: '/admin/api/post',
             headers: {
                 'Authorization': 'Bearer ' + Cookies.get('token'),
             }
         })
             .then(res => {
                 const { data } = res;
+                console.log(data)
                 this.setState({ AllPages: data })
             })
     }
@@ -46,8 +50,8 @@ class Rcf extends Component {
 
 
     render() {
-        const { fields, schemaData, selectedPage } = this.props.schema;
-
+        const { fields, schemaData, selectPages } = this.props.schema;
+        console.log(this.props.schema)
         return (
             <>
                 <div>
@@ -58,11 +62,12 @@ class Rcf extends Component {
                     <Center>
                         <Button shape="circle" icon="plus" onClick={() => this.props.addNewField()} />
                     </Center>
+
                 </div>
                 <Card>
                     <p>{schemaData.slug}</p>
                     <p>{schemaData.type}</p>
-                    <Select
+                    {/* <Select
                         mode="multiple"
                         style={{ width: '100%' }}
                         placeholder="Please select"
@@ -74,7 +79,10 @@ class Rcf extends Component {
                                 {page.slug}
                             </Option>
                         ))}
-                    </Select>
+                    </Select> */}
+                </Card>
+                <Card>
+                    <RcfPagesSelect allPages={this.state.AllPages} selectPages={selectPages} />
                 </Card>
             </>
         );

@@ -19,18 +19,23 @@ router.get('/', async (req, res) => {
     res.json(schema)
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', async (req, res, next) => {
     const id = parseInt(req.params.id)
-    const schema = await Schema.query().findById(id)
 
-    const related = await schema.$relatedQuery('fields').where('fields_schema_id', '=', id).groupBy('id');
+    try {
+        const schema = await Schema.query().findById(id)
+        const related = await schema.$relatedQuery('fields').where('fields_schema_id', '=', id).groupBy('id');
+        const pages = await schema.$relatedQuery('posts')
+        const resut = { pages: pages, fields: related, ...schema }
+        console.log(resut)
+        res.json(resut)
+    } catch (error) {
+        console.log(error)
+        next();
+    }
 
-    const pages = await schema.$relatedQuery('posts')
-        .catch(() => res.sendStatus(400))
 
-    const resut = { pages: pages, fields: related, ...schema }
 
-    res.json(resut)
 })
 
 router.post('/add', async (req, res) => {

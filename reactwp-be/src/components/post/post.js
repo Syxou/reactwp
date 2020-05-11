@@ -11,14 +11,27 @@ const PostType = require('../../models/post_type')
  * ! path: /admin/pages/  deprecated 
  */
 
-router.get('/', async function (req, res) {
-    var type = req.query.type
-    console.log(type)
-    await Post.query()
-        .where('type', type)
-        .then(Post => {
-            res.json(Post)
-        })
+router.get('/', async function (req, res, next) {
+    try {
+        var type = req.query.type
+        console.log(type)
+        if (type) {
+            await Post.query()
+                .where('type', type)
+                .then(Post => {
+                    res.json(Post)
+                })
+        } else {
+            await Post.query()
+                .then(Post => {
+                    res.json(Post)
+                })
+        }
+    } catch (error) {
+        console.log(error)
+        next()
+    }
+
 })
 
 

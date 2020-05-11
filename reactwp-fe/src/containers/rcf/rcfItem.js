@@ -78,7 +78,6 @@ class rcfItem extends Component {
 
     handleSetEdided = () => {
         this.setState({ save: true })
-        console.log('asdasd')
     }
     handleUnsetEdided = () => {
         this.setState({ save: false })
