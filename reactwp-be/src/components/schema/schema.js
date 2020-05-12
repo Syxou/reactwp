@@ -41,21 +41,18 @@ router.get('/:id', async (req, res, next) => {
 router.post('/:id/add/pages', async (req, res, next) => {
     const id = parseInt(req.params.id)
     const body = req.body
-    console.log(id, body.pages)
     try {
         const postShcema = await PostShcema.query().where('schema_id', id)
 
-        postShcema.forEach(item => {
+        if (postShcema.length > 0)
             body.pages.forEach(page => {
-                console.log(page, item.post_id)
-                if (page !== item.post_id) {
-                    PostShcema.query().insert({ post_id: page, schema_id: id })
-                        .then(result => console.log(result))
-                        .catch(err => console.log(err))
-                }
+                addPost(page, id)
             })
-        })
-        console.log(postShcema)
+        else
+            body.pages.forEach(page => {
+                addPost(page, id)
+            })
+
     } catch (error) {
         console.log(error)
         next()
@@ -66,6 +63,26 @@ router.post('/:id/add/pages', async (req, res, next) => {
         message: `Posts/Pages added`
     });
 })
+
+addPost = async (post, schema) => {
+    try {
+        const postEqual = await PostShcema.query().where("post_id", '=', post).where('schema_id', schema)
+        if (postEqual.length === 0)
+            await PostShcema.query().insert({ post_id: post, schema_id: schema })
+                .then(result => console.log(result))
+                .catch(err => console.log(err))
+
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+remoevPost = async (post, schema) => {
+    await PostShcema.query()
+        .delete()
+        .where('schema_id', schema)
+        .where('post_id', post)
+}
 
 router.post('/:id/add/field', async (req, res) => {
     const body = req.body

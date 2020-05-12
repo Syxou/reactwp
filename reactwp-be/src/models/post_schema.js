@@ -8,6 +8,8 @@ Model.knex(knex);
 
 class PostSchema extends Model {
     static tableName = 'post_schema';
+
+
 }
 
 
