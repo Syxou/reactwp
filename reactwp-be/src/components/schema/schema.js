@@ -3,6 +3,7 @@ const router = express.Router();
 
 const Schema = require('../../models/schema')
 const Fields = require('../../models/fields')
+const PostShcema = require('../../models/post_schema')
 
 /**
             "id": 2,
@@ -33,13 +34,37 @@ router.get('/:id', async (req, res, next) => {
         console.log(error)
         next();
     }
-
-
-
 })
 
-router.post('/add', async (req, res) => {
 
+
+router.post('/:id/add/pages', async (req, res, next) => {
+    const id = parseInt(req.params.id)
+    const body = req.body
+    console.log(id, body.pages)
+    try {
+        const postShcema = await PostShcema.query().where('schema_id', id)
+
+        postShcema.forEach(item => {
+            body.pages.forEach(page => {
+                console.log(page, item.post_id)
+                if (page !== item.post_id) {
+                    PostShcema.query().insert({ post_id: page, schema_id: id })
+                        .then(result => console.log(result))
+                        .catch(err => console.log(err))
+                }
+            })
+        })
+        console.log(postShcema)
+    } catch (error) {
+        console.log(error)
+        next()
+    }
+
+    res.json({
+        error: false,
+        message: `Posts/Pages added`
+    });
 })
 
 router.post('/:id/add/field', async (req, res) => {

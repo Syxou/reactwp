@@ -82,7 +82,7 @@ class Rcf extends Component {
                     </Select> */}
                 </Card>
                 <Card>
-                    <RcfPagesSelect allPages={this.state.AllPages} selectPages={selectPages} />
+                    <RcfPagesSelect allPages={this.state.AllPages} selectPages={selectPages} idScnema={this.props.match.params.id} />
                 </Card>
             </>
         );

@@ -15,7 +15,6 @@ export function getSchemaById(id) {
         })
             .then(res => {
                 const { data } = res;
-                console.log('schema', data)
                 let newSelectedPage = []
                 data.pages.forEach(page => {
                     newSelectedPage.push(page.slug)

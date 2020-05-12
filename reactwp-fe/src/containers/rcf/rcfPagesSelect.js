@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import axios from "axios"
 import Cookies from 'js-cookie'
-import styled from 'styled-components';
+
 import { Transfer, Switch, Table, Tag, Button, Icon } from 'antd';
 import difference from 'lodash/difference';
 
@@ -117,8 +117,23 @@ class RcfPagesSelect extends Component {
         this.setState({ targetKeys: nextTargetKeys, showSave: JSON.stringify(this.state.trueKeys) !== JSON.stringify(nextTargetKeys) });
     };
 
-    savePosts = () => {
-        console.log("save")
+    savePosts = async () => {
+        console.log("save", { pages: this.state.targetKeys })
+
+        await axios({
+            method: "post",
+            url: `/admin/api/fields/schema/${this.props.idScnema}/add/pages`,
+            headers: {
+                'Authorization': 'Bearer ' + Cookies.get('token'),
+            },
+            data: {
+                pages: this.state.targetKeys
+            }
+        })
+            .then(res => {
+                const { data } = res;
+                console.log(data)
+            })
     }
 
     render() {

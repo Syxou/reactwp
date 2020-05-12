@@ -1,4 +1,4 @@
-const { Model } = require('objection');
+const { Model, ref } = require('objection');
 const knex = require('../knex/knex')
 
 
@@ -19,7 +19,8 @@ class Schema extends Model {
     static get relationMappings() {
         const Fields = require('../models/fields')
         const Post = require('../models/post')
-        
+        const PostSchema = require('../models/post_schema')
+
         return {
             fields: {
                 relation: Model.HasManyRelation,
@@ -27,6 +28,14 @@ class Schema extends Model {
                 join: {
                     from: 'fields_schema.id',
                     to: 'fields.fields_schema_id',
+                }
+            },
+            PostSchema: {
+                relation: Model.HasManyRelation,
+                modelClass: PostSchema,
+                join: {
+                    from: 'fields_schema.id',
+                    to: 'post_schema.schema_id'
                 }
             },
             posts: {

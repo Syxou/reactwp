@@ -16,25 +16,40 @@ class Post extends Model {
         return 'post'
     }
 
-    static relationMappings = {
-        // schema: {
-        //     relation: Model.ManyTomanyRelation,
-        //     modelClass: Schema,
-        //     join: {
-        //         from: 'post.id',
-        //         through: {
-        //             from: 'post_schema.posts_id',
-        //             to: 'post_schema.schema_id'
-        //         },
-        //         to: 'fields_schema.id'
-        //     },
-        // },
-        fields: {
-            relation: Model.BelongsToOneRelation,
-            modelClass: Fields,
-            join: {
-                from: 'post.id',
-                to: 'fields.post_id',
+    static get relationMappings() {
+        const Schema = require('./schema');
+        const Fields = require('./fields');
+        const PostSchema = require('../models/post_schema')
+
+        return {
+            // schema: {
+            //     relation: Model.ManyTomanyRelation,
+            //     modelClass: Schema,
+            //     join: {
+            //         from: 'post.id',
+            //         through: {
+            //             from: 'post_schema.posts_id',
+            //             to: 'post_schema.schema_id'
+            //         },
+            //         to: 'fields_schema.id'
+            //     },
+            // },
+            PostSchema: {
+                relation: Model.HasManyRelation,
+                modelClass: PostSchema,
+                join: {
+                    from: 'post.id',
+                    to: 'post_schema.post_id'
+                }
+            },
+
+            fields: {
+                relation: Model.BelongsToOneRelation,
+                modelClass: Fields,
+                join: {
+                    from: 'post.id',
+                    to: 'fields.post_id',
+                }
             }
         }
     }
