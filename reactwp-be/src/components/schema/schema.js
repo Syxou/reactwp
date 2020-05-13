@@ -41,6 +41,7 @@ router.get('/:id', async (req, res, next) => {
 router.post('/:id/add/pages', async (req, res, next) => {
     const id = parseInt(req.params.id)
     const body = req.body
+    var removerItems = [];
     try {
         const postShcema = await PostShcema.query().where('schema_id', id)
 
@@ -52,6 +53,10 @@ router.post('/:id/add/pages', async (req, res, next) => {
             body.pages.forEach(page => {
                 addPost(page, id)
             })
+        console.log(postShcema)
+        postShcema.forEach(schema => {
+            checkRemoved(body.pages, schema.post_id, id)
+        });
 
     } catch (error) {
         console.log(error)
@@ -63,7 +68,6 @@ router.post('/:id/add/pages', async (req, res, next) => {
         message: `Posts/Pages added`
     });
 })
-
 addPost = async (post, schema) => {
     try {
         const postEqual = await PostShcema.query().where("post_id", '=', post).where('schema_id', schema)
@@ -75,8 +79,18 @@ addPost = async (post, schema) => {
     } catch (error) {
         console.log(error)
     }
-
 }
+
+checkRemoved = (newPosts, oldPost, schemaID) => {
+    if (newPosts.indexOf(oldPost) === -1) {
+        newPosts.pop(oldPost);
+        remoevPost(oldPost, schemaID)
+        console.log('remove post: ' + oldPost);
+    } else if (newPosts.indexOf(oldPost) > -1) {
+        console.log(oldPost + ' already exists');
+    }
+}
+
 remoevPost = async (post, schema) => {
     await PostShcema.query()
         .delete()
