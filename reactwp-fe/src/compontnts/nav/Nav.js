@@ -77,6 +77,12 @@ class Nav extends Component {
                                 </NavLink>
                             ))
                         }
+                        <NavLink
+                            to="/admin/settings"
+                            activeClassName="navbar__link--active"
+                            className="navbar__link">
+                            <Icon type="setting" />
+                        </NavLink>
 
                     </div>
                     <div className="menuBottom">

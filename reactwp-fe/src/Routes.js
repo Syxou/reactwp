@@ -17,6 +17,7 @@ import Rcf from './containers/rcf/rcf'
 import Media from './containers/media/Meida'
 import Posts from './containers/post/Posts'
 import Post from './containers/post/Post'
+import Settings from './containers/settings/Settings'
 
 import Cookies from 'js-cookie'
 
@@ -46,6 +47,7 @@ const Routes = (props) => {
 
             <Route path="/admin/post/:name/:id" component={Post} />
             <Route path="/admin/post/:name" component={Posts} />
+            <Route path="/admin/settings" component={Settings} />
 
             <Route>
                 <h1>404</h1>
