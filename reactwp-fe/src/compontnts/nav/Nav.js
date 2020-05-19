@@ -44,13 +44,12 @@ class Nav extends Component {
                             <Icon style={{ fontSize: '21px' }} type="user" />
                         </NavLink>
 
-
-                        <NavLink
+                        {/* <NavLink
                             activeClassName="navbar__link--active"
                             className="navbar__link"
                             to="/admin/pages">
                             <Icon style={{ fontSize: '21px' }} type="file" />
-                        </NavLink>
+                        </NavLink> */}
                         <NavLink
                             activeClassName="navbar__link--active"
                             className="navbar__link"
@@ -81,7 +80,7 @@ class Nav extends Component {
                             to="/admin/settings"
                             activeClassName="navbar__link--active"
                             className="navbar__link">
-                            <Icon type="setting" />
+                            <Icon style={{ fontSize: '21px' }}  type="setting" />
                         </NavLink>
 
                     </div>
