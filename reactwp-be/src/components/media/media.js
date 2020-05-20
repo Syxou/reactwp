@@ -7,7 +7,6 @@ const fs = require('fs')
 const Media = require('../../models/media')
 
 
-
 router.get('/all', async (req, res) => {
     const media = await Media.query();
 
@@ -22,6 +21,7 @@ router.post('/remove/:id', async (req, res) => {
         fs.unlinkSync(path.join(appDir, '/uploads', page.name))
         const remove = await Media.query().deleteById(id);
         console.log(remove, page)
+
     } catch (error) {
         console.log(error)
     }
@@ -33,10 +33,17 @@ router.post('/upload', async (req, res) => {
     if (!req.files || Object.keys(req.files).length === 0) {
         return res.status(400).send('No files were uploaded.');
     }
+
+    console.log(appDir + '/uploads')
+
     try {
         const target_file = req.files.Files;
         const host = req.get('host');
         const fileUrl = path.join(appDir, '/uploads', target_file.name);
+
+        if (!fs.existsSync(appDir + '/uploads')) {
+            fs.mkdirSync(appDir + '/uploads');
+        }
 
         target_file.mv(fileUrl, (err) => {
             if (err) throw err;
