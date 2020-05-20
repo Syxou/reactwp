@@ -9,6 +9,7 @@ const postData = require('../components/postData/router');
 const fields = require('../components/fields/fields');
 const schema = require('../components/schema/schema');
 const media = require('../components/media/media')
+const global = require('../components/global/global')
 
 router.use('/', (req, res, next) => {
     if (req.originalUrl === "/admin/users/signin/") {
@@ -42,6 +43,7 @@ router.use('/pages', post)  //!deprecated
 router.use('/users', users)
 router.use('/posts', posts)
 router.use('/postdata', postData)
+router.use('/api/global', global)
 
 
 module.exports = router;

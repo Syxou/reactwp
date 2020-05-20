@@ -5,7 +5,11 @@ Model.knex(knex);
 
 
 class Global extends Model {
-    static tableName = 'global';
+
+    static get tableName() {
+        return 'global'
+    }
+
 }
 
 
