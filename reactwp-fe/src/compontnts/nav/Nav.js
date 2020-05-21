@@ -68,7 +68,7 @@ class Nav extends Component {
                             types.map((post) => (
                                 <NavLink
                                     key={post.id}
-                                    to={`/admin/post/${post.type}`}
+                                    to={`/admin/post/${post.type}/`}
                                     activeClassName="navbar__link--active"
                                     className="navbar__link"
                                 >
@@ -80,7 +80,7 @@ class Nav extends Component {
                             to="/admin/settings"
                             activeClassName="navbar__link--active"
                             className="navbar__link">
-                            <Icon style={{ fontSize: '21px' }}  type="setting" />
+                            <Icon style={{ fontSize: '21px' }} type="setting" />
                         </NavLink>
 
                     </div>

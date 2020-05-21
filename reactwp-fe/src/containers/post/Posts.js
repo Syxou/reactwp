@@ -8,10 +8,17 @@ import Sidebare from '../../compontnts/sidebar/Sidebar'
 // import Filters from '../../compontnts/filter/Filter'
 
 
-class Post extends Component {
+class Posts extends Component {
 
     componentDidMount() {
+        console.log('mount')
         this.props.dispatch(getPostByType(this.props.match.params.name));
+    }
+
+    componentDidUpdate(prevProps) {
+        if(this.props.match.params.name !== prevProps.match.params.name){
+            this.props.dispatch(getPostByType(this.props.match.params.name));
+        }
     }
 
     render() {
@@ -55,4 +62,4 @@ const mapStateToProps = state => {
     }
 }
 
-export default connect(mapStateToProps)(Post);
+export default connect(mapStateToProps)(Posts);
