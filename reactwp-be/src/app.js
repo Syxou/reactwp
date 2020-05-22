@@ -3,7 +3,7 @@ const fileUpload = require('express-fileupload');
 var bodyParser = require("body-parser");
 const cors = require('cors');
 const knex = require('./knex/knex')
-const routes = require('./routes/index');
+const api = require('./routes/api');
 const admin = require('./routes/admin');
 const path = require('path');
 
@@ -20,7 +20,7 @@ app.use(fileUpload({
     useTempFiles: true,
 }))
 
-app.use('/', routes);
+app.use('/api', api);
 app.use('/admin', admin)
 app.use('/static', express.static(__dirname + '/uploads'))
 

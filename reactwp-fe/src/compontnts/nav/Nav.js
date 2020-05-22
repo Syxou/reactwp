@@ -14,7 +14,7 @@ class Nav extends Component {
     }
 
     hendleLogOut = () => {
-        this.props.dispatch(unsetUserToken())
+        this.props.unsetToken()
     }
 
     componentDidMount() {
@@ -105,6 +105,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => ({
     getPostTypes() {
         return dispatch(getAllPostType())
+    },
+    unsetToken() {
+        return dispatch(unsetUserToken())
     }
 })
 
