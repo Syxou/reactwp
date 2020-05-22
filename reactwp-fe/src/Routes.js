@@ -11,7 +11,7 @@ import editUser from './containers/user/UserEdit'
 import Pages from './containers/pages/Pages'
 import Page from './containers/pages/Page'
 
-import newPage from './containers/pages/newPage'
+import newPage from './containers/post/newPage'
 import Rcfs from './containers/rcf/rcfs'
 import Rcf from './containers/rcf/rcf'
 import Media from './containers/media/Meida'
@@ -38,7 +38,7 @@ const Routes = (props) => {
 
             <Route path="/admin/pages/:id" component={Page} />
             <Route path="/admin/pages" component={Pages} />
-            <Route path="/admin/new/page" component={newPage} />
+            <Route path="/admin/post/new/:type" component={newPage} />
 
             <Route path="/admin/media" component={Media} />
 

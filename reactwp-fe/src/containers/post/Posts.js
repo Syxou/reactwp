@@ -16,7 +16,7 @@ class Posts extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if(this.props.match.params.name !== prevProps.match.params.name){
+        if (this.props.match.params.name !== prevProps.match.params.name) {
             this.props.dispatch(getPostByType(this.props.match.params.name));
         }
     }
@@ -46,7 +46,7 @@ class Posts extends Component {
                 </div>
 
                 <Sidebare>
-                    <Link to="/admin/new/page">
+                    <Link to={`/admin/post/new/${this.props.match.params.name}`}>
                         <Button type="primary">New Page</Button>
                     </Link>
                 </Sidebare>

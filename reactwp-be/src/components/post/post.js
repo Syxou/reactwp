@@ -98,7 +98,8 @@ router.post('/add', async function (req, res) {
             title: page.title,
             state: page.state,
             slug: page.slug,
-            date_modifate: new Date()
+            date_modifate: new Date(),
+            type: page.type
         })
         .then(() => {
             PostData.query()
