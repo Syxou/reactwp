@@ -36,7 +36,13 @@ router.get('/:id/data', async (req, res, next) => {
         const post = await Post.query().findById(id).where('type', 'page')
 
         const fields = await post.$relatedQuery('fields').where('post_id', id)
-        res.json({ fields: fields, post: post })
+
+        objectFields = new Object;
+
+        fields.forEach((field) => {
+            objectFields = { [field.slug]: { ...field }, ...objectFields }
+        })
+        res.json({ fields: objectFields, post: post })
     } catch (error) {
         console.log(error)
         next()
