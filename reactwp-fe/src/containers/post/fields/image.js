@@ -1,61 +1,74 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
+import { Button } from 'antd';
+
 import Card from '../../../compontnts/card/Card'
-// import { changeFieldById } from '../../../actions/pageAction'
-import { fetchAllMedia } from '../../../actions/mediaAction'
-import { Button, Drawer } from 'antd';
+import ImageDrawer from './imageDrawer'
+import { changeFieldById } from '../../../actions/pageAction'
 import styled from 'styled-components'
+
 
 function Image({ field, setFieldById }) {
 
     const [visible, setVisible] = useState(false)
-    // const [childrenDrawer, setChildrenDrawer] = useState(false)
+    const [url, setUrl] = useState(field.data || '')
+
+
 
     const showDrawer = () => {
         setVisible(true)
-    };
-
-    const onClose = () => {
-        setVisible(false)
     };
 
     return (
         <div>
             <Card>
                 <h4>{field.name}</h4>
-                {field.data === "" &&
-                    <Button onClick={showDrawer()}>Select image</Button>
+                {url !== ''
+                    ? <>
+                        <Img src={url} alt="" />
+                        <Button type="dashed"
+                            onClick={() => {
+                                setFieldById({ ...field, data: '' })
+                                setUrl('')
+                            }}
+                            style={{
+                                position: 'absolute',
+                                marginLeft: '-19px',
+                                marginTop: "-1px",
+                                padding: '0',
+                                minWidth: '20px',
+                                width: '20px',
+                                height: '20px',
+                                fontSize: '10px',
+                            }}
+                            shape="circle"
+                            icon="close" />
+                    </>
+                    : <Button onClick={() => showDrawer()}>Select image</Button>
                 }
-
             </Card>
-            <Drawer
-                title="Basic Drawer"
-                placement="right"
-                closable={false}
-                onClose={onClose()}
+            {visible && <ImageDrawer
                 visible={visible}
-                getContainer={false}
-                style={{ position: 'absolute' }}
-            >
-                <p>Some contents...</p>
-            </Drawer>
+                closeCallblack={() => setVisible(false)}
+                urlCallback={(url => {
+                    setUrl(url)
+                    setFieldById({ ...field, data: url })
+                })} />}
         </div>
     )
 }
 
-
-
-
-// const handleChangeFieldData = (field, event) => {
-//     return { ...field, data: event.target.value }
-// }
+const Img = styled.img`
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 7px;
+    box-shadow: 0px 10px 20px rgba(31,32,65,0.1);
+`;
 
 const mapDispatchToProps = dispatch => ({
-    // setFieldById(field) {
-    //     return dispatch(changeFieldById(field))
-    // },
-    getMedia() {
-        return dispatch(fetchAllMedia())
+    setFieldById(field) {
+        return dispatch(changeFieldById(field))
     }
 });
 

@@ -85,23 +85,28 @@ class Post extends Component {
 
     handleDeletePage = () => {
         axios({
-            method: 'post',
-            url: '/admin/pages/trash/',
-            data: this.state.page,
+            method: 'DELETE',
+            url: `/admin/api/post/trash/${this.props.match.params.id}`,
             headers: {
                 'Authorization': 'Bearer ' + Cookies.get('token'),
             },
+            data: {
+                status: this.props.page.post.state
+            }
         })
-            .then((() => { this.setState({ redirect: true }) }))
+            .then((res => {
+                console.log(res)
+                this.setState({ redirect: true })
+            }))
             .catch((err) => { console.log(err) })
     }
 
     render() {
         const { redirect, fields } = this.state;
         if (redirect) {
-            return <Redirect to="/admin/pages" />;
+            return <Redirect to="/admin/post/page" />;
         }
-        console.log(this.props)
+        console.log("props", this.props)
         return (
             <>
                 <div style={{ width: "95%" }}>

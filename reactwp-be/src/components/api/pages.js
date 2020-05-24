@@ -26,10 +26,6 @@ router.get('/:id', async (req, res, next) => {
     }
 })
 
-getPostByid = (type, id) => {
-
-}
-
 router.get('/:id/data', async (req, res, next) => {
     const id = req.params.id
     try {

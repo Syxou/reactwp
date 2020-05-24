@@ -8,7 +8,7 @@ export function fetchOnePageById(id) {
     return (
         dispatch => axios({
             method: 'get',
-            url: `/admin/pages/${id}`,
+            url: `/admin/api/post/${id}`,
             headers: {
                 'Authorization': 'Bearer ' + Cookies.get('token'),
             }

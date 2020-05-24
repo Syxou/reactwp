@@ -1,13 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const Post = require('../../models/post');
-const Fields = require('../../models/fields');
 const PostData = require('../postData/model');
 const PostType = require('../../models/post_type')
 // var slugify = require('slugify')
 
 /**
- * * newPath /api/post/   new
+ * * newPath /admin/api/post/   new
  * ! path: /admin/pages/  deprecated 
  */
 
@@ -98,6 +97,7 @@ router.post('/add', async function (req, res) {
             title: page.title,
             state: page.state,
             slug: page.slug,
+            state: 'draft',
             date_modifate: new Date(),
             type: page.type
         })
@@ -121,11 +121,14 @@ router.post('/add', async function (req, res) {
         })
 })
 
-router.post('/trash', async function (req, res) {
-    const page = req.body
-    if (req.body.state === 'trash') {
-        Post.query()
-            .deleteById(page.id)
+router.delete('/trash/:id', async function (req, res) {
+    const id = parseInt(req.params.id)
+    const status = req.body.status
+    console.log(id, "dasdasd", status)
+
+    if (status === 'trash') {
+        await Post.query()
+            .deleteById(id)
             .then(() => {
                 res.sendStatus(200)
             })
@@ -133,16 +136,18 @@ router.post('/trash', async function (req, res) {
                 res.json(err.message)
             })
     } else
-        Post.query()
-            .update({ state: 'trash' })
-            .where('id', page.id)
+        await Post.query()
+            .findById(id)
+            .patch({
+                state: 'trash'
+            })
             .then(() => {
                 res.sendStatus(200)
             })
             .catch(err => {
                 res.json(err.message)
             })
-    console.log(page)
+
 })
 
 router.post('/delete', async function (req, res) {

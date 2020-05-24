@@ -51,8 +51,15 @@ function MediaItem(props) {
                         <p>{"http://" + props.media.url}</p>
                         <p>{props.media.width + " x " + props.media.height}</p>
                         <Button onClick={() => removeMedia()} danger>Remove</Button>
+                        {props.showSelect &&
+                            <Button onClick={() => {
+                                changeShow(false)
+                                props.selectCallback("http://" + props.media.url)
+                            }} danger>Select</Button>
+                        }
                     </InfoMedia>
                     <Close onClick={() => changeShow(false)} ><Icon type="close" /></Close>
+
                 </Modal>
 
             }
