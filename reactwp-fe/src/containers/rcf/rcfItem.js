@@ -27,8 +27,8 @@ class rcfItem extends Component {
     }
 
     handleChangeName = e => {
-        const slug = slugify("cf_" + e.target.value, { lower: true, });
-        const oldNameSlug = slugify("cf_" + this.props.field.name, { lower: true, });
+        const slug = slugify("cf_" + e.target.value, { lower: true, replacement: '_', });
+        const oldNameSlug = slugify("cf_" + this.props.field.name, { lower: true, replacement: '_', });
         let newField = {};
         if (oldNameSlug === this.props.field.slug || this.props.field.slug === "") {
             newField = { ...this.props.field, name: e.target.value, slug: slug }
