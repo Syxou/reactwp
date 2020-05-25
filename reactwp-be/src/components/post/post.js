@@ -226,9 +226,17 @@ router.post('/type/add', async (req, res, next) => {
                 type: body.type,
                 icon: body.icon,
             })
-            res.status(200).send({ error: false, message: 'This type has been added' })
+            res.status(200).send({ error: false, message: 'This type has been added 🌞' })
+        } else if (body.type === checkType[0].type) {
+            const newType = await PostType.query()
+                .findById(checkType[0].id)
+                .patch({
+                    type: body.type,
+                    icon: body.icon,
+                });
+            res.status(200).send({ error: false, message: 'This type has been updated 💫' })
         } else {
-            res.status(409).send({ error: true, message: 'This type already exist' })
+            res.status(409).send({ error: true, message: 'This type already exist 🌚' })
             next();
         }
     } catch (error) {
@@ -238,12 +246,13 @@ router.post('/type/add', async (req, res, next) => {
 })
 
 router.delete('/type/remove/:id', async (req, res, next) => {
+    const id = req.params.id
     try {
-        const id = req.params.id
         const postTypeAll = await PostType.query().deleteById(id);
-        res.json(postTypeAll)
+        res.status(200).send({ error: false, message: 'This type has been deleted 🌛' })
     } catch (error) {
         console.log(error)
+        res.status(409).send({ error: true, message: 'This type already exist 🌚' })
         next();
     }
 })

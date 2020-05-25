@@ -4,7 +4,6 @@ import Cookies from 'js-cookie'
 import { unsetUserToken } from './actions'
 
 export function getAllPostType() {
-    console.log("getAllPostType")
     return dispatch => {
         axios({
             method: "get",
@@ -18,6 +17,12 @@ export function getAllPostType() {
                 postsTypes: res.data
             }))
     }
+}
+
+export function setNewPostType() {
+    return dispatch => dispatch({
+        type: actionTypes.SET_NEW_POST_TYPE,
+    })
 }
 
 export function getPostByType(type) {
