@@ -3,10 +3,8 @@ import { NavLink, } from "react-router-dom";
 import { connect } from 'react-redux'
 import { Icon } from 'antd';
 import './Nav.css'
-import { Avatar } from 'antd';
 import { unsetUserToken } from '../../actions/actions'
 import { getAllPostType } from '../../actions/postAction'
-import styled from 'styled-components';
 
 class Nav extends Component {
     constructor(props) {
