@@ -11,6 +11,7 @@ class Card extends Component {
         margin: '10px 0',
         width: 'inherit',
         display: 'block',
+        justify: 'initial'
     }
 
     render() {
@@ -22,7 +23,7 @@ class Card extends Component {
                 margin={this.props.margin}
                 width={this.props.width}
                 display={this.props.display}
-
+                justify={this.props.justify}
             >
                 {this.props.children}
             </CardConponent>
@@ -36,6 +37,7 @@ const CardConponent = styled.div`
     margin: ${props => props.margin || '10px 0'};
     width: ${props => props.width || 'inherit'};
     display: ${props => props.display || 'block'};
+    justify-content: ${props => props.justify || 'initial'}
 `
 
 export default Card;
