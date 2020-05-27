@@ -199,17 +199,6 @@ router.get('/type/all', async (req, res, next) => {
     }
 })
 
-router.get('/type/all', async (req, res, next) => {
-    try {
-        const postTypeAll = await PostType.query()
-        res.json(postTypeAll)
-    } catch (error) {
-        console.log(error)
-        next();
-    }
-})
-
-
 /**  
 **  {
 **     "type": "page",
@@ -219,7 +208,7 @@ router.get('/type/all', async (req, res, next) => {
 router.post('/type/add', async (req, res, next) => {
     try {
         const body = req.body
-        const checkType = await PostType.query().where({ type: body.type })
+        const checkType = await PostType.query().where("type", body.type)
 
         if (checkType.length === 0) {
             const newType = await PostType.query().insert({
@@ -248,11 +237,17 @@ router.post('/type/add', async (req, res, next) => {
 router.delete('/type/remove/:id', async (req, res, next) => {
     const id = req.params.id
     try {
-        const type = await PostType.query().findById(id);
-        const postTypeAll = await PostType.query().deleteById(id);
-        const posts = await Post.query().delete().where('type', type.type)
-        console.log(type, postTypeAll, posts)
-        res.status(200).send({ error: false, message: 'This type has been deleted 🌛' })
+        const postType = await PostType.query().findById(id);
+        if (postType) { var post = await Post.query().where('type', postType.type) }
+
+        if (post.length !== 0) {
+            console.log(post)
+            res.status(200).send({ error: true, message: 'This type has entries, delete them 🌪' });
+        }
+        else {
+            const postTypeRemowe = await PostType.query().deleteById(id);
+            res.status(200).send({ error: false, message: 'This type has been deleted 🌛' })
+        }
     } catch (error) {
         console.log(error)
         res.status(409).send({ error: true, message: 'This type already exist 🌚' })

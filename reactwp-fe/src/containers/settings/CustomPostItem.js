@@ -19,16 +19,13 @@ export default function CustomPostItem({ type, update }) {
             method: "post", url: '/admin/api/post/type/add',
             headers: { "Authorization": 'Bearer ' + Cookies.get('token') },
             data: { type: name, icon: icon }
-        })
-            .then(res => {
-                if (!res.data.error) {
-                    message.success(res.data.message)
-                    return update()
-                }
-                else
-                    return message.error(res.data.message)
-            })
-            .catch(err => console.log(err))
+        }).then(res => {
+            if (!res.data.error) {
+                message.success(res.data.message)
+                return update()
+            }
+            else return message.error(res.data.message)
+        }).catch(err => console.log(err))
     }
     const deleteType = async () => {
         await axios({
