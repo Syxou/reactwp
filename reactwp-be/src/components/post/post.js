@@ -248,7 +248,10 @@ router.post('/type/add', async (req, res, next) => {
 router.delete('/type/remove/:id', async (req, res, next) => {
     const id = req.params.id
     try {
+        const type = await PostType.query().findById(id);
         const postTypeAll = await PostType.query().deleteById(id);
+        const posts = await Post.query().delete().where('type', type.type)
+        console.log(type, postTypeAll, posts)
         res.status(200).send({ error: false, message: 'This type has been deleted 🌛' })
     } catch (error) {
         console.log(error)
