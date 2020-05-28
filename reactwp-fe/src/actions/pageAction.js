@@ -33,6 +33,13 @@ export function changePageTitle(title) {
     })
 }
 
+export function changePostStatus(status) {
+    return dispatch => dispatch({
+        type: actionTypes.PAGE_SET_STATUS,
+        status: status,
+    })
+}
+
 export function changeFieldById(field) {
     return {
         type: actionTypes.PAGE_SET_FIELD_BY_ID,

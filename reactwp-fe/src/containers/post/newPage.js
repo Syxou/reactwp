@@ -47,7 +47,7 @@ class NewPage extends Component {
     handleSubmitPage() {
         const data = {
             title: this.state.title,
-            state: '',
+            state: 'draft',
             slug: this.state.title,
             type: this.props.match.params.type
         }
@@ -60,6 +60,7 @@ class NewPage extends Component {
             },
         })
             .then(() => {
+                
                 this.setState({ redirect: true })
             })
             .catch(error => {
@@ -68,34 +69,23 @@ class NewPage extends Component {
             });
     }
 
-    render(props) {
+    render() {
         const { redirect } = this.state;
 
         if (redirect) {
-            return <Redirect to="/admin/pages/" />;
+            return <Redirect to={`/admin/post/${this.props.match.params.type}`} />;
         }
         return (
             <>
                 <div style={{ width: "95%" }}>
                     <input className="pageTitle" value={this.state.title} onClick={this.handleClickTitle} onChange={this.handleChangeTitle} />
-                    <Card >
-                        <Editor
-                            editorState={this.state.editorState}
-                            wrapperClassName="demo-wrapper"
-                            editorClassName="editer-content"
-                            onEditorStateChange={this.onChange}
-                        />
-                    </Card>
                 </div>
 
                 <Sidebare>
-                    <Card
-                        bg='linear-gradient(180deg, #679CF6 0%, #4072EE 100%)'
-                    >
+                    <Card bg='linear-gradient(180deg, #679CF6 0%, #4072EE 100%)'>
                         <p style={{ color: '#ffffff' }}><span>Status:</span>{" draft"}</p>
-                        <p></p>
                     </Card>
-                    <Button className="buttonSave" type="primary" SmileOutlined="save" size={'large'} onClick={this.handleSubmitPage} />
+                    <Button type="primary" onClick={this.handleSubmitPage.bind(this)}>Save</Button>
                 </Sidebare>
             </>
         );

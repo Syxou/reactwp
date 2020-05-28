@@ -89,36 +89,24 @@ router.post('/fields/update/:id', async (req, res) => {
     }
 })
 
+
 router.post('/add', async function (req, res) {
     const page = req.body
     console.log(page)
-    Post.query()
-        .insert({
-            title: page.title,
-            state: page.state,
-            slug: page.slug,
-            state: 'draft',
-            date_modifate: new Date(),
-            type: page.type
-        })
-        .then(() => {
-            PostData.query()
-                .insert({
-                    post_content: JSON.stringify(content),
-                    post_id: page.id,
-                    post_type: 'content',
-                    state: 'draft'
-                })
-                .catch(err => {
-                    console.log(err)
-                })
-        })
-        .then(() => {
-            res.sendStatus(200)
-        })
-        .catch(err => {
-            console.log(err)
-        })
+
+    const post = await Post.query().insert({
+        title: page.title,
+        state: page.state,
+        slug: page.slug,
+        state: 'draft',
+        date_modifate: new Date(),
+        type: page.type
+    })
+
+    if (post) {
+        res.send({ error: false, message: `${post.title} has been added 🌞` })
+    }
+    res.send({ error: true, message: 'something went wrong 💥' })
 })
 
 router.delete('/trash/:id', async function (req, res) {

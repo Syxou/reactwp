@@ -28,6 +28,11 @@ export default (state = initialState, action) => {
             const page = { ...state.page, post: post }
             updated['page'] = page;
             return updated
+        case actionTypes.PAGE_SET_STATUS:
+            const posts = { ...state.page.post, state: action.status }
+            const newpost = { ...state.page, post: post }
+            updated['page'] = page;
+            return updated
 
         case actionTypes.PAGE_SET_FIELD_BY_ID:
             let newFields = [];

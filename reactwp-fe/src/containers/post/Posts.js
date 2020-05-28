@@ -47,7 +47,7 @@ class Posts extends Component {
 
                 <Sidebare>
                     <Link to={`/admin/post/new/${this.props.match.params.name}`}>
-                        <Button type="primary">New Page</Button>
+                        <Button type="primary">New {this.props.match.params.name}</Button>
                     </Link>
                 </Sidebare>
             </>

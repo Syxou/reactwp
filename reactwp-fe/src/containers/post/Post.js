@@ -1,18 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-
-import { Button } from 'antd';
 import axios from 'axios'
 import Cookies from 'js-cookie'
+import { Menu, Dropdown, Icon, Button } from 'antd';
+
 
 import Card from '../../compontnts/card/Card'
 import Sidebare from '../../compontnts/sidebar/Sidebar'
-import { unsetUserToken, fetchOnePageById, changePageTitle } from '../../actions/pageAction'
+import { unsetUserToken, fetchOnePageById, changePageTitle, changePostStatus } from '../../actions/pageAction'
 import Fields from './fields/fields'
 
 class Post extends Component {
@@ -22,17 +21,18 @@ class Post extends Component {
             editorState: EditorState.createEmpty(),
             redirect: false,
             page: {},
-            fields: []
+            fields: [],
+
         };
         this.onChange = editorState => this.setState({ editorState });
     }
 
-    async componentDidMount() {
+    componentDidMount() {
         const id = this.props.match.params.id;
         // this.props.dispatch(fetchPageItem(id))
-        await this.props.dispatch(fetchOnePageById(id))
+        this.props.dispatch(fetchOnePageById(id))
 
-        await axios({
+        axios({
             method: 'get',
             url: `/admin/postdata/${id}`,
             headers: {
@@ -48,7 +48,7 @@ class Post extends Component {
     }
 
     handleChangeTitle = (event) => {
-        let value = event.target.value
+        const value = event.target.value
         this.props.dispatch(changePageTitle(value))
     }
 
@@ -101,11 +101,12 @@ class Post extends Component {
             .catch((err) => { console.log(err) })
     }
 
+
     render() {
-        const { redirect, fields } = this.state;
-        if (redirect) {
-            return <Redirect to="/admin/post/page" />;
-        }
+        const { redirect } = this.state;
+        if (redirect)
+            return <Redirect to={`/admin/post/${this.props.page.post.type}`} />;
+
         console.log("props", this.props)
         return (
             <>
@@ -126,11 +127,8 @@ class Post extends Component {
                 </div>
 
                 <Sidebare>
-                    <Card
-                        bg='linear-gradient(180deg, #679CF6 0%, #4072EE 100%)'
-                    >
-                        <p style={{ color: '#ffffff' }}><span>Status:</span>{" " + this.props.page.post.state}</p>
-                        <p></p>
+                    <Card bg='linear-gradient(180deg, #679CF6 0%, #4072EE 100%)'>
+                        <p style={{ color: '#ffffff' }}><span>Status:</span>{" " + this.props.page.post.state} <Icon type="down" /></p>
                     </Card>
                     <Button onClick={this.handleSubmitPage} shape="circle" icon="save" />
                     <Button onClick={this.handleDeletePage} shape="circle" icon="delete" />
@@ -145,5 +143,6 @@ const mapStateToProps = state => {
         page: state.pages.page
     }
 }
+
 
 export default connect(mapStateToProps)(Post);
