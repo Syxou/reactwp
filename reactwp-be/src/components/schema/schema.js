@@ -25,7 +25,7 @@ router.get('/:id', async (req, res, next) => {
 
     try {
         const schema = await Schema.query().findById(id)
-        const related = await schema.$relatedQuery('fields').where('fields_schema_id', '=', id).groupBy('id');
+        const related = await schema.$relatedQuery('fields').where('fields_schema_id', '=', id).groupByRaw('slug');
         const pages = await schema.$relatedQuery('posts')
         const resut = { pages: pages, fields: related, ...schema }
         console.log(resut)
@@ -36,24 +36,25 @@ router.get('/:id', async (req, res, next) => {
     }
 })
 
-
-
 router.post('/:id/add/pages', async (req, res, next) => {
+    console.log('/:id/add/pages')
     const id = parseInt(req.params.id)
     const body = req.body
     var removerItems = [];
     try {
+        //**added 
         const postShcema = await PostShcema.query().where('schema_id', id)
 
-        if (postShcema.length > 0)
-            body.pages.forEach(page => {
-                addPost(page, id)
-            })
-        else
-            body.pages.forEach(page => {
-                addPost(page, id)
-            })
+        body.pages.forEach(page => {
+            addPost(page, id)
+        })
+
+        console.log('postShcema.length  < 0')
+        // body.pages.forEach(page => {
+        //     addPost(page, id)
+        // })
         console.log(postShcema)
+        //**removed 
         postShcema.forEach(schema => {
             checkRemoved(body.pages, schema.post_id, id)
         });
@@ -68,24 +69,49 @@ router.post('/:id/add/pages', async (req, res, next) => {
         message: `Posts/Pages added`
     });
 })
-addPost = async (post, schema) => {
+addPost = async (postID, schemaID) => {
     try {
-        const postEqual = await PostShcema.query().where("post_id", '=', post).where('schema_id', schema)
-        if (postEqual.length === 0)
-            await PostShcema.query().insert({ post_id: post, schema_id: schema })
+        const postEqual = await PostShcema.query().where("post_id", '=', postID).where('schema_id', schemaID)
+        if (postEqual.length === 0) {
+            await PostShcema.query().insert({ post_id: postID, schema_id: schemaID })
                 .then(result => console.log(result))
                 .catch(err => console.log(err))
-
+            await addFiedlsToPost(postID, schemaID)
+        }
     } catch (error) {
         console.log(error)
     }
+}
+addFiedlsToPost = async (postID, schemaID) => {
+    const schema = await Schema.query().findById(schemaID)
+    const fields = await schema.$relatedQuery('fields').groupByRaw('slug')
+    await fields.forEach(field => {
+        schema.$relatedQuery('fields')
+            .insert({
+                data: '',
+                type: field.type,
+                name: field.name,
+                slug: field.slug,
+                post_id: postID,
+                fields_schema_id: schemaID,
+            }).where('slug', 'field.slug').where('post_id', '!=', postID)
+            .then(result => { console.log(result) })
+            .catch(error => { console.log(error) })
+    })
+    return true
+}
+
+removeFieldsFromPost = async (postID, schemaID) => {
+    const fields = await Fields.query().delete().where('post_id', postID).where('fields_schema_id', schemaID)
+
 }
 
 checkRemoved = (newPosts, oldPost, schemaID) => {
     if (newPosts.indexOf(oldPost) === -1) {
         newPosts.pop(oldPost);
         remoevPost(oldPost, schemaID)
-        console.log('remove post: ' + oldPost);
+        removeFieldsFromPost(oldPost, schemaID)
+        console.log('remove post by id: ' + oldPost);
     } else if (newPosts.indexOf(oldPost) > -1) {
         console.log(oldPost + ' already exists');
     }
