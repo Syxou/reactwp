@@ -20,12 +20,23 @@ router.get('/', async (req, res) => {
     res.json(schema)
 })
 
+router.post('/add', async (req, res) => {
+    const data = req.data
+    const schema = await Schema.query().insert({
+        name: data.name,
+        type: data.type,
+        slug: data.slug
+    })
+    res.json(schema)
+})
+
+
 router.get('/:id', async (req, res, next) => {
     const id = parseInt(req.params.id)
 
     try {
         const schema = await Schema.query().findById(id)
-        const related = await schema.$relatedQuery('fields').where('fields_schema_id', '=', id).groupByRaw('slug');
+        const related = await schema.$relatedQuery('fields').where('fields_schema_id', '=', id).groupBy("slug");
         const pages = await schema.$relatedQuery('posts')
         const resut = { pages: pages, fields: related, ...schema }
         console.log(resut)
@@ -35,6 +46,7 @@ router.get('/:id', async (req, res, next) => {
         next();
     }
 })
+
 
 router.post('/:id/add/pages', async (req, res, next) => {
     console.log('/:id/add/pages')
@@ -84,7 +96,7 @@ addPost = async (postID, schemaID) => {
 }
 addFiedlsToPost = async (postID, schemaID) => {
     const schema = await Schema.query().findById(schemaID)
-    const fields = await schema.$relatedQuery('fields').groupByRaw('slug')
+    const fields = await schema.$relatedQuery('fields').groupByRaw("`slug`");
     await fields.forEach(field => {
         schema.$relatedQuery('fields')
             .insert({
