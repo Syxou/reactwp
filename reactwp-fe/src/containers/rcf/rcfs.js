@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 import { connect } from "react-redux"
+import { Button } from 'antd'
 import { unsetUserToken } from "../../actions/actions"
 import Listing from '../../compontnts/listing/Listing'
-
+import Sidebare from '../../compontnts/sidebar/Sidebar'
 class rcf extends Component {
     constructor(props) {
         super(props)
@@ -41,12 +43,19 @@ class rcf extends Component {
             />
         ))
         return (
-            <div>
-                <h1>Custom Fields</h1>
-                <div className="cardList">
-                    {this.state.fields && getFIelds}
+            <>
+                <div>
+                    <h1>Custom Fields</h1>
+                    <div className="cardList">
+                        {this.state.fields && getFIelds}
+                    </div>
                 </div>
-            </div>
+                <Sidebare>
+                    <Link to={`/admin/post/new/${this.props.match.params.name}`}>
+                        <Button type="primary">New {this.props.match.params.name}</Button>
+                    </Link>
+                </Sidebare>
+            </>
         );
     }
 }

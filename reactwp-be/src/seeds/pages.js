@@ -20,17 +20,10 @@ exports.seed = function (knex) {
           date_modifate: new Date()
         },
         {
-          title: 'About',
-          state: 'trash',
-          slug: 'about',
-          type: 'page',
-          date_modifate: new Date()
-        },
-        {
           title: 'post1',
           state: 'publish',
           slug: 'post1',
-          type: 'post',
+          type: 'projects',
           date_modifate: new Date()
         }
       ]);

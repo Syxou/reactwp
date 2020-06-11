@@ -7,7 +7,6 @@ exports.seed = function (knex) {
       return knex('post_type').insert([
         { id: 1, type: 'page', icon: 'file' },
         { id: 2, type: 'projects', icon: 'project' },
-        { id: 3, type: 'blog', icon: 'align-left' }
       ]);
     });
 };
