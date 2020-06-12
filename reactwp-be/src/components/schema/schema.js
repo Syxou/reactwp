@@ -20,14 +20,31 @@ router.get('/', async (req, res) => {
     res.json(schema)
 })
 
-router.post('/add', async (req, res) => {
-    const data = req.data
+router.post('/add', async (req, res, next) => {
+    const data = req.body
+    const schemaOld = await Schema.query()
+    console.log(data, schemaOld)
+    await schemaOld.forEach(s => {
+        if (data.slug === s.slug) {
+            res.json({ error: true, message: 'Already exist this schema.' })
+            return next()
+        }
+    })
     const schema = await Schema.query().insert({
         name: data.name,
-        type: data.type,
+        desc: data.desc,
         slug: data.slug
     })
-    res.json(schema)
+    res.json({ error: false, message: "Schema has been created.", schema })
+})
+
+router.delete('/delete', async (req, res, next) => {
+    const id = req.body.id
+    const schemaDeleted = await Schema.query().deleteById(id)
+    schemaDeleted
+        ? res.json({ error: false, message: "Schema has been deleted." })
+        : res.json({ error: true, message: "Schema does not exist." })
+    next()
 })
 
 

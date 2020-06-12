@@ -111,7 +111,9 @@ class Post extends Component {
         return (
             <>
                 <div style={{ width: "95%" }}>
-                    <input className="pageTitle" value={this.props.page.post.title} onChange={this.handleChangeTitle} />
+                    <input
+                        className="pageTitle" value={this.props.page.post.title}
+                        onChange={this.handleChangeTitle} />
                     <Card>
                         <Editor
                             editorState={this.state.editorState}

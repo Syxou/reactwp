@@ -37,7 +37,7 @@ const CardConponent = styled.div`
     margin: ${props => props.margin || '10px 0'};
     width: ${props => props.width || 'inherit'};
     display: ${props => props.display || 'block'};
-    justify-content: ${props => props.justify || 'initial'}
+    justify-content: ${props => props.justify || 'initial'};
 `
 
 export default Card;
