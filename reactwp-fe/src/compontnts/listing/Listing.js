@@ -41,20 +41,26 @@ const Card = styled.div`
     }
 `
 
+const CardData = styled.div`
+    display: inherit;
+`
+
 
 const Listing = (props) => {
     return (
         <Card>
-            {props.image && <img src={props.image} alt="" />}
-            <div>
-                <p>{props.name}</p>
-                <span>{props.status}</span>
-            </div>
+            <CardData>
+                {props.image && <img src={props.image} alt="" />}
+                <div>
+                    <p>{props.name}</p>
+                    <span>{props.status}</span>
+                </div>
+            </CardData>
             <div>
                 <Link to={props.link}>
                     <Button
                         type="dashed"
-                        style={{ borderColor: "#1890ff"}}
+                        style={{ borderColor: "#1890ff" }}
                     >
                         {props.textLink}
                     </Button>
