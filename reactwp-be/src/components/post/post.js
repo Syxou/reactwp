@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Post = require('../../models/post');
 const PostData = require('../postData/model');
-const PostType = require('../../models/post_type')
+const PostType = require('../../models/post_type');
 // var slugify = require('slugify')
 
 /**
@@ -204,21 +204,29 @@ router.post('/type/add', async (req, res, next) => {
                 icon: body.icon,
             })
             res.status(200).send({ error: false, message: 'This type has been added 🌞' })
-        } else if (body.type === checkType[0].type) {
-            const newType = await PostType.query()
-                .findById(checkType[0].id)
-                .patch({
-                    type: body.type,
-                    icon: body.icon,
-                });
-            res.status(200).send({ error: false, message: 'This type has been updated 💫' })
         } else {
-            res.status(409).send({ error: true, message: 'This type already exist 🌚' })
+            res.status(200).send({ error: true, message: 'This type already exist 🌚' })
             next();
         }
     } catch (error) {
         console.log(error)
         next()
+    }
+})
+
+router.post('/type/update', async (req, res, next) => {
+    const body = req.body
+    try {
+        const updateType = await PostType.query()
+            .findById(body.id)
+            .patch({
+                type: body.type,
+                icon: body.icon,
+            })
+        updateType && res.status(200).send({ error: false, message: 'This type has been updated 💫' })
+
+    } catch (error) {
+        res.status(200).send({ error: true, message: 'Error' })
     }
 })
 

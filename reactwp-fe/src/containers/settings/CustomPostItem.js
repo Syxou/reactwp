@@ -15,17 +15,30 @@ export default function CustomPostItem({ type, update }) {
     const [icon, setIcon] = useState(type.icon)
 
     const saveType = async () => {
-        await axios({
-            method: "post", url: '/admin/api/post/type/add',
-            headers: { "Authorization": 'Bearer ' + Cookies.get('token') },
-            data: { type: name, icon: icon }
-        }).then(res => {
-            if (!res.data.error) {
-                message.success(res.data.message)
-                return update()
-            }
-            else return message.error(res.data.message)
-        }).catch(err => console.log(err))
+        if (type.new)
+            await axios({
+                method: "post", url: '/admin/api/post/type/add',
+                headers: { "Authorization": 'Bearer ' + Cookies.get('token') },
+                data: { type: name, icon: icon }
+            }).then(res => {
+                if (!res.data.error) {
+                    message.success(res.data.message)
+                    return update()
+                }
+                else return message.error(res.data.message)
+            }).catch(err => console.log(err))
+        else
+            await axios({
+                method: "post", url: '/admin/api/post/type/update',
+                headers: { "Authorization": 'Bearer ' + Cookies.get('token') },
+                data: { type: name, icon: icon, id: type.id }
+            }).then(res => {
+                if (!res.data.error) {
+                    message.success(res.data.message)
+                    return update()
+                }
+                else return message.error(res.data.message)
+            }).catch(err => console.log(err))
     }
     const deleteType = async () => {
         await axios({

@@ -15,8 +15,8 @@ export default (state = iniTialState, action) => {
             return update;
         case actionTypes.SET_NEW_POST_TYPE:
             const last = state.types[state.types.length - 1]
-            let newTypes = [...state.types]
-            newTypes.push({ id: last.id + 1, type: 'new_type', icon: 'align-left' })
+            let newTypes = [].concat(state.types)
+            newTypes.push({ id: last.id + 1, type: 'new_type', icon: 'align-left', new: true })
             update['types'] = newTypes
             return update;
         case actionTypes.SET_POST_BY_TYPE:
