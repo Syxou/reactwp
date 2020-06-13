@@ -1,8 +1,7 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Button, Drawer } from 'antd';
+import { Drawer } from 'antd';
 
-// import { changeFieldById } from '../../../actions/pageAction'
 import { fetchAllMedia } from '../../../actions/mediaAction'
 import MediaItem from '../../media/MediaItem'
 
@@ -11,14 +10,11 @@ function ImageDrawer({ visible, closeCallblack, getMedia, media, urlCallback }) 
 
     useEffect(() => {
         getMedia()
-
-    }, [])
-
-
+    })
 
     return (
         <Drawer
-            title="Basic Drawer"
+            title="Images"
             placement="right"
             closable={false}
             onClose={() => closeCallblack()}
@@ -44,5 +40,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ImageDrawer);
-
-

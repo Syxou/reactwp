@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { changeFieldById } from '../../../actions/pageAction'
-import Card from '../../../compontnts/card/Card'
 import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
+
+import Card from '../../../compontnts/card/Card'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
+import { changeFieldById } from '../../../actions/pageAction'
 
 function Wyswyg({ field, setFieldById }) {
 

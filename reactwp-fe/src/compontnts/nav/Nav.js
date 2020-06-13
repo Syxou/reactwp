@@ -7,10 +7,7 @@ import { unsetUserToken } from '../../actions/actions'
 import { getAllPostType } from '../../actions/postAction'
 
 class Nav extends Component {
-    constructor(props) {
-        super(props)
-    }
-
+  
     hendleLogOut = () => {
         this.props.unsetToken()
     }

@@ -10,13 +10,11 @@ import MediaItem from './MediaItem'
 const useFetching = someFetchActionCreator => {
     useEffect(() => {
         someFetchActionCreator();
-    }, [])
+    }, [someFetchActionCreator])
 }
 
 function Meida({ media, getMedia }) {
     useFetching(getMedia)
-    console.log(media)
-
 
     return (
         <Wrap>

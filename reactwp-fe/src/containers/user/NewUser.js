@@ -86,8 +86,8 @@ export default class NewUser extends Component {
     };
 
     render() {
-        // if (this.stete.redirect)
-        //     return <Redirect to={`/admin/users/`} />
+        if (this.stete.redirect)
+            return <Redirect to={`/admin/users/`} />
         const uploadButton = (
             <div>
                 <Icon type={this.state.loading ? 'loading' : 'plus'} />
@@ -180,5 +180,3 @@ function beforeUpload(file) {
     }
     return isJpgOrPng && isLt2M;
 }
-
-

@@ -11,7 +11,6 @@ var initialState = {
 
 export default (state = initialState, action) => {
     var updated = Object.assign({}, state)
-
     switch (action.type) {
         case actionTypes.PAGES_RECEIVED:
             console.log('PAGES_RECEIVED')
@@ -28,9 +27,10 @@ export default (state = initialState, action) => {
             const page = { ...state.page, post: post }
             updated['page'] = page;
             return updated
+
         case actionTypes.PAGE_SET_STATUS:
-            const posts = { ...state.page.post, state: action.status }
-            const newpost = { ...state.page, post: post }
+            // const posts = { ...state.page.post, state: action.status }
+            // const newpost = { ...state.page, post: post }
             updated['page'] = page;
             return updated
 
@@ -38,11 +38,10 @@ export default (state = initialState, action) => {
             let newFields = [];
             state.page.fields.length > 1 ?
                 state.page.fields.map((field) => {
-                    if (field.id === action.field.id) {
-                        newFields.push(action.field)
-                    } else {
-                        newFields.push(field)
-                    }
+                    if (field.id === action.field.id)
+                        return newFields.push(action.field)
+                    else return newFields.push(field)
+
                 })
                 : newFields = action.field
             const page_set_field = { ...state.page, fields: newFields }
@@ -63,7 +62,6 @@ export default (state = initialState, action) => {
             updated['pageItem'] = action.pageItem
             return updated
 
-        default:
-            return state
+        default: return state
     }
 }

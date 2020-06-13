@@ -39,9 +39,7 @@ class Posts extends Component {
                 <div>
                     <h1>{this.props.match.params.name}</h1>
                     <div>
-                        <div className="cardList">
                             {pageItems}
-                        </div>
                     </div>
                 </div>
 

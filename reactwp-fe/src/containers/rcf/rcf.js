@@ -5,18 +5,12 @@ import styled from 'styled-components';
 import Card from './../../compontnts/card/Card';
 import { connect } from 'react-redux';
 import { getSchemaById, setNewField } from '../../actions/schemaAction'
-import { Select, Button } from 'antd';
-import { Transfer, Switch, Table, Tag } from 'antd';
-import difference from 'lodash/difference';
+import { Button } from 'antd';
 import RcfPagesSelect from './rcfPagesSelect'
 
 import RcfItem from './rcfItem'
 import './style.css'
 
-const { Option } = Select;
-function handleChange(value) {
-    console.log(`selected ${value}`);
-}
 
 class Rcf extends Component {
     constructor(props) {

@@ -72,7 +72,7 @@ const getImageOrPdf = (url, type) => {
         return <h3> PDF </h3>
     }
     else {
-        return <img src={"http://" + url} />
+        return <img src={"http://" + url} alt="img" />
     }
 }
 

@@ -8,7 +8,7 @@ import { fetchAllMedia } from '../../actions/mediaAction'
 const { Dragger } = Upload;
 function UploadMedia({ getMedia }) {
     const props = {
-        name: 'file',
+        // name: 'file',
         multiple: true,
         method: 'post',
         action: '/admin/api/media/upload',

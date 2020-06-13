@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from "axios"
 import Cookies from 'js-cookie'
 
-import { Transfer, Switch, Table, Tag, Button, Icon } from 'antd';
+import { Transfer, Table, Tag, Button } from 'antd';
 import difference from 'lodash/difference';
 
 // Customize Table Transfer

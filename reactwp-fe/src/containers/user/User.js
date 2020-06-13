@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
-import axios from 'axios';
-import { Link } from 'react-router-dom'
-import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import Card from '../../compontnts/card/Card';
-import Sidebare from '../../compontnts/sidebar/Sidebar';
-import { Icon, Button } from 'antd';
+import { connect } from 'react-redux';
 import Cookies from 'js-cookie';
+import { Button } from 'antd';
+import axios from 'axios';
+
+import Card from '../../compontnts/card/Card';
 import { unsetUserToken } from "../../actions/actions";
+import Sidebare from '../../compontnts/sidebar/Sidebar';
 
 class User extends Component {
     constructor(props) {
@@ -107,9 +108,6 @@ const UserName = styled.h4`
     line-height: 24px;
     text-align: center;
     color: #1F2041;
-`
-const FlexRow = styled.div`
-    display:flex;
 `
 
 export default connect()(User);

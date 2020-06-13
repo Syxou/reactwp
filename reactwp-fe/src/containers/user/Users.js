@@ -46,15 +46,13 @@ class Users extends Component {
             <>
                 <div>
                     <h1>Users</h1>
-                    <div className="cardList">
-                        {this.state.users && getUsers}
-                    </div>
+                    {this.state.users && getUsers}
                 </div>
                 <Sidebare>
                     <Link to="/admin/users/new">
                         <button type="primary">New user</button>
                     </Link>
-                </Sidebare>А
+                </Sidebare>
             </>
         );
     }

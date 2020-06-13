@@ -1,19 +1,17 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { Button } from 'antd';
+import styled from 'styled-components'
 
 import Card from '../../../compontnts/card/Card'
 import ImageDrawer from './imageDrawer'
 import { changeFieldById } from '../../../actions/pageAction'
-import styled from 'styled-components'
 
 
 function Image({ field, setFieldById }) {
 
     const [visible, setVisible] = useState(false)
     const [url, setUrl] = useState(field.data || '')
-
-
 
     const showDrawer = () => {
         setVisible(true)
@@ -73,5 +71,3 @@ const mapDispatchToProps = dispatch => ({
 });
 
 export default connect(null, mapDispatchToProps)(Image);
-
-

@@ -5,9 +5,7 @@ import Image from './image'
 
 export default class Fields extends Component {
 
-    constructor(props) {
-        super(props);
-    }
+
 
     distributor = (field) => {
         switch (field.type) {
@@ -16,19 +14,20 @@ export default class Fields extends Component {
                     key={field.id}
                     field={field}
                 />
-                break
+
             case "text":
                 return <Text
                     key={field.id}
                     field={field}
                 />
-                break
+
             case "image":
                 return <Image
                     key={field.id}
                     field={field}
                 />
-            break
+                
+            default: return null
         }
     }
     render() {

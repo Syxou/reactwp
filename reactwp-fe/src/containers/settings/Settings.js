@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Tabs, Radio } from 'antd';
+import { Tabs } from 'antd';
 
 import Menu from './Menu'
 import GlobalSettings from './GlobalSettings'

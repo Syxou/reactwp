@@ -12,7 +12,7 @@ import Cookies from 'js-cookie'
 
 import Card from '../../compontnts/card/Card'
 import Sidebare from '../../compontnts/sidebar/Sidebar'
-import { unsetUserToken, fetchOnePageById, changePageTitle } from '../../actions/pageAction'
+import { fetchOnePageById, changePageTitle } from '../../actions/pageAction'
 import Fields from './fields/fields'
 
 class Page extends Component {
@@ -97,11 +97,9 @@ class Page extends Component {
     }
 
     render() {
-        const { redirect, fields } = this.state;
-        if (redirect) {
+        if (this.stateredirect)
             return <Redirect to="/admin/pages" />;
-        }
-        console.log(this.props)
+
         return (
             <>
                 <div style={{ width: "95%" }}>
@@ -142,5 +140,3 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps)(Page);
-
-

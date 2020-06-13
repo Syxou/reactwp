@@ -6,7 +6,7 @@ import Card from '../../compontnts/card/Card';
 import Sidebare from '../../compontnts/sidebar/Sidebar';
 import { unsetUserToken } from '../../actions/actions'
 import { connect } from 'react-redux';
-import { Select, Button, message, Icon, Input, Switch, Upload } from 'antd';
+import { Select, Button, message, Icon, Upload } from 'antd';
 import "./user.css"
 
 

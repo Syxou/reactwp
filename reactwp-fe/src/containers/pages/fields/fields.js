@@ -1,13 +1,11 @@
 import React, { Component } from 'react'
 import Wyswyg from './wyswyg';
 import Text from './text';
-import Image from './image'
+
 
 export default class Fields extends Component {
 
-    constructor(props) {
-        super(props);
-    }
+
 
     distributor = (field) => {
         switch (field.type) {
@@ -26,6 +24,7 @@ export default class Fields extends Component {
             //         key={field.id}
             //         field={field}
             //     />
+            default: return null
         }
     }
     render() {

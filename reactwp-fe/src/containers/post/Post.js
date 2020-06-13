@@ -6,12 +6,12 @@ import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import axios from 'axios'
 import Cookies from 'js-cookie'
-import { Menu, Dropdown, Icon, Button } from 'antd';
+import { Icon, Button } from 'antd';
 
 
 import Card from '../../compontnts/card/Card'
 import Sidebare from '../../compontnts/sidebar/Sidebar'
-import { unsetUserToken, fetchOnePageById, changePageTitle, changePostStatus } from '../../actions/pageAction'
+import { fetchOnePageById, changePageTitle } from '../../actions/pageAction'
 import Fields from './fields/fields'
 
 class Post extends Component {

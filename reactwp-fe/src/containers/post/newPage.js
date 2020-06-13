@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 
 import { Redirect } from 'react-router-dom';
 import { EditorState } from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import { Button } from 'antd';
@@ -94,5 +93,3 @@ class NewPage extends Component {
 
 
 export default NewPage;
-
-

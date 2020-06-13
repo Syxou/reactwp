@@ -1,6 +1,5 @@
 import actionTypes from '../constants'
 import Cookies from 'js-cookie'
-import Password from 'antd/lib/input/Password'
 
 var initialState = {
     user: {},
@@ -26,7 +25,7 @@ export default (state = initialState, action) => {
             return updated
         case actionTypes.ADD_STEPS_ACCOUNT:
             updated['newUser'] = action.account
-        default:
-            return state
+            return updated
+        default: return state
     }
 }

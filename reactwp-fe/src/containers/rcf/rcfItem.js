@@ -91,10 +91,8 @@ class rcfItem extends Component {
                 onMouseEnter={this.handleSetEdided}
                 onMouseLeave={this.handleUnsetEdided}
             >
-                <Card
-                    key={field.id}
-                    display={'flex'}
-
+                <Card display={'flex'}
+                    justify="space-between"
                 >
                     <Name
                         onChange={this.handleChangeName}
@@ -112,24 +110,35 @@ class rcfItem extends Component {
                             ))}
                         </Select>
                     </div>
-                    {this.state.save &&
-                        <div>
-                            <Button type="dashed" shape="circle" icon="save" onClick={this.saveField} />
-                            <Popconfirm
-                                placement="topRight"
-                                title={'Are you sure to delete this field?'}
-                                onConfirm={this.handleRemoveFeld}
-                                okText="Yes"
-                                cancelText="No"
-                            >
-                                <Button type="dashed" shape="circle" icon="close" />
-                            </Popconfirm>
-                        </div>}
+
+                    <HandesButtons>
+                        {this.state.save &&
+                            <>
+                                <Button style={{ borderColor: '#1890ff' }} type="dashed" shape="circle" icon="save" onClick={this.saveField} />
+                                <Popconfirm
+                                    placement="topRight"
+                                    title={'Are you sure to delete this field?'}
+                                    onConfirm={this.handleRemoveFeld}
+                                    okText="Yes"
+                                    cancelText="No"
+                                >
+                                    <Button style={{ borderColor: 'tomato' }} type="dashed" shape="circle" icon="close" />
+                                </Popconfirm>
+                            </>
+                        }
+                    </HandesButtons>
                 </Card>
             </CardWrap>
         );
     }
 }
+const HandesButtons = styled.div`
+    min-width:70xp;
+    display: block;
+    button{
+        margin: 0 3px;
+    }
+`
 
 const Slug = styled.input`
     margin-top:0 ;
