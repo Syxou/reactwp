@@ -110,3 +110,4 @@ dist
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 reactwp-be/knexfile.js
+reactwp-fe/package-lock.json
