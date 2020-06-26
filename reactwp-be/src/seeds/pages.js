@@ -25,6 +25,13 @@ exports.seed = function (knex) {
           slug: 'post1',
           type: 'projects',
           date_modifate: new Date()
+        },
+        {
+          title: 'menu',
+          state: 'publish',
+          slug: 'menu',
+          type: 'menu',
+          date_modifate: new Date()
         }
       ]);
     });

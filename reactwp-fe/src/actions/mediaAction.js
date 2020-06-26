@@ -3,8 +3,8 @@ import axios from 'axios';
 import Cookies from 'js-cookie'
 import { unsetUserToken } from './actions'
 
-export function fetchAllMedia(id) {
-   
+export function fetchAllMedia() {
+
     return (
         dispatch => axios({
             method: 'get',

@@ -14,7 +14,7 @@ exports.seed = function (knex) {
           post_date: faker.date.past(),
         },
         { post_id: 2, post_content: faker.image.imageUrl(), data_type: 'attachment', post_type: 'content', post_date: faker.date.past() },
-        { post_id: 3, post_content: faker.lorem.paragraph(), data_type: 'html', post_type: 'content', post_date: faker.date.past() }
+        { post_id: 3, post_content: faker.lorem.paragraph(), data_type: 'html', post_type: 'content', post_date: faker.date.past() },
       ]);
     });
 };

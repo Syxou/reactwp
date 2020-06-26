@@ -56,7 +56,9 @@ class Rcf extends Component {
                     <Center>
                         <Button shape="circle" icon="plus" onClick={() => this.props.addNewField()} />
                     </Center>
-
+                    <Card>
+                        <RcfPagesSelect allPages={this.state.AllPages} selectPages={selectPages} idScnema={this.props.match.params.id} />
+                    </Card>
                 </div>
                 <Card>
                     <p>{schemaData.slug}</p>
@@ -75,9 +77,7 @@ class Rcf extends Component {
                         ))}
                     </Select> */}
                 </Card>
-                <Card>
-                    <RcfPagesSelect allPages={this.state.AllPages} selectPages={selectPages} idScnema={this.props.match.params.id} />
-                </Card>
+
             </>
         );
     }

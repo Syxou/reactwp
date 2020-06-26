@@ -38,6 +38,9 @@ const CardConponent = styled.div`
     width: ${props => props.width || 'inherit'};
     display: ${props => props.display || 'block'};
     justify-content: ${props => props.justify || 'initial'};
+    @media (max-width: 768px) {
+    flex-direction: ${props => props.display === 'flex' ? 'column' : 'initial' };
+  }
 `
 
 export default Card;

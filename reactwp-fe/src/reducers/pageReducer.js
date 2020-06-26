@@ -41,7 +41,6 @@ export default (state = initialState, action) => {
                     if (field.id === action.field.id)
                         return newFields.push(action.field)
                     else return newFields.push(field)
-
                 })
                 : newFields = action.field
             const page_set_field = { ...state.page, fields: newFields }

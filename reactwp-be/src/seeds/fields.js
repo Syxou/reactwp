@@ -24,6 +24,16 @@ exports.seed = function (knex) {
           post_id: 1,
           fields_schema_id: 1
         },
+
+        {
+          id: 3,
+          data: '[{name: "Home",slug: "home",link: "/",class: "", type:"custom"},{name: "Projects",slug: "projects", link: "/#projects",class: "", type:"id"}]',
+          type: 'menu',
+          name: 'Primary Menu',
+          slug: 'menu',
+          post_id: null,
+          fields_schema_id: null
+        },
       ]);
     });
 };

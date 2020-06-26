@@ -7,7 +7,7 @@ import { unsetUserToken } from '../../actions/actions'
 import { getAllPostType } from '../../actions/postAction'
 
 class Nav extends Component {
-  
+
     hendleLogOut = () => {
         this.props.unsetToken()
     }
@@ -20,70 +20,68 @@ class Nav extends Component {
         const { types } = this.props
         console.log(this.props)
         return (
-            <div className="nav">
-                <nav className="menu">
-                    <div>
-                        <NavLink
-                            exact
-                            activeClassName="navbar__link--active"
-                            className="navbar__link"
-                            to="/admin/"
-                        >
-                            <Icon style={{ fontSize: '21px' }} type="home" />
-                        </NavLink>
+            // <div className="nav">
+            <nav className="menu">
+
+                <NavLink
+                    exact
+                    activeClassName="navbar__link--active"
+                    className="navbar__link"
+                    to="/admin/"
+                >
+                    <Icon style={{ fontSize: '21px' }} type="home" />
+                </NavLink>
 
 
-                        <NavLink
-                            activeClassName="navbar__link--active"
-                            className="navbar__link" to="/admin/users/">
-                            <Icon style={{ fontSize: '21px' }} type="user" />
-                        </NavLink>
+                <NavLink
+                    activeClassName="navbar__link--active"
+                    className="navbar__link" to="/admin/users/">
+                    <Icon style={{ fontSize: '21px' }} type="user" />
+                </NavLink>
 
-                        {/* <NavLink
+                {/* <NavLink
                             activeClassName="navbar__link--active"
                             className="navbar__link"
                             to="/admin/pages">
                             <Icon style={{ fontSize: '21px' }} type="file" />
                         </NavLink> */}
+                <NavLink
+                    activeClassName="navbar__link--active"
+                    className="navbar__link"
+                    to="/admin/rcf">
+                    <Icon style={{ fontSize: '21px' }} type="form" />
+                </NavLink>
+                <NavLink
+                    to="/admin/media"
+                    activeClassName="navbar__link--active"
+                    className="navbar__link"
+                >
+                    <Icon style={{ fontSize: '21px' }} type="file-image" />
+                </NavLink>
+                {
+                    types &&
+                    types.map((post) => (
                         <NavLink
-                            activeClassName="navbar__link--active"
-                            className="navbar__link"
-                            to="/admin/rcf">
-                            <Icon style={{ fontSize: '21px' }} type="form" />
-                        </NavLink>
-                        <NavLink
-                            to="/admin/media"
+                            key={post.id}
+                            to={`/admin/post/${post.type}/`}
                             activeClassName="navbar__link--active"
                             className="navbar__link"
                         >
-                            <Icon style={{ fontSize: '21px' }} type="file-image" />
+                            <Icon style={{ fontSize: '21px' }} type={post.icon} />
                         </NavLink>
-                        {
-                            types &&
-                            types.map((post) => (
-                                <NavLink
-                                    key={post.id}
-                                    to={`/admin/post/${post.type}/`}
-                                    activeClassName="navbar__link--active"
-                                    className="navbar__link"
-                                >
-                                    <Icon style={{ fontSize: '21px' }} type={post.icon} />
-                                </NavLink>
-                            ))
-                        }
-                        <NavLink
-                            to="/admin/settings"
-                            activeClassName="navbar__link--active"
-                            className="navbar__link">
-                            <Icon style={{ fontSize: '21px' }} type="setting" />
-                        </NavLink>
+                    ))
+                }
+                <NavLink
+                    to="/admin/settings"
+                    activeClassName="navbar__link--active"
+                    className="navbar__link">
+                    <Icon style={{ fontSize: '21px' }} type="setting" />
+                </NavLink>
 
-                    </div>
-                    <div className="menuBottom">
-                        <button className="logOut" onClick={this.hendleLogOut}><Icon type="logout" /></button>
-                    </div>
-                </nav>
-            </div >
+                <button className="logOut" onClick={this.hendleLogOut}><Icon type="logout" /></button>
+
+            </nav>
+            // </div >
         );
     }
 }
