@@ -8,8 +8,8 @@ import { Button } from 'antd';
 import axios from 'axios';
 import Cookies from 'js-cookie'
 
-import Card from '../../compontnts/card/Card';
-import Sidebare from '../../compontnts/sidebar/Sidebar';
+import Card from '../../components/card/Card';
+import Sidebare from '../../components/sidebar/Sidebar';
 import { unsetUserToken } from '../../actions/actions';
 
 

@@ -3,7 +3,7 @@ import { Button, Input, message } from 'antd';
 import Cookies from 'js-cookie'
 import axios from 'axios'
 
-import Card from '../../compontnts/card/Card'
+import Card from '../../components/card/Card'
 
 
 const { TextArea } = Input;

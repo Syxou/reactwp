@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { Button } from 'antd';
 import { Link } from 'react-router-dom'
-import Listing from '../../compontnts/listing/Listing'
+import Listing from '../../components/listing/Listing'
 import { fetchPages } from '../../actions/actions'
-import Sidebare from '../../compontnts/sidebar/Sidebar'
-import Filters from '../../compontnts/filter/Filter'
+import Sidebare from '../../components/sidebar/Sidebar'
+import Filters from '../../components/filter/Filter'
 import './Pages.css';
 
 class Pages extends Component {

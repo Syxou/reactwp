@@ -1,20 +1,18 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Button } from 'antd'
 import { connect } from 'react-redux'
-import { DndProvider } from 'react-dnd'
-import { HTML5Backend } from 'react-dnd-html5-backend'
 
 import { getCurrentMenu } from '../../../actions/actionMenu'
 import MenuAddNew from './MenuAddNew'
 import MenuItem from './MenuItem'
-// import Card from '../../../compontnts/card/Card'
-import Sidebare from '../../../compontnts/sidebar/Sidebar'
+import Sidebar from '../../../components/sidebar/Sidebar'
+
 
 //! remowe key={i} this "i" from map function
+
 function Menu({ menu, getMenu }) {
     const [handleNew, setHandleNew] = useState(false)
-    const [cards, setCards] = useState(menu)
 
     useEffect(() => {
         getMenu()
@@ -24,18 +22,16 @@ function Menu({ menu, getMenu }) {
     return (
         <Wrap>
             <div>
-                <DndProvider backend={HTML5Backend}>
-                    {menu.map((m, i) => (
-                        <MenuItem key={i} item={m} />
-                    ))}
-                </DndProvider>
+                {menu.map((m, i) => (
+                    <MenuItem key={i} item={m} />
+                ))}
             </div>
             <div>
-                <Sidebare>
+                <Sidebar>
                     <FormAdd>
                         <Button type="primary" onClick={() => setHandleNew(true)} >New</Button>
                     </FormAdd>
-                </Sidebare>
+                </Sidebar>
                 {handleNew && <MenuAddNew FormAdd={FormAdd} />}
             </div>
         </Wrap>

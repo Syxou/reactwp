@@ -9,8 +9,8 @@ import Cookies from 'js-cookie'
 import { Icon, Button } from 'antd';
 
 
-import Card from '../../compontnts/card/Card'
-import Sidebare from '../../compontnts/sidebar/Sidebar'
+import Card from '../../components/card/Card'
+import Sidebare from '../../components/sidebar/Sidebar'
 import { fetchOnePageById, changePageTitle } from '../../actions/pageAction'
 import Fields from './fields/fields'
 

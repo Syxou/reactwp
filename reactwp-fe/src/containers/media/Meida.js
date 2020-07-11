@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { fetchAllMedia } from '../../actions/mediaAction'
 import UploadMedia from './UploadMedia'
 import styled from 'styled-components'
-import Card from '../../compontnts/card/Card'
+import Card from '../../components/card/Card'
 import MediaItem from './MediaItem'
 
 

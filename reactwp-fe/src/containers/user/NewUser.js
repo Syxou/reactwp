@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Card from '../../compontnts/card/Card';
+import Card from '../../components/card/Card';
 import axios from 'axios'
 import { Redirect } from 'react-router-dom'
 import Cookies from 'js-cookie'

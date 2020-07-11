@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from "axios"
 import Cookies from 'js-cookie'
 import styled from 'styled-components';
-import Card from './../../compontnts/card/Card';
+import Card from './../../components/card/Card';
 import { connect } from 'react-redux';
 import { getSchemaById, setNewField } from '../../actions/schemaAction'
 import { Button } from 'antd';

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Button, Input } from 'antd'
 
 import { addItemCurrentMenu } from '../../../actions/actionMenu'
-import Sidebare from '../../../compontnts/sidebar/Sidebar'
+import Sidebare from '../../../components/sidebar/Sidebar'
 
 function MenuAddNew({ FormAdd, setItem }, props) {
     const [name, setName] = useState('')

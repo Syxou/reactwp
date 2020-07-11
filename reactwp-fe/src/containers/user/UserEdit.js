@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie'
 import styled from 'styled-components';
-import Card from '../../compontnts/card/Card';
-import Sidebare from '../../compontnts/sidebar/Sidebar';
+import Card from '../../components/card/Card';
+import Sidebare from '../../components/sidebar/Sidebar';
 import { unsetUserToken } from '../../actions/actions'
 import { connect } from 'react-redux';
 import { Select, Button, message, Icon, Upload } from 'antd';

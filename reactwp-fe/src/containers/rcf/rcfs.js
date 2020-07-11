@@ -7,8 +7,8 @@ import { connect } from "react-redux"
 import { Button, Input, message } from 'antd'
 
 import { unsetUserToken } from "../../actions/actions"
-import Listing from '../../compontnts/listing/Listing'
-import Sidebare from '../../compontnts/sidebar/Sidebar'
+import Listing from '../../components/listing/Listing'
+import Sidebare from '../../components/sidebar/Sidebar'
 
 const { TextArea } = Input;
 class rcf extends Component {

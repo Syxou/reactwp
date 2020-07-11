@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import {
-  BrowserRouter as Router
-} from "react-router-dom";
-import { Route, Switch } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from 'react-redux';
 import styled from 'styled-components'
-import store from './store/store';
 
+import store from './store/store';
 import Routes from './Routes'
-import Nav from './compontnts/nav/Nav'
+import PrivateRoute from './PrivateRoute';
+import Nav from './components/nav/Nav'
 import Login from "./containers/login/Login"
+import { AuthContext } from "./context/auth";
 
 import './App.css';
 
@@ -26,7 +25,6 @@ function App() {
             </div>
             <MainWrap showRight={showRight}>
               <Routes />
-              {/* <MobileTarget onClick={() => setShowRight(!showRight)}>show</MobileTarget> */}
             </MainWrap>
           </AppWrap>
           <Route>

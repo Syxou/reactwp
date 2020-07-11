@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom'
-import Listing from '../../compontnts/listing/Listing'
+import Listing from '../../components/listing/Listing'
 import { connect } from "react-redux"
 import { unsetUserToken } from "../../actions/actions"
 import Cookies from 'js-cookie'
-import Sidebare from '../../compontnts/sidebar/Sidebar'
+import Sidebare from '../../components/sidebar/Sidebar'
 class Users extends Component {
 
     constructor(props) {

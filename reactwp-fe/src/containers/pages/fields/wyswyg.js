@@ -4,7 +4,7 @@ import { EditorState, convertFromRaw, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 
 import { changeFieldById } from '../../../actions/pageAction'
-import Card from '../../../compontnts/card/Card'
+import Card from '../../../components/card/Card'
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 function Wyswyg({ field, setFieldById }) {

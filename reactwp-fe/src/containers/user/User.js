@@ -6,9 +6,9 @@ import Cookies from 'js-cookie';
 import { Button } from 'antd';
 import axios from 'axios';
 
-import Card from '../../compontnts/card/Card';
+import Card from '../../components/card/Card';
 import { unsetUserToken } from "../../actions/actions";
-import Sidebare from '../../compontnts/sidebar/Sidebar';
+import Sidebare from '../../components/sidebar/Sidebar';
 
 class User extends Component {
     constructor(props) {

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Button } from 'antd';
 import styled from 'styled-components'
 
-import Card from '../../../compontnts/card/Card'
+import Card from '../../../components/card/Card'
 import ImageDrawer from './imageDrawer'
 import { changeFieldById } from '../../../actions/pageAction'
 

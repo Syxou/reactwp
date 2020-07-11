@@ -5,7 +5,7 @@ import Cookies from 'js-cookie'
 import { Icon, Button, Popconfirm, Drawer, message } from 'antd'
 import slugify from 'slugify'
 
-import Card from '../../compontnts/card/Card'
+import Card from '../../components/card/Card'
 
 export default function CustomPostItem({ type, update }) {
 

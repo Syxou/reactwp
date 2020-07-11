@@ -8,7 +8,7 @@ import postReduser from '../reducers/postReducer'
 import menuReduser from '../reducers/menuReducer'
 
 /* eslint-disable no-underscore-dangle */
-const composeEnhancers = window?.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__;
 
 const store = createStore(
   combineReducers({

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Card from '../../../compontnts/card/Card'
+import Card from '../../../components/card/Card'
 import { changeFieldById } from '../../../actions/pageAction'
 import { Input } from 'antd';
 

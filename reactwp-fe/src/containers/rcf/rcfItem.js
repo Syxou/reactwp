@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import Card from './../../compontnts/card/Card';
+import Card from './../../components/card/Card';
 import Cookies from 'js-cookie';
 import axios from 'axios';
 import { Select, Button, message, Popconfirm } from 'antd';

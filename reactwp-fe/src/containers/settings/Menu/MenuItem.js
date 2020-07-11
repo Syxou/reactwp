@@ -6,7 +6,7 @@ export default function MenuItem({ item }) {
     const [itemName, setItemName] = useState(item.name)
     const [itemLink, setItemLink] = useState(item.link)
     const [itemClass, setItemClass] = useState(item.class)
-    console.log(item)
+
     return (
         <Card display='flex' justify='space-between'>
             <div>
