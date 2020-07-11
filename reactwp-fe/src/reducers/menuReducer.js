@@ -1,7 +1,8 @@
 import actionTypes from '../constants'
 
 const initialState = {
-    current: []
+    current: [],
+    name: ''
 }
 
 export default (state = initialState, action) => {
@@ -10,7 +11,17 @@ export default (state = initialState, action) => {
     switch (action.type) {
 
         case actionTypes.GET_CURRENT_MENU:
-            update['current'] = action.menu
+            const menuMoc = {
+                id: 18,
+                name: 'menu',
+                items: [
+                    { id: 1, name: "Home", slug: "home", link: "/", class: "", type: "custom" },
+                    { id: 2, name: "Projects", slug: "projects", link: "/#projects", class: "", type: "id" }
+                ]
+            }
+            update['current'] = menuMoc.items
+            update['id'] = menuMoc.id
+            update['name'] = menuMoc.name
             return update
 
         case actionTypes.ADD_ITEM_TO_MENU:

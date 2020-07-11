@@ -51,17 +51,12 @@ const Card = styled.div`
     display: flex;
     padding: 10px 15px;
     align-items: center;
-    margin: 15px 0;
     background-color: #ffffff;
     justify-content:space-between;
     box-shadow: 0px 10px 20px rgba(31, 32, 65, 0.05);
     border-radius: 5px;
     width: 300px;
     transition: all 0.3s ease;
-    animation-duration: 0.3s;
-    animation-name: slidein;
-`
-
-const CardData = styled.div`
-    display: inherit;
+    /* animation-duration: 0.3s; */
+    /* animation-name: slidein; */
 `

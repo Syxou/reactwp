@@ -4,17 +4,20 @@ import { Button } from 'antd'
 import { connect } from 'react-redux'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-import { getCurrentMenu, reorderCurrentMenu } from '../../../actions/actionMenu'
+import { getCurrentMenu, reorderCurrentMenu, getCurrentMenuName } from '../../../actions/actionMenu'
 import MenuAddNew from './MenuAddNew'
 import MenuItem from './MenuItem'
+import MenuHeader from './MenuHeader'
 import Sidebar from '../../../components/sidebar/Sidebar'
 
 const getItemStyle = (isDragging, draggableStyle) => ({
     // some basic styles to make the items look a bit nicer
     userSelect: "none",
     padding: 0,
+    margin: " 15px 0",
     // change background colour if dragging
     // background: isDragging ? "lightgreen" : "grey",
+    boxShadow: isDragging && '0px 10px 26px rgba(31,32,65,0.1)',
     // styles we need to apply on draggables
     ...draggableStyle
 });
@@ -23,19 +26,24 @@ const getListStyle = () => ({
     width: 'min-content'
 });
 
-function Menu({ menu, getMenu, reorder }) {
+function Menu({ menu, name, getMenu, reorder }) {
     const [handleNew, setHandleNew] = useState(false)
+
 
     useEffect(() => {
         getMenu()
     }, [getMenu])
+
+    const saveMenu = () => {
+        return null;
+    }
 
     const onDragEnd = (result) => {
 
         if (!result.destination)
             return;
 
-        reorder(
+        return reorder(
             menu,
             result.source.index,
             result.destination.index
@@ -45,6 +53,7 @@ function Menu({ menu, getMenu, reorder }) {
     return (
         <Wrap>
             <div>
+                <MenuHeader name={name} />
                 <DragDropContext onDragEnd={onDragEnd}>
                     <Droppable droppableId="droppable">
                         {(provided, snapshot) => (
@@ -80,6 +89,7 @@ function Menu({ menu, getMenu, reorder }) {
             <div>
                 <Sidebar>
                     <FormAdd>
+                        <Button type="primary" onClick={() => saveMenu()} >Save menu</Button>
                         <Button type="primary" onClick={() => setHandleNew(true)} >New</Button>
                     </FormAdd>
                 </Sidebar>
@@ -114,6 +124,6 @@ const mapDispatchToProps = dispatch => {
 
     }
 }
-const mapStateToProps = (state) => ({ menu: state.menu.current })
+const mapStateToProps = (state) => ({ menu: state.menu.current, name: state.menu.name })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Menu)
