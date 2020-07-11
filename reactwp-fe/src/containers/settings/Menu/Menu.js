@@ -2,29 +2,80 @@ import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Button } from 'antd'
 import { connect } from 'react-redux'
+import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-import { getCurrentMenu } from '../../../actions/actionMenu'
+import { getCurrentMenu, reorderCurrentMenu } from '../../../actions/actionMenu'
 import MenuAddNew from './MenuAddNew'
 import MenuItem from './MenuItem'
 import Sidebar from '../../../components/sidebar/Sidebar'
 
+const getItemStyle = (isDragging, draggableStyle) => ({
+    // some basic styles to make the items look a bit nicer
+    userSelect: "none",
+    padding: 0,
+    // change background colour if dragging
+    // background: isDragging ? "lightgreen" : "grey",
+    // styles we need to apply on draggables
+    ...draggableStyle
+});
 
-//! remowe key={i} this "i" from map function
+const getListStyle = () => ({
+    width: 'min-content'
+});
 
-function Menu({ menu, getMenu }) {
+function Menu({ menu, getMenu, reorder }) {
     const [handleNew, setHandleNew] = useState(false)
 
     useEffect(() => {
         getMenu()
     }, [getMenu])
 
+    const onDragEnd = (result) => {
+
+        if (!result.destination)
+            return;
+
+        reorder(
+            menu,
+            result.source.index,
+            result.destination.index
+        );
+    }
 
     return (
         <Wrap>
             <div>
-                {menu.map((m, i) => (
-                    <MenuItem key={i} item={m} />
-                ))}
+                <DragDropContext onDragEnd={onDragEnd}>
+                    <Droppable droppableId="droppable">
+                        {(provided, snapshot) => (
+                            <div
+                                {...provided.droppableProps}
+                                ref={provided.innerRef}
+                                style={getListStyle(snapshot.isDraggingOver)}
+                            >
+                                {menu.map((item, index) => (
+                                    <Draggable key={"item-" + item.id} draggableId={"item-" + item.id} index={index}>
+                                        {(provided, snapshot) => (
+                                            <div
+                                                ref={provided.innerRef}
+                                                {...provided.draggableProps}
+                                                {...provided.dragHandleProps}
+                                                style={getItemStyle(
+                                                    snapshot.isDragging,
+                                                    provided.draggableProps.style
+                                                )}
+                                            >
+                                                <MenuItem item={item} />
+                                            </div>
+                                        )}
+                                    </Draggable>
+
+                                ))}
+                                {provided.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                </DragDropContext>
             </div>
             <div>
                 <Sidebar>
@@ -55,12 +106,14 @@ const Wrap = styled.div`
     
 `
 
-const mapDistatchToProps = dispatch => {
+const mapDispatchToProps = dispatch => {
     return {
         getMenu: () => dispatch(getCurrentMenu()),
+        reorder: (list, startIndex, endIndex) => dispatch(reorderCurrentMenu(list, startIndex, endIndex))
         // setItem:() => dispatch(addItemCurrentMenu()),
+
     }
 }
 const mapStateToProps = (state) => ({ menu: state.menu.current })
 
-export default connect(mapStateToProps, mapDistatchToProps)(Menu)
+export default connect(mapStateToProps, mapDispatchToProps)(Menu)

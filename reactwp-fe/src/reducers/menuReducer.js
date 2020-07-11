@@ -1,4 +1,4 @@
-import actioonTypes from '../constants'
+import actionTypes from '../constants'
 
 const initialState = {
     current: []
@@ -9,16 +9,25 @@ export default (state = initialState, action) => {
 
     switch (action.type) {
 
-        case actioonTypes.GET_CURRENT_MENU:
+        case actionTypes.GET_CURRENT_MENU:
             update['current'] = action.menu
             return update
 
-        case actioonTypes.ADD_ITEM_TO_MENU:
+        case actionTypes.ADD_ITEM_TO_MENU:
+            const newId = state.current[state.current.length - 1].id + 1;
+            console.log(newId)
             let updatedCurrentMenu =
-                state.current.concat(action.item)
+                state.current.concat({ id: newId, ...action.item })
             update['current'] = updatedCurrentMenu
             return update
-            
+
+        case actionTypes.REORDER_CURRENT_MENU:
+            const result = Array.from(action.list);
+            const [removed] = result.splice(action.startIndex, 1);
+            result.splice(action.endIndex, 0, removed);
+            update['current'] = result
+            return update
+
         default: return state
     }
 }

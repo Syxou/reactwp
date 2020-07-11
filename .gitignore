@@ -111,3 +111,4 @@ dist
 .vscode-test
 reactwp-be/knexfile.js
 reactwp-fe/package-lock.json
+reactwp-fe/package-lock.json
