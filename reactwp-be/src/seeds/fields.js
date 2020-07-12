@@ -1,4 +1,5 @@
 var faker = require('faker');
+const { json } = require('body-parser');
 
 exports.seed = function (knex) {
   // Deletes ALL existing entries
@@ -12,7 +13,7 @@ exports.seed = function (knex) {
           type: 'wyswyg',
           name: 'About Home',
           slug: 'cf_about-home',
-          post_id: 1,
+          post_id: 2,
           fields_schema_id: 1
         },
         {
@@ -21,19 +22,23 @@ exports.seed = function (knex) {
           type: 'text',
           name: 'About title home',
           slug: 'cf_about-title-home',
-          post_id: 1,
+          post_id: 2,
           fields_schema_id: 1
         },
 
         {
           id: 3,
-          data: '[{name: "Home",slug: "home",link: "/",class: "", type:"custom"},{name: "Projects",slug: "projects", link: "/#projects",class: "", type:"id"}]',
-          type: 'menu',
-          name: 'Primary Menu',
-          slug: 'menu',
-          post_id: null,
+          data: JSON.stringify([
+            { id: 1, name: "Home", slug: "home", link: "/", class: "", type: "custom" },
+            { id: 2, name: "Projects", slug: "projects", link: "/#projects", class: "", type: "id" }
+          ]),
+          type: 'Primary Menu',
+          name: 'First Menu',
+          slug: 'sys_menu',
+          post_id: 1,
           fields_schema_id: null
         },
+
       ]);
     });
 };

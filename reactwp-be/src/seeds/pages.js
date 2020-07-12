@@ -6,32 +6,36 @@ exports.seed = function (knex) {
       // Inserts seed entries
       return knex('post').insert([
         {
+          id: 2,
           title: 'Home',
           state: 'publish',
           slug: 'home',
           type: 'page',
-          date_modifate: new Date()
+          date_modified: new Date()
         },
         {
+          id: 3,
           title: 'Blog',
           state: 'draft',
           slug: 'blog',
           type: 'page',
-          date_modifate: new Date()
+          date_modified: new Date()
         },
         {
+          id: 4,
           title: 'post1',
           state: 'publish',
           slug: 'post1',
           type: 'projects',
-          date_modifate: new Date()
+          date_modified: new Date()
         },
         {
+          id: 1,
           title: 'menu',
           state: 'publish',
           slug: 'menu',
-          type: 'menu',
-          date_modifate: new Date()
+          type: 'sys_menu',
+          date_modified: new Date()
         }
       ]);
     });

@@ -1,22 +1,27 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Select } from 'antd';
+import { getAllTypesMenu, getCurrentMenu } from '../../../actions/actionMenu'
 
 const { Option } = Select;
 
-function MenuHeader({ name, id = 10, list }) {
+function MenuHeader({ type, id = 10, list, getListMenus, getMenu }) {
+
+    useEffect(() => {
+        getListMenus()
+    }, [getListMenus])
 
     const handleChange = val => {
-        console.log(val)
+        getMenu(val)
     }
 
     return (
         <div style={{ display: 'flex', alignItems: "baseline" }}>
-            <h1>{name}</h1>
+            <h1>{type}</h1>
             <Select defaultValue='Select menu' style={{ width: 120, margin: '0px 25px' }} onChange={handleChange}>
                 {
                     list?.map(l => (
-                        <Option key={l.id} value={l.id}>{l.name}</Option>
+                        <Option key={l.id} value={l.type}>{l.type}</Option>
                     ))
                 }
             </Select>
@@ -25,17 +30,18 @@ function MenuHeader({ name, id = 10, list }) {
 }
 
 const mapStateToProps = (state) => ({
-    name: state.menu.name,
+    type: state.menu.type,
     id: state.menu.id,
-    list: [
-        { id: 18, name: 'menu' },
-        { id: 20, name: 'menu2' },
-        { id: 21, name: 'menu3' },
-    ]
+    list: state.menu.types
 })
 
 const mapDispatchToProps = dispatch => {
-    // getListMenus: () => (dispatch =>)
+    return {
+        getListMenus: () => dispatch(getAllTypesMenu()),
+        getMenu: (type) => {
+            return dispatch(getCurrentMenu(type))
+        },
+    }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MenuHeader)

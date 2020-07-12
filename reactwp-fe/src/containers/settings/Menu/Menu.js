@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { Button } from 'antd'
+import axios from 'axios'
+import Cookies from 'js-cookie'
 import { connect } from 'react-redux'
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 
-import { getCurrentMenu, reorderCurrentMenu, getCurrentMenuName } from '../../../actions/actionMenu'
+import { getCurrentMenu, reorderCurrentMenu } from '../../../actions/actionMenu'
 import MenuAddNew from './MenuAddNew'
 import MenuItem from './MenuItem'
 import MenuHeader from './MenuHeader'
@@ -26,16 +28,33 @@ const getListStyle = () => ({
     width: 'min-content'
 });
 
-function Menu({ menu, name, getMenu, reorder }) {
+function Menu({ menu, type, id, getMenu, reorder }) {
     const [handleNew, setHandleNew] = useState(false)
-
 
     useEffect(() => {
         getMenu()
     }, [getMenu])
 
     const saveMenu = () => {
-        return null;
+        axios({
+            method: 'post',
+            url: '/admin/api/menu/add',
+            data: {
+                menu,
+                type,
+                id,
+            },
+            headers: {
+                'Authorization': 'Bearer ' + Cookies.get('token'),
+            },
+        })
+            .then(() => {
+                this.setState({ redirect: true })
+            })
+            .catch(error => {
+                // if (error.response.status === 401)
+                // this.ptops.dispatch(unsetUserToken())
+            });
     }
 
     const onDragEnd = (result) => {
@@ -53,7 +72,7 @@ function Menu({ menu, name, getMenu, reorder }) {
     return (
         <Wrap>
             <div>
-                <MenuHeader name={name} />
+                <MenuHeader />
                 <DragDropContext onDragEnd={onDragEnd}>
                     <Droppable droppableId="droppable">
                         {(provided, snapshot) => (
@@ -78,7 +97,6 @@ function Menu({ menu, name, getMenu, reorder }) {
                                             </div>
                                         )}
                                     </Draggable>
-
                                 ))}
                                 {provided.placeholder}
                             </div>
@@ -124,6 +142,6 @@ const mapDispatchToProps = dispatch => {
 
     }
 }
-const mapStateToProps = (state) => ({ menu: state.menu.current, name: state.menu.name })
+const mapStateToProps = (state) => ({ menu: state.menu.current, type: state.menu.type, id: state.menu.id })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Menu)

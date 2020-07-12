@@ -9,6 +9,12 @@ export default function MenuItem({ item }) {
 
     return (
         <Card display='flex' justify='space-between'>
+            <DragIndicator>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+                    <path d="M0 0h24v24H0V0z" fill="none" />
+                    <path d="M11 18c0 1.1-.9 2-2 2s-2-.9-2-2 .9-2 2-2 2 .9 2 2zm-2-8c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0-6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 4c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
+                </svg>
+            </DragIndicator>
             <div>
                 <Input
                     placeholder="Name: ž"
@@ -29,6 +35,17 @@ export default function MenuItem({ item }) {
         </Card>
     )
 }
+const DragIndicator = styled.div`
+    width: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    svg{
+        width: 30px;
+        height: 20px;
+        fill: gray;
+    }
+`;
 
 const Input = styled.input`
     margin-top:0;
@@ -49,7 +66,7 @@ const Input = styled.input`
 
 const Card = styled.div`
     display: flex;
-    padding: 10px 15px;
+    padding: 10px 15px 10px 0px;
     align-items: center;
     background-color: #ffffff;
     justify-content:space-between;
@@ -57,6 +74,7 @@ const Card = styled.div`
     border-radius: 5px;
     width: 300px;
     transition: all 0.3s ease;
+    overflow: hidden;
     /* animation-duration: 0.3s; */
     /* animation-name: slidein; */
-`
+`;

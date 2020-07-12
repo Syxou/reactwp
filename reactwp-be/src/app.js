@@ -1,6 +1,6 @@
 const express = require('express');
 const fileUpload = require('express-fileupload');
-var bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
 const cors = require('cors');
 const knex = require('./knex/knex')
 const api = require('./routes/api');

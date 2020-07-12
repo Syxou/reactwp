@@ -17,6 +17,9 @@ export function fetchAllMedia() {
                 type: actionTypes.GET_ALL_MEDIA,
                 media: res.data,
             }))
+            .then(() => {
+                console.log('fetchAllMedia')
+            })
             .catch(error => {
                 if (error.response && error.response.status === 401) {
                     console.log(401)

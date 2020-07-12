@@ -13,7 +13,6 @@ const PostType = require('../../models/post_type');
 router.get('/', async function (req, res, next) {
     try {
         var type = req.query.type
-        console.log(type)
         if (type) {
             await Post.query()
                 .where('type', type)

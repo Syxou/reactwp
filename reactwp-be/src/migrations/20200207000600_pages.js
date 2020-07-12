@@ -17,7 +17,7 @@ exports.up = function (knex) {
                 .string("slug")
                 .notNullable()
             table
-                .string("date_modifate")
+                .string("date_modified")
                 .notNullable()
             table
                 .integer('user_id')

@@ -10,10 +10,10 @@ const fields = require('../components/fields/fields');
 const schema = require('../components/schema/schema');
 const media = require('../components/media/media')
 const global = require('../components/global/global')
+const menu = require('../components/menu/menu')
 
 router.use('/', (req, res, next) => {
     if (req.originalUrl === "/admin/users/signin/") {
-
     }
     else {
         var token = getTokenFromBearer(req)
@@ -44,6 +44,7 @@ router.use('/users', users)
 router.use('/posts', posts)
 router.use('/postdata', postData)
 router.use('/api/global', global)
+router.use('/api/menu', menu)
 
 
 module.exports = router;
