@@ -34,7 +34,7 @@ function MenuAddNew({ FormAdd, setItem }, props) {
                     type="dashed"
                     style={{ borderColor: 'tomato' }}
                 >
-                    Сancel
+                    Cancel
                  </Button>
             </FormAdd>
         </Sidebare>

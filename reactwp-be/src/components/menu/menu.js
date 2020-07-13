@@ -66,22 +66,23 @@ router.get('/types', (req, res, next) => {
         })
 })
 
-router.post('/add', async (req, res) => {
+router.post('/add', async (req, res, next) => {
     const body = req.body
     console.log(body)
-    const menu = await Post.query()
-        .select('id')
-        .where('type', 'like', 'sys_menu')
-    const menuID = menu[0].id
 
-    const newMenu = await Fields.query()
-        .insert({
-            name: body.name,
-            type: body.type,
+    Fields.query()
+        .patch({
+            data: JSON.stringify(body.menu),
             slug: body.slug,
+        }).where('id', body.id)
+        .then(result => {
+            console.log(result)
+        }).catch(err => {
+            console.log(err)
+            next()
         })
+
     res.send('added')
 })
-
 
 module.exports = router

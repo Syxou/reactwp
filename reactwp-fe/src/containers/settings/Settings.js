@@ -13,7 +13,7 @@ class Settings extends Component {
         return (
             <Wrap>
                 <h1>Settings</h1>
-                <Tabs defaultActiveKey="1" tabPosition={'top'} style={{ height: '90vh' }}>
+                <Tabs defaultActiveKey="1" tabPosition={'top'} style={{ height: '90vh', overflow: 'scroll' }}>
                     <TabPane tab="Menu" key="1">
                         <Menu />
                     </TabPane>
