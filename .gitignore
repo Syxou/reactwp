@@ -112,3 +112,4 @@ dist
 reactwp-be/knexfile.js
 reactwp-fe/package-lock.json
 reactwp-fe/package-lock.json
+reactwp-be/package-lock.json
