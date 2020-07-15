@@ -27,6 +27,7 @@
   },
   "devDependencies": {
     "@types/express": "^4.17.3",
+    "jest": "^26.1.0",
     "tslint": "^6.1.0"
   }
 }
