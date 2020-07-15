@@ -53,11 +53,20 @@ router.get('/:id', async (req, res, next) => {
 
     try {
         const schema = await Schema.query().findById(id)
-        const related = await schema.$relatedQuery('fields').where('fields_schema_id', '=', id).groupBy("slug");
+        const related = await Fields.query().select('*', 'slug').where('fields_schema_id', '=', id);
         const pages = await schema.$relatedQuery('posts')
-        const resut = { pages: pages, fields: related, ...schema }
-        console.log(resut)
-        res.json(resut)
+        let check = []
+        let newArray = []
+        related.forEach(element => {
+            if (!check.includes(element.slug)) {
+                check.push(element.slug)
+                newArray.push(element)
+            }
+        })
+        console.log('newResult: ', newArray)
+
+        const result = { pages: pages, fields: newArray, ...schema }
+        res.json(result)
     } catch (error) {
         console.log(error)
         next();
