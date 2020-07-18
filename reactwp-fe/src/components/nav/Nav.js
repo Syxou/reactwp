@@ -16,7 +16,7 @@ class Nav extends Component {
 
     hendleLogOut = () => {
         this.props.unsetToken()
-
+        this.setState(() => ({ redirect: true }))
     }
 
     componentDidMount() {

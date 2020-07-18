@@ -11,7 +11,7 @@ router.get('/', function (req, res, next) {
     res.json({
         get_app_post: {
             all_get: '/api/page/all',
-            byid_get: '/api/page/:id',
+            by_id_get: '/api/page/:id',
             page_data: '/api/page/:id/data',
         }
     });

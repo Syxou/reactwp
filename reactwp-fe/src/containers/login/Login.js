@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
-import { Form, Icon, Input, Button, Checkbox } from 'antd'
+import { Form, Icon, Input, Button, Checkbox, message } from 'antd'
 import { setUserToken } from '../../actions/actions'
 import axios from 'axios'
 import 'antd/dist/antd.css'
@@ -32,16 +32,17 @@ class Login extends Component {
                         if (res.data.token) {
                             this.props.dispatch(setUserToken(res.data))
                             this.setState({ login: true })
+                            message.success("Username or Password correct 🌈")
                         }
                         else
-                            console.log(res.data.error)
+                            console.log(res.data.error, 'error')
                     })
                     .catch((err) => {
-                        console.log(err)
+                        message.error("Username or Password is Wrong")
                     })
             }
             else {
-                return 0
+                console.log(err)
             }
         })
     }

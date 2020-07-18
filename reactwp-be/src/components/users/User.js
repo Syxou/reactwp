@@ -105,37 +105,50 @@ router.post('/delete', (req, res) => {
 
 router.post('/signin', async function (req, res) {
     const body = req.body
-    var user = []
-    const userQuery = await User.query()
+    const user = await User.query()
         .where('username', body.username)
-        .then((res, err) => {
-            console.log('user', res[0])
-            user = res;
-            console.log(err)
+        .then((result) => {
+            return result
         })
-    bcrypt.compare(body.password, user[0].password, function (err, valid) {
-        if (!valid) {
+        .catch(err => {
+            console.log(err)
             return res.status(401).json({
-                errror: true,
-                message: "Username or Passwoerd is Wrong"
+                error: true,
+                message: "Username or Password is Wrong"
             })
-        }
-        let token = generateToken(user[0]);
-        userClean = {
-            name: user[0].name.trim(),
-            username: user[0].username.trim(),
-            email: user[0].email.trim(),
-            admin: user[0].admin,
-            avatar: user[0].avatar
-        }
-        console.log(userClean)
+        })
+    if (user.length === 0) {
+        console.log("Username or Password is Wrong")
+        res.status(401).json({
+            error: true,
+            message: "Username or Password is Wrong"
+        })
+    } else {
+        bcrypt.compare(body.password, user[0].password, function (err, valid) {
+            if (!valid) {
+                console.log("Username or Password is Wrong")
+                return res.status(401).json({
+                    error: true,
+                    message: "Username or Password is Wrong"
+                })
+            }
+            let token = generateToken(user[0]);
+            userClean = {
+                name: user[0].name.trim(),
+                username: user[0].username.trim(),
+                email: user[0].email.trim(),
+                admin: user[0].admin,
+                avatar: user[0].avatar
+            }
+            console.log(userClean)
 
-        res.status(200)
-            .json({
-                user: userClean,
-                token: token
-            })
-    })
+            res.status(200)
+                .json({
+                    user: userClean,
+                    token: token
+                })
+        })
+    }
 })
 
 module.exports = router

@@ -28,7 +28,8 @@ router.use('/', (req, res, next) => {
             }
         })
     }
-    next();
+    setTimeout(() => next(), '1000')
+
 })
 
 router.get('/', function (req, res) {
