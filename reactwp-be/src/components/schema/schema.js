@@ -122,8 +122,16 @@ addPost = async (postID, schemaID) => {
 }
 addFiedlsToPost = async (postID, schemaID) => {
     const schema = await Schema.query().findById(schemaID)
-    const fields = await schema.$relatedQuery('fields').groupByRaw("`slug`");
-    await fields.forEach(field => {
+    const fields = await schema.$relatedQuery('fields');
+    let check = []
+    let newFields = []
+    fields.forEach(element => {
+        if (!check.includes(element.id)) {
+            check.push(element.id)
+            newFields.push(element)
+        }
+    })
+    await newFields.forEach(field => {
         schema.$relatedQuery('fields')
             .insert({
                 data: '',
@@ -171,6 +179,7 @@ router.post('/:id/add/field', async (req, res) => {
         .where('fields_schema_id', '=', id)
         .where('slug', body.slug)
         .groupBy('id')
+
     if (fields.length) {
         return res.json({
             error: true,
