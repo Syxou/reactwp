@@ -155,7 +155,7 @@ removeFieldsFromPost = async (postID, schemaID) => {
 checkRemoved = (newPosts, oldPost, schemaID) => {
     if (newPosts.indexOf(oldPost) === -1) {
         newPosts.pop(oldPost);
-        remoevPost(oldPost, schemaID)
+        removePost(oldPost, schemaID)
         removeFieldsFromPost(oldPost, schemaID)
         console.log('remove post by id: ' + oldPost);
     } else if (newPosts.indexOf(oldPost) > -1) {
@@ -163,7 +163,7 @@ checkRemoved = (newPosts, oldPost, schemaID) => {
     }
 }
 
-remoevPost = async (post, schema) => {
+removePost = async (post, schema) => {
     await PostShcema.query()
         .delete()
         .where('schema_id', schema)

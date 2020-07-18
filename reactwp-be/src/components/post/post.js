@@ -98,7 +98,7 @@ router.post('/add', async function (req, res) {
         state: page.state,
         slug: page.slug,
         state: 'draft',
-        date_modifate: new Date(),
+        date_modified: new Date(),
         type: page.type
     })
 
