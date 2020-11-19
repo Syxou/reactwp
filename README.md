@@ -20,7 +20,7 @@ Reactwp uses a number of open source projects to work properly:
 
 ### Installation
 
-Reactwp requires [Node.js](https://nodejs.org/) v10+ to run.
+Reactwp requires [Node.js](https://nodejs.org/) v10 to run.
 
 Install the dependencies and devDependencies and start the front-end.
 
